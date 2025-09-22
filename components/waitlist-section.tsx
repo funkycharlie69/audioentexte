@@ -15,48 +15,75 @@ export function WaitlistSection() {
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
   const handleSubmit = async (e: React.FormEvent) => {
-  e.preventDefault();
-  setErrorMsg(null);
-  setLoading(true);
+    e.preventDefault();
+    setErrorMsg(null);
+    setLoading(true);
 
-  try {
-    const params = new URLSearchParams(window.location.search);
-    const get = (k: string) => params.get(k) || sessionStorage.getItem(k) || "";
+    try {
+      const params = new URLSearchParams(window.location.search);
+      const get = (k: string) => params.get(k) || sessionStorage.getItem(k) || "";
 
-    const payload = {
-      email: email.trim().toLowerCase(),
-      subscribed: true,
-      source: "lp",
-      userGroup: "waitlist",
-      utmSource: get("utm_source"),
-      campaign: get("utm_campaign"),
-      content:  get("utm_content"),
-      medium:   get("utm_medium"),
-      term:     get("utm_term"),
-      landingPage: window.location.pathname || "/reunions",
-    };
+      const payload = {
+        email: email.trim().toLowerCase(),
+        subscribed: true,
+        source: "lp", // ta source interne
+        userGroup: "waitlist",
+        utmSource: get("utm_source"), // ⚠️ ajoute ce champ à Loops + route.ts si tu veux le stocker
+        campaign: get("utm_campaign"),
+        content:  get("utm_content"),
+        medium:   get("utm_medium"),
+        term:     get("utm_term"),
+        landingPage: window.location.pathname || "/reunions",
+      };
 
-    const res = await fetch("/api/waitlist", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload),
-    });
+      const res = await fetch("/api/waitlist", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
 
-    if (!res.ok) {
-      const data = await res.json().catch(() => ({}));
-      throw new Error(data?.error || "submit_failed");
+      if (!res.ok) {
+        const data = await res.json().catch(() => ({}));
+        throw new Error(data?.error || "submit_failed");
+      }
+
+      // --- UI success ---
+      setIsSubmitted(true);
+      setEmail("");
+
+      // --- Meta Pixel: Lead conversion ---
+      // Helpful if you add CAPI later (dedup with the same eventID)
+      const eventId =
+        (typeof crypto !== "undefined" && "randomUUID" in crypto)
+          ? crypto.randomUUID()
+          : String(Date.now());
+
+      if (typeof window !== "undefined" && (window as any).fbq) {
+        (window as any).fbq(
+          "track",
+          "Lead",
+          {
+            content_name: "Waitlist",
+            value: 0,
+            currency: "EUR",
+            source:   get("utm_source") || undefined,
+            medium:   get("utm_medium") || undefined,
+            campaign: get("utm_campaign") || undefined,
+            content:  get("utm_content") || undefined,
+            term:     get("utm_term") || undefined,
+            landingPage: payload.landingPage,
+            email_hash: undefined, // (optionnel) si tu hashes l'email côté client
+          },
+          { eventID: eventId }
+        );
+      }
+    } catch (err) {
+      console.error(err);
+      setErrorMsg("Oups, une erreur est survenue. Réessayez dans un instant.");
+    } finally {
+      setLoading(false);
     }
-
-    setIsSubmitted(true);
-    setEmail("");
-  } catch (err) {
-    console.error(err);
-    setErrorMsg("Oups, une erreur est survenue. Réessayez dans un instant.");
-  } finally {
-    setLoading(false);
-  }
-};
-
+  };
 
   return (
     <section id="waitlist" className="py-16 sm:py-24 lg:py-32 bg-background">
