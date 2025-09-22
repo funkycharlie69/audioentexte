@@ -1,26 +1,29 @@
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import React from "react";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle, } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { Languages, Zap, Crown, Shield, Users, Mail } from "lucide-react"
+import { Languages, Zap, Crown, Shield, Users, Mail, } from "lucide-react"
+import { Button } from "./ui/button"
+import Link from "next/link";
 
 const features = [
   {
     icon: Languages,
-    title: "Expert en Français",
+    title: "Optimisé pour le Français",
     description: "Algorithme spécialement entraîné sur la langue française pour une précision inégalée.",
     badge: "IA Française",
     color: "text-primary",
   },
   {
     icon: Mail,
-    title: "Résumés Email Intelligents",
-    description: "Génération automatique de résumés professionnels prêts à être partagés par email.",
+    title: "Résumés Intelligents",
+    description: "Génération automatique de résumés professionnels prêts à être partagés.",
     badge: "Automatique",
     color: "text-secondary",
   },
   {
     icon: Crown,
-    title: "Modèle Freemium",
-    description: "Commencez gratuitement avec 30 minutes/mois. Passez au premium pour plus de fonctionnalités.",
+    title: "Gratuit & Premium",
+    description: "Commencez gratuitement avec 1H/mois de transcription. Passez au premium pour plus d'heures et de fonctionnalités.",
     badge: "Gratuit",
     color: "text-accent",
   },
@@ -33,18 +36,18 @@ const features = [
   },
   {
     icon: Shield,
-    title: "Sécurité Garantie",
-    description: "Vos données sont chiffrées et supprimées automatiquement après traitement.",
+    title: "Confidentialité Garantie",
+    description: "Vos fichiers restent privées car supprimées automatiquement après traitement.",
     badge: "RGPD",
     color: "text-secondary",
   },
-  {
-    icon: Users,
-    title: "Collaboration",
-    description: "Partagez facilement vos transcriptions et résumés avec votre équipe.",
-    badge: "Équipe",
-    color: "text-accent",
-  },
+  // {
+  //   icon: Users,
+  //   title: "Collaboration",
+  //   description: "Partagez facilement vos transcriptions et résumés avec votre équipe.",
+  //   badge: "Équipe",
+  //   color: "text-accent",
+  // },
 ]
 
 export function FeaturesSection() {
@@ -53,7 +56,10 @@ export function FeaturesSection() {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-2xl text-center">
           <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-foreground text-balance">
-            Pourquoi choisir AudioEnTexte ?
+            Pourquoi choisir 
+            Audio
+            <span className="text-primary">En</span>
+            Texte ?
           </h2>
           <p className="mt-3 sm:mt-4 text-base sm:text-lg text-muted-foreground text-pretty px-2 sm:px-0">
             La solution la plus avancée pour transformer vos enregistrements français en contenu professionnel.
@@ -81,8 +87,13 @@ export function FeaturesSection() {
                 </CardDescription>
               </CardContent>
             </Card>
-          ))}
+         ))}
         </div>
+        <div className="mt-8 sm:mt-10 flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-x-6 px-4 sm:px-0">
+            <Button size="lg" className="w-full sm:w-auto bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-4 text-base font-medium min-h-[48px]" asChild>
+              <Link href="#waitlist">🎁 5H de transcription offertes →</Link>
+            </Button>
+          </div>
       </div>
     </section>
   )

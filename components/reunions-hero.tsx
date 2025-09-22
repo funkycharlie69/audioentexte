@@ -21,6 +21,7 @@ export function ReunionsHero() {
                 Texte
           </CardTitle>
         </div>
+        
         <div className="mx-auto max-w-3xl text-center">
           <Badge
             variant="secondary"
@@ -41,8 +42,8 @@ export function ReunionsHero() {
 
           <div className="mt-8 sm:mt-10 flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-x-6 px-4 sm:px-0">
             <Button size="lg" className="w-full sm:w-auto bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-4 text-base font-medium min-h-[48px]" asChild>
-  <Link href="#waitlist">🎁 5H de transcription offertes →</Link>
-</Button>
+              <Link href="#waitlist">🎁 5H de transcription offertes →</Link>
+            </Button>
           </div>
 
           {/* <div className="mt-2 text-xs text-muted-foreground"> +250/500 déjà inscrits ・ Données non stockées ・ Optimisé pour le français</div> */}

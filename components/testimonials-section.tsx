@@ -1,44 +1,48 @@
 import { Card, CardContent } from "@/components/ui/card"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Star } from "lucide-react"
+import { Button } from "./ui/button"
+import Link from "next/link";
 
 const testimonials = [
   {
-    name: "Marie Dubois",
-    role: "Journaliste, Le Figaro",
-    avatar: "/professional-woman-journalist.png",
+    name: "Marc Biessy",
+    role: "Fondateur, opsclean.com",
+    avatar: "/marc-biessy.png",
     content:
-      "Enfin une solution qui comprend parfaitement le français ! Les transcriptions sont d'une précision remarquable, même avec les accents régionaux.",
+      "Enfin une solution qui comprend parfaitement le français ! Les transcriptions sont d'une précision remarquable, même avec les accents.",
     rating: 5,
   },
   {
-    name: "Thomas Martin",
-    role: "Consultant, Deloitte",
-    avatar: "/professional-man-consultant.png",
+    name: "Enzo Benzoni",
+    role: "Consultant, Wild",
+    avatar: "/enzo-benzoni.png",
     content:
-      "Les résumés email générés automatiquement me font gagner des heures chaque semaine. Un outil indispensable pour mes réunions clients.",
+      "Les résumés générés automatiquement me font gagner des heures chaque semaine. Un outil indispensable pour mes réunions clients.",
     rating: 5,
   },
   {
-    name: "Sophie Laurent",
-    role: "Avocate, Cabinet Laurent & Associés",
-    avatar: "/professional-woman-lawyer.png",
+    name: "Josselin Trouilloud",
+    role: "Vidéaste, JossTVisuals",
+    avatar: "/josselin-trouilloud.png",
     content:
-      "La qualité de transcription est exceptionnelle pour le vocabulaire juridique français. Je recommande vivement cette solution.",
+      "La qualité de transcription est exceptionnelle pour le vocabulaire technique français. Je recommande vivement cette solution.",
     rating: 5,
   },
 ]
 
 export function TestimonialsSection() {
   return (
-    <section className="py-24 sm:py-32 bg-muted/30">
+    <section id="testimonials" className="py-24 sm:py-32 bg-muted/30">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="mx-auto max-w-2xl text-center">
           <h2 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl text-balance">
             Ils nous font déjà confiance
           </h2>
           <p className="mt-4 text-lg text-muted-foreground text-pretty">
-            Découvrez pourquoi les professionnels français choisissent AudioEnTexte.
+            Découvrez pourquoi les professionnels français choisissent Audio
+            <span className="text-primary">En</span>
+            Texte.
           </p>
         </div>
 
@@ -73,6 +77,11 @@ export function TestimonialsSection() {
             </Card>
           ))}
         </div>
+        <div className="mt-8 sm:mt-10 flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-x-6 px-4 sm:px-0">
+            <Button size="lg" className="w-full sm:w-auto bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-4 text-base font-medium min-h-[48px]" asChild>
+              <Link href="#waitlist">🎁 5H de transcription offertes →</Link>
+            </Button>
+          </div>
       </div>
     </section>
   )
