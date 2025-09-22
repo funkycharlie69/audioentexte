@@ -1,3 +1,4 @@
+import { MetaPixel } from "@/components/meta-pixel"
 import { HeroSection } from "@/components/hero-section"
 import { FeaturesSection } from "@/components/features-section"
 import { TestimonialsSection } from "@/components/testimonials-section"
@@ -7,13 +8,16 @@ import { UtmCapture } from "@/components/utm-capture";
 
 export default function HomePage() {
   return (
-    <main className="min-h-screen bg-background">
-      <UtmCapture />
-      <HeroSection />
-      <FeaturesSection />
-      <TestimonialsSection />
-      <WaitlistSection />
-      <Footer />
-    </main>
+    <>
+      <MetaPixel />
+      <main className="min-h-screen bg-background">
+        <UtmCapture />
+        <HeroSection />
+        <FeaturesSection />
+        <TestimonialsSection />
+        <WaitlistSection />
+        <Footer />
+      </main>
+    </>
   )
 }

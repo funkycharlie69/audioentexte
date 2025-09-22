@@ -1,3 +1,4 @@
+import { MetaPixel } from "@/components/meta-pixel"
 import { ReunionsHero } from "@/components/reunions-hero"
 import { WaitlistSection } from "@/components/waitlist-section"
 import { Footer } from "@/components/footer"
@@ -7,6 +8,8 @@ import { FeaturesSection } from "@/components/features-section"
 
 export default function ReunionsPage() {
   return (
+   <>
+    <MetaPixel />
     <main className="min-h-screen bg-background">
       <UtmCapture />
       <ReunionsHero />
@@ -15,5 +18,6 @@ export default function ReunionsPage() {
       <WaitlistSection />
       <Footer />
     </main>
+  </>
   )
 }
