@@ -10,12 +10,8 @@ export function FbPageView() {
 
   useEffect(() => {
     if (typeof window === "undefined" || !(window as any).fbq) return;
-
     const url = pathname + (search?.toString() ? `?${search}` : "");
-
-    // Global de-dupe to handle StrictMode and multiple renders/layouts
-    if ((window as any).__fbqLastPV === url) return;
-
+    if ((window as any).__fbqLastPV === url) return; // de-dupe
     (window as any).fbq("track", "PageView");
     (window as any).__fbqLastPV = url;
   }, [pathname, search?.toString()]);
