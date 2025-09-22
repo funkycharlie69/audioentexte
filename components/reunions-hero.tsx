@@ -30,7 +30,7 @@ export function ReunionsHero() {
             🇫🇷 Offre de lancement ・ 500 places disponibles
           </Badge>
 
-          <h1 className="text-3xl sm:text-4xl lg:text-6xl font-bold tracking-tight text-foreground text-balance leading-tight">
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-foreground text-balance leading-tight">
             <span className="text-primary">Transcription audio en texte de vos réunions</span>{" "}
             <br></br><span className="text-foreground">+</span>
             <br></br><span className="text-foreground">compte rendu instantané prêt à partager</span>

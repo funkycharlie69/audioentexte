@@ -41,13 +41,13 @@ const features = [
     badge: "RGPD",
     color: "text-secondary",
   },
-  // {
-  //   icon: Users,
-  //   title: "Collaboration",
-  //   description: "Partagez facilement vos transcriptions et résumés avec votre équipe.",
-  //   badge: "Équipe",
-  //   color: "text-accent",
-  // },
+  {
+    icon: Users,
+    title: "Collaboration",
+    description: "Partagez facilement vos transcriptions et résumés.",
+    badge: "Équipe",
+    color: "text-accent",
+  },
 ]
 
 export function FeaturesSection() {
@@ -66,7 +66,7 @@ export function FeaturesSection() {
           </p>
         </div>
 
-        <div className="mx-auto mt-12 sm:mt-16 grid max-w-6xl grid-cols-1 gap-6 sm:gap-8 sm:grid-cols-2 lg:grid-cols-3 px-2 sm:px-0">
+        <div className="mx-auto mt-12 sm:mt-16 grid max-w-6xl grid-cols-1 gap-6 sm:gap-8 sm:grid-cols-2 lg:grid-cols-2 px-2 sm:px-0">
           {features.map((feature, index) => (
             <Card
               key={index}

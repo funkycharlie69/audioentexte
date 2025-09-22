@@ -30,9 +30,10 @@ export function HeroSection() {
             🇫🇷 Offre de lancement ・ 500 places disponibles
           </Badge>
 
-          <h1 className="text-3xl sm:text-4xl lg:text-6xl font-bold tracking-tight text-foreground text-balance leading-tight">
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-foreground text-balance leading-tight">
             <span className="text-primary">Transcription audio en texte</span>{" "}
-            <span className="text-foreground">+ Résumé automatique instantané</span>
+            <br></br><span className="text-foreground">+ </span>
+            <br></br><span className="text-foreground">Résumé automatique instantané</span>
           </h1>
 
           <p className="mt-4 sm:mt-6 text-base sm:text-lg leading-7 sm:leading-8 text-muted-foreground text-pretty px-2 sm:px-0">

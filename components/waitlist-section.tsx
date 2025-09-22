@@ -33,7 +33,7 @@ export function WaitlistSection() {
       content:  get("utm_content"),
       medium:   get("utm_medium"),
       term:     get("utm_term"),
-      landingPage: sessionStorage.getItem("landingPage") || window.location.pathname || "/reunions",
+      landingPage: window.location.pathname || "/reunions",
     };
 
     const res = await fetch("/api/waitlist", {
