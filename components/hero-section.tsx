@@ -6,21 +6,25 @@ import { FileText } from "lucide-react";
 import { FileCheck } from "lucide-react";
 import { CardTitle } from "./ui/card";
 import Link from "next/link";
+import Image from "next/image";
 // (Optional) imports not currently used: Mic, FileText, Mail from "lucide-react"
 
 export function HeroSection() {
   return (
     <section className="relative overflow-hidden bg-gradient-to-b from-background to-muted/30 py-12 sm:py-20 lg:py-32">
       <div className="absolute inset-0 bg-[url('/abstract-audio-waves-pattern-light-blue.jpg')] opacity-5 bg-cover bg-center" />
-
-      <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="relative z-10 mb-6 mx-auto max-w-3xl text-center">
-          <CardTitle className="text-xl sm:text-3xl lg:text-4xl font-bold text-card-foreground text-balance leading-tight">
-                Audio
-                <span className="text-primary">En</span>
-                Texte
-          </CardTitle>
-        </div>
+      
+            <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+              <div className="relative z-5 -m-10 mx-auto max-w-3xl text-center">
+                <Image
+                  src="/Audio-En-Texte.png"          // 👈 make sure logo.svg is in /public/
+                  alt="AudioEnTexte logo"
+                  width={150}              // adjust to your logo’s proportions
+                  height={150}              // adjust to your logo’s proportions
+                  className="centered-logo mx-auto mb-4"
+                  priority                 // loads instantly (good for logos)
+                />
+              </div>
 
         <div className="mx-auto max-w-3xl text-center">
           <Badge
