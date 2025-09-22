@@ -10,8 +10,8 @@ import "./globals.css"
 export const metadata: Metadata = {
   title: "AudioEnTexte - Transcription Audio Française de Qualité",
   description:
-    "La meilleure solution de transcription audio-to-text en français. Transformez vos enregistrements en texte et résumés email de haute qualité.",
-  generator: "v0.app",
+    "La meilleure solution gratuite de transcription audio en texte en français. Transformez vos enregistrements en texte et résumés email de haute qualité.",
+  generator: "",
   viewport: "width=device-width, initial-scale=1, maximum-scale=5, user-scalable=yes",
   themeColor: "#0891b2",
   openGraph: {
