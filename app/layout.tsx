@@ -7,7 +7,7 @@ import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Suspense } from "react";
 import Script from "next/script";
-import { FbPageView } from "@/components/fb-pageview"; // 👈 add this
+import { FbPageView } from "../components/fb-pageview"; // 👈 relative path = zero alias problems
 import "./globals.css";
 
 export const metadata: Metadata = {
