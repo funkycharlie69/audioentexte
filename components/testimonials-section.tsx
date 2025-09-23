@@ -18,7 +18,7 @@ const testimonials = [
     role: "Consultant, Wild",
     avatar: "/enzo-benzoni.png",
     content:
-      "Les résumés générés automatiquement me font gagner des heures chaque semaine. Un outil indispensable pour mes réunions clients.",
+      "Je gagne des heures chaque semaine grâce aux comptes rendus automatiques. Un outil indispensable pour mes réunions clients.",
     rating: 5,
   },
   {
