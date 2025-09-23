@@ -9,6 +9,8 @@ import { Suspense } from "react";
 import Script from "next/script";
 import { FbPageView } from "../components/fb-pageview"; // relative path avoids alias issues
 import "./globals.css";
+import { GtagPageView } from "../components/gtag-pageview";
+
 
 export const metadata: Metadata = {
   title: "AudioEnTexte - Transcription Audio Française de Qualité",
@@ -58,6 +60,25 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             }}
           />
         )}
+
+        {/* Google tag (Ads) */}
+          <Script
+            src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GTAG_ID || "AW-17593383683"}`}
+            strategy="afterInteractive"
+          />
+          <Script
+            id="gtag-init"
+            strategy="afterInteractive"
+            dangerouslySetInnerHTML={{
+              __html: `
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+                // Disable auto page_view to avoid duplicates in SPA
+                gtag('config', '${process.env.NEXT_PUBLIC_GTAG_ID || "AW-17593383683"}', { send_page_view: false });
+              `,
+            }}
+          />
       </head>
       <body className={`font-sans ${GeistSans.variable} ${GeistMono.variable} antialiased`}>
         <Suspense fallback={null}>
@@ -67,6 +88,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         {/* Fire PageView exactly once per real URL (initial load + client navigations) */}
         <Suspense fallback={null}>
           <FbPageView />
+        </Suspense>
+
+        <Suspense fallback={null}>
+          <GtagPageView />
         </Suspense>
 
         <Analytics />
