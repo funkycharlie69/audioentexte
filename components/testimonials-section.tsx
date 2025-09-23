@@ -26,7 +26,7 @@ const testimonials = [
     role: "Vidéaste, JossTVisuals",
     avatar: "/josselin-trouilloud.png",
     content:
-      "La qualité de transcription est exceptionnelle pour le vocabulaire technique français. Je recommande vivement cette solution.",
+      "Marche super bien. Transcription fidèle à l'enregistrement.",
     rating: 5,
   },
 ]
