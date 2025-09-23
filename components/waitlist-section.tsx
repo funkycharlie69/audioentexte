@@ -80,13 +80,13 @@ export function WaitlistSection() {
 
       // --- Google Ads: Lead conversion ---
       if (typeof window !== "undefined" && (window as any).gtag) {
-  (window as any).gtag("event", "conversion", {
-    send_to: `${process.env.NEXT_PUBLIC_GTAG_ID || "AW-17593383683"}/${process.env.NEXT_PUBLIC_GADS_CONVERSION_LABEL || "REPLACE_LABEL"}`,
-    value: 0,              // optional
-    currency: "EUR",       // optional
-    // event_callback: () => { /* optional redirect */ },
-  });
-}
+        (window as any).gtag("event", "conversion", {
+          send_to: `${process.env.NEXT_PUBLIC_GTAG_ID || "AW-17593383683"}/${process.env.NEXT_PUBLIC_GADS_CONVERSION_LABEL || "v7uvCP-kl6AbEIP2lsVB"}`,
+          value: 1.0,              // optional
+          currency: "EUR",       // optional
+          // event_callback: () => { /* optional redirect */ },
+        });
+      }
 
 
     } catch (err) {
