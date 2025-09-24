@@ -17,7 +17,7 @@ export function HeroSection() {
             <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
               <div className="relative z-5 -m-10 mx-auto max-w-3xl text-center">
                 <Image
-                  src="/Audio-En-Texte.png"          // 👈 make sure logo.svg is in /public/
+                  src="/logo_aet.png"          // 👈 make sure logo.svg is in /public/
                   alt="AudioEnTexte logo"
                   width={150}              // adjust to your logo’s proportions
                   height={150}              // adjust to your logo’s proportions
