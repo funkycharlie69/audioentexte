@@ -1,14 +1,14 @@
 import React from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { Languages, Zap, Crown, Shield, Users, Mail, } from "lucide-react"
+import { Languages, Zap, Crown, Shield, Users, Brain, } from "lucide-react"
 import { Button } from "./ui/button"
 import Link from "next/link";
 
 const features = [
   {
     icon: Languages,
-    title: "Optimisé pour le Français",
+    title: "Optimisé pour le français",
     description: "Algorithme spécialement entraîné sur la langue française pour une précision inégalée.",
     badge: "IA Française",
     color: "text-primary",
@@ -16,28 +16,28 @@ const features = [
   {
     icon: Shield,
     title: "Confidentialité Garantie",
-    description: "Vos fichiers restent privées car supprimées automatiquement après traitement.",
+    description: "Vos fichiers restent privés car supprimés automatiquement après traitement.",
     badge: "RGPD",
     color: "text-secondary",
   },
   {
-    icon: Mail,
+    icon: Brain,
     title: "Résumés Intelligents",
-    description: "Génération automatique de résumés professionnels prêts à être partagés.",
+    description: "points clés, décisions, tâches.",
     badge: "Automatique",
     color: "text-secondary",
   },
   {
     icon: Crown,
     title: "Gratuit & Premium",
-    description: "Commencez gratuitement avec 1H/mois de transcription. Passez au premium pour plus d'heures et de fonctionnalités.",
+    description: "1h/mois gratuite, passez au premium pour plus d'heures et de fonctionnalités.",
     badge: "Gratuit",
     color: "text-accent",
   },
   {
     icon: Zap,
-    title: "Transcription Rapide",
-    description: "Traitement en temps réel. Vos fichiers audio sont transcrits en quelques secondes.",
+    title: "Rapide",
+    description: "Traitement quasi instantané.",
     badge: "Instantané",
     color: "text-primary",
   },
@@ -66,7 +66,7 @@ export function FeaturesSection() {
           </p>
         </div>
 
-        <div className="mx-auto mt-12 sm:mt-16 grid max-w-6xl grid-cols-1 gap-6 sm:gap-8 sm:grid-cols-2 lg:grid-cols-2 px-2 sm:px-0">
+        <div className="mx-auto mt-12 sm:mt-16 grid max-w-5xl grid-cols-1 gap-6 sm:gap-8 sm:grid-cols-2 lg:grid-cols-2 px-2 sm:px-0">
           {features.map((feature, index) => (
             <Card
               key={index}
@@ -91,9 +91,9 @@ export function FeaturesSection() {
         </div>
         <div className="mt-8 sm:mt-10 flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-x-6 px-4 sm:px-0">
             <Button size="lg" className="w-full sm:w-auto bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-4 text-base font-medium min-h-[48px]" asChild>
-              <Link href="#waitlist">🎁 5H de transcription offertes →</Link>
+              <Link href="#waitlist">Essayer maintenant – 5h offertes →</Link>
             </Button>
-          </div>
+        </div>
       </div>
     </section>
   )

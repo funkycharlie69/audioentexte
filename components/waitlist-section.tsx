@@ -157,7 +157,7 @@ export function WaitlistSection() {
                   />
                   <p className="text-xs -mt-2">Votre email devra être validé.</p>
                   <Button type="submit" size="lg" disabled={loading} className="bg-primary hover:bg-primary/90 text-primary-foreground min-h-[48px] text-base font-medium">
-                    {loading ? "Envoi…" : "🎁 Recevoir 5h offertes"}
+                    {loading ? "Envoi…" : "🎁 Testez gratuitement 5H"}
                     {!loading && <ArrowRight className="ml-2 h-4 w-4" />}
                   </Button>
                   {errorMsg && <p className="text-xs text-red-500 text-center -mt-1">{errorMsg}</p>}
@@ -243,7 +243,7 @@ export function WaitlistSection() {
 
               {/* petits proof points */}
               <div className="mt-8 grid grid-cols-3 gap-4 text-center">
-                <div className="flex flex-col items-center"><div className="text-xl sm:text-2xl">🚀</div><div className="text-xs sm:text-sm text-muted-foreground">+250/500 déjà inscrits</div></div>
+                <div className="flex flex-col items-center"><div className="text-xl sm:text-2xl">🚀</div><div className="text-xs sm:text-sm text-muted-foreground">+312/500 déjà inscrits</div></div>
                 <div className="flex flex-col items-center"><div className="text-xl sm:text-2xl">🔒</div><div className="text-xs sm:text-sm text-muted-foreground">Vos données ne sont pas stockées</div></div>
                 <div className="flex flex-col items-center"><div className="text-xl sm:text-2xl">🇫🇷</div><div className="text-xs sm:text-sm text-muted-foreground">Optimisé pour le français</div></div>
               </div>

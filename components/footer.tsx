@@ -12,7 +12,7 @@ export function Footer() {
               Texte
             </h3>
             <p className="text-muted-foreground text-sm leading-relaxed max-w-md">
-              La solution de transcription audio en texte gratuite la plus avancée pour le français. Transformez vos
+              La solution de transcription audio en texte optimisée pour le français. Transformez vos
               enregistrements en contenu professionnel en quelques secondes.
             </p>
           </div>

@@ -55,7 +55,7 @@ export function ReunionsHero() {
           {/* Proof row */}
           <div className="mt-12 sm:mt-16 flex flex-col sm:flex-row justify-center items-center gap-6 sm:gap-8 text-muted-foreground px-4 sm:px-0">
             <div className="flex items-center gap-2">
-              <span className="text-sm font-medium">🚀 +300/500 déjà inscrits</span>
+              <span className="text-sm font-medium">🚀 +312/500 déjà inscrits</span>
             </div>
             <div className="flex items-center gap-2">
               <span className="text-sm font-medium">🇫🇷 Optimisé pour le français</span>
