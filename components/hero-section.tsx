@@ -60,7 +60,7 @@ export function HeroSection() {
               <span className="text-sm font-medium">✅ Forfait Gratuit : 1h/mois</span>
             </div>
             <div className="flex items-center gap-2">
-              <span className="text-sm font-medium">✅ Optimisé pour le français</span>
+              <span className="text-sm font-medium">✅ Fichiers non stockées : vos données restent privées</span>
             </div>
           </div>
 

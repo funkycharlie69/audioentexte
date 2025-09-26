@@ -76,7 +76,7 @@ export default function TutorielPage() {
             <div className="mt-4">
               <a
                 href={MAILTO}
-                className="inline-flex items-center justify-center rounded-lg bg-sky-600 px-4 py-2.5 text-white font-medium hover:bg-sky-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-sky-500"
+                className="inline-flex items-center justify-center rounded-lg bg-primary px-4 py-2.5 text-white font-medium hover:bg-sky-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-sky-500"
               >
                 ✉️ Envoyer mon lien à bonjour@audioentexte.com
               </a>
