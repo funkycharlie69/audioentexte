@@ -14,6 +14,13 @@ const features = [
     color: "text-primary",
   },
   {
+    icon: Shield,
+    title: "Confidentialité Garantie",
+    description: "Vos fichiers restent privées car supprimées automatiquement après traitement.",
+    badge: "RGPD",
+    color: "text-secondary",
+  },
+  {
     icon: Mail,
     title: "Résumés Intelligents",
     description: "Génération automatique de résumés professionnels prêts à être partagés.",
@@ -33,13 +40,6 @@ const features = [
     description: "Traitement en temps réel. Vos fichiers audio sont transcrits en quelques secondes.",
     badge: "Instantané",
     color: "text-primary",
-  },
-  {
-    icon: Shield,
-    title: "Confidentialité Garantie",
-    description: "Vos fichiers restent privées car supprimées automatiquement après traitement.",
-    badge: "RGPD",
-    color: "text-secondary",
   },
   {
     icon: Users,
