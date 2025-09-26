@@ -7,6 +7,8 @@ import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { CheckCircle, ArrowRight, Gift } from "lucide-react";
+import Clarity from "@microsoft/clarity";
+
 
 type Step = "email" | "questions" | "done";
 
@@ -59,6 +61,9 @@ export function WaitlistSection() {
         const data = await res.json().catch(() => ({}));
         throw new Error(data?.error || "submit_failed");
       }
+
+      // 👉 Clarity custom event
+      Clarity.event("waitlist_submit");
 
       // Analytics (inchangé) : Meta Lead + Google Ads conversion
       const eventId =
