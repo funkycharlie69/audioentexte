@@ -155,7 +155,7 @@ export function WaitlistSection() {
                     aria-label="Adresse email"
                     autoComplete="email"
                   />
-                  <p className="text-xs -mt-2">Votre email devra être validé.</p>
+                  <p className="text-xs -mt-2">Vous recevrez un email de confirmation.</p>
                   <Button type="submit" size="lg" disabled={loading} className="bg-primary hover:bg-primary/90 text-primary-foreground min-h-[48px] text-base font-medium">
                     {loading ? "Envoi…" : "🎁 Testez gratuitement 5H"}
                     {!loading && <ArrowRight className="ml-2 h-4 w-4" />}

@@ -5,6 +5,7 @@ import { TestimonialsSection } from "@/components/testimonials-section"
 import { WaitlistSection } from "@/components/waitlist-section"
 import { Footer } from "@/components/footer"
 import { UtmCapture } from "@/components/utm-capture";
+// import { ProsUseCasesSection } from "@/components/pro-use-case-section";
 
 export default function HomePage() {
   return (
@@ -12,6 +13,7 @@ export default function HomePage() {
       <main className="min-h-screen bg-background">
         <UtmCapture />
         <HeroSection />
+        {/* <ProsUseCasesSection /> */}
         <FeaturesSection />
         <TestimonialsSection />
         <WaitlistSection />

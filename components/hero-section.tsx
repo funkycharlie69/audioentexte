@@ -177,7 +177,7 @@ export function HeroSection() {
           <div className="flex items-center gap-3">
             <div className="hidden sm:flex flex-col text-sm text-muted-foreground">
               <span className="font-medium text-foreground">Transcription FR + Résumé</span>
-              <span>🎁 5h offertes — sans CB</span>
+              <span>🎁 5h offertes - sans CB</span>
             </div>
             <div className="flex-1 sm:flex-none" />
             <Button
