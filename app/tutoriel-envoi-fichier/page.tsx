@@ -16,11 +16,6 @@ const MAILTO = (() => {
       "",
       "Voici le lien de mon fichier audio : [collez ici votre lien Smash/WeTransfer]",
       "",
-      "Informations (optionnel) :",
-      "• Langue : français",
-      "• Participants / contexte : ",
-      "• Attentes pour le compte-rendu : ",
-      "",
       "Merci !",
     ].join("\n")
   )
