@@ -10,6 +10,7 @@ import Script from "next/script";
 import { FbPageView } from "../components/fb-pageview"; // relative path avoids alias issues
 import "./globals.css";
 import { GtagPageView } from "../components/gtag-pageview";
+import { ClarityInit } from "@/components/clarity-init";
 
 
 export const metadata: Metadata = {
@@ -89,13 +90,21 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <Suspense fallback={null}>
           <FbPageView />
         </Suspense>
-
+        
+        {/* initialise Gtag page view tracking */}
         <Suspense fallback={null}>
           <GtagPageView />
         </Suspense>
 
+        {/* initialise Clarity (if configured) */}
+        <Suspense fallback={null}>
+          <ClarityInit />  {/* ← loads Clarity on every page */}
+        </Suspense>
+
+        {/* initialise vercel analytics and speed insights */}
         <Analytics />
         <SpeedInsights />
+      
       </body>
     </html>
   );
