@@ -9,6 +9,8 @@
     "start": "next start"
   },
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.899.0",
+    "@aws-sdk/s3-request-presigner": "^3.899.0",
     "@hookform/resolvers": "^3.10.0",
     "@microsoft/clarity": "^1.0.0",
     "@radix-ui/react-accordion": "1.2.2",
