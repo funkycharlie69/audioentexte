@@ -15,14 +15,17 @@ export function ReunionsHero() {
       <div className="absolute inset-0 bg-[url('/abstract-audio-waves-pattern-light-blue.jpg')] opacity-5 bg-cover bg-center" />
 
       <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="relative z-5 -m-10 mx-auto max-w-3xl text-center">
+        <div className="relative -m-10 mx-auto max-w-3xl text-center">
+          {/* Logo is already good; add sizes + consider AVIF source */}
           <Image
-            src="/logo_aet.png"          // 👈 make sure logo.svg is in /public/
+            src="/logo_aet.png"     // (optional) switch to /logo_aet.avif after preconvert
             alt="AudioEnTexte logo"
-            width={150}              // adjust to your logo’s proportions
-            height={150}              // adjust to your logo’s proportions
-            className="centered-logo mx-auto mb-4"
-            priority                 // loads instantly (good for logos)
+            width={150}
+            height={150}
+            sizes="(max-width: 640px) 120px, 150px"
+            className="mx-auto mb-4"
+            // If your LCP is text (likely), keep priority off to avoid competing with the LCP.
+            priority={false}
           />
         </div>
         

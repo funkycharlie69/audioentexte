@@ -1,8 +1,8 @@
 import { Card, CardContent } from "@/components/ui/card"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Star } from "lucide-react"
 import { Button } from "./ui/button"
-import Link from "next/link";
+import Link from "next/link"
+import Image from "next/image"
 
 const testimonials = [
   {
@@ -25,11 +25,19 @@ const testimonials = [
     name: "Josselin Trouilloud",
     role: "Vidéaste, JossTVisuals",
     avatar: "/josselin-trouilloud.png",
-    content:
-      "Marche super bien. Transcription fidèle à l'enregistrement.",
+    content: "Marche super bien. Transcription fidèle à l'enregistrement.",
     rating: 5,
   },
 ]
+
+function initials(name: string) {
+  return name
+    .split(" ")
+    .map((n) => n[0])
+    .join("")
+    .slice(0, 2)
+    .toUpperCase()
+}
 
 export function TestimonialsSection() {
   return (
@@ -47,41 +55,55 @@ export function TestimonialsSection() {
         </div>
 
         <div className="mx-auto mt-16 grid max-w-6xl grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
-          {testimonials.map((testimonial, index) => (
+          {testimonials.map((t, index) => (
             <Card key={index} className="bg-card border-border/50">
               <CardContent className="p-6">
                 <div className="flex items-center gap-1 mb-4">
-                  {[...Array(testimonial.rating)].map((_, i) => (
+                  {Array.from({ length: t.rating }).map((_, i) => (
                     <Star key={i} className="h-4 w-4 fill-secondary text-secondary" />
                   ))}
                 </div>
 
-                <blockquote className="text-card-foreground leading-relaxed mb-6">"{testimonial.content}"</blockquote>
+                <blockquote className="text-card-foreground leading-relaxed mb-6">
+                  “{t.content}”
+                </blockquote>
 
                 <div className="flex items-center gap-3">
-                  <Avatar className="h-10 w-10">
-                    <AvatarImage src={testimonial.avatar || "/placeholder.svg"} alt={testimonial.name} />
-                    <AvatarFallback className="bg-primary/10 text-primary">
-                      {testimonial.name
-                        .split(" ")
-                        .map((n) => n[0])
-                        .join("")}
-                    </AvatarFallback>
-                  </Avatar>
+                  <div className="relative h-10 w-10">
+                    {t.avatar ? (
+                      <Image
+                        src={t.avatar}
+                        alt={t.name}
+                        width={40}
+                        height={40}
+                        sizes="40px"
+                        className="rounded-full object-cover"
+                      />
+                    ) : (
+                      <div className="h-10 w-10 rounded-full bg-primary/10 text-primary flex items-center justify-center text-xs font-semibold">
+                        {initials(t.name)}
+                      </div>
+                    )}
+                  </div>
                   <div>
-                    <div className="font-semibold text-card-foreground">{testimonial.name}</div>
-                    <div className="text-sm text-muted-foreground">{testimonial.role}</div>
+                    <div className="font-semibold text-card-foreground">{t.name}</div>
+                    <div className="text-sm text-muted-foreground">{t.role}</div>
                   </div>
                 </div>
               </CardContent>
             </Card>
           ))}
         </div>
+
         <div className="mt-8 sm:mt-10 flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-x-6 px-4 sm:px-0">
-            <Button size="lg" className="w-full sm:w-auto bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-4 text-base font-medium min-h-[48px]" asChild>
-              <Link href="#waitlist">🎁 5H de transcription offertes →</Link>
-            </Button>
-          </div>
+          <Button
+            size="lg"
+            className="w-full sm:w-auto bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-4 text-base font-medium min-h-[48px]"
+            asChild
+          >
+            <Link href="#waitlist">🎁 5H de transcription offertes →</Link>
+          </Button>
+        </div>
       </div>
     </section>
   )

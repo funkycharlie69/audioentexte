@@ -9,6 +9,9 @@ const nextConfig = {
   images: {
     unoptimized: true,
   },
+  images: {
+    formats: ['image/avif', 'image/webp'], // Serve AVIF/WebP when the browser supports it
+  },
 }
 
 export default nextConfig
