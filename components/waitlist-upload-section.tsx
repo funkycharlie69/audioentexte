@@ -5,24 +5,37 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { CheckCircle, ArrowRight, Gift } from "lucide-react"
+import { CheckCircle, ArrowRight, Gift, Mic, Folder, Pause } from "lucide-react"
 import Clarity from "@microsoft/clarity"
 
 type Step = "upload" | "questions" | "done"
 
+// ↑ Ajout de "recording" pour l'UX d'enregistrement
+type UploadStatus = "idle" | "recording" | "signing" | "uploading" | "done" | "error"
+
 export default function WaitlistUploadSection() {
   const [step, setStep] = useState<Step>("upload")
+
+  // Upload states
   const [email, setEmail] = useState("")
   const [submittedEmail, setSubmittedEmail] = useState<string>("")
   const [file, setFile] = useState<File | null>(null)
-  const [status, setStatus] = useState<"idle" | "signing" | "uploading" | "done" | "error">("idle")
+  const [fileName, setFileName] = useState("")
+  const [status, setStatus] = useState<UploadStatus>("idle")
   const [message, setMessage] = useState<string>("")
   const [errorMsg, setErrorMsg] = useState<string | null>(null)
   const [loading, setLoading] = useState(false)
-  const [fileName, setFileName] = useState("");
-const fileInputRef = useRef<HTMLInputElement | null>(null);
 
-  // Questions (reprend tes champs)
+  // UI/UX helpers
+  const fileInputRef = useRef<HTMLInputElement | null>(null)
+  const audioRef = useRef<HTMLAudioElement | null>(null)
+  const [showHelp, setShowHelp] = useState(false)
+
+  // MediaRecorder
+  const mediaRecorderRef = useRef<MediaRecorder | null>(null)
+  const chunksRef = useRef<Blob[]>([])
+
+  // Questions
   const [hoursPerMonth, setHoursPerMonth] = useState<string>("")
   const [mainUseCase, setMainUseCase] = useState<string>("")
   const [useCaseOther, setUseCaseOther] = useState<string>("")
@@ -40,20 +53,60 @@ const fileInputRef = useRef<HTMLInputElement | null>(null);
     }
   }
 
+  // ---------- Recording UX ----------
+  async function startRecording() {
+    try {
+      setErrorMsg(null)
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true })
+      const mr = new MediaRecorder(stream)
+      chunksRef.current = []
+      mr.ondataavailable = (e) => e.data?.size && chunksRef.current.push(e.data)
+      mr.onstop = () => {
+        // iOS sort souvent de l'AAC dans un conteneur mp4/m4a
+        const blob = new Blob(chunksRef.current, { type: "audio/mp4" })
+        const f = new File([blob], `memo-${Date.now()}.m4a`, { type: blob.type })
+        setFile(f)
+        setFileName(f.name)
+        const url = URL.createObjectURL(blob)
+        if (audioRef.current) audioRef.current.src = url
+        // Libérer le micro
+        mr.stream.getTracks().forEach(t => t.stop())
+        mediaRecorderRef.current = null
+        setStatus("idle")
+      }
+      mediaRecorderRef.current = mr
+      mr.start()
+      setStatus("recording")
+    } catch {
+      setErrorMsg("Micro non accessible. Vérifiez les permissions navigateur.")
+    }
+  }
+
+  function stopRecording() {
+    mediaRecorderRef.current?.stop()
+  }
+
+  // ---------- Submit upload ----------
   async function handleUploadSubmit(e: React.FormEvent) {
     e.preventDefault()
-    if (!email || !file) return
+    if (!email || !file) {
+      setErrorMsg("Ajoutez votre email et un fichier audio.")
+      return
+    }
+
     setErrorMsg(null)
     setMessage("")
+
     try {
-      // Petit garde-fou optionnel (200 Mo)
+      // Garde-fou volume
       if (file.size > 200 * 1024 * 1024) {
         throw new Error("Fichier trop volumineux (max 200 Mo pour ce premier test).")
       }
 
-      setStatus("signing"); setMessage("Préparation de l’upload…")
+      setStatus("signing")
+      setMessage("Préparation de l’upload…")
 
-      // 1) Obtenir une URL présignée pour PUT vers R2
+      // 1) URL présignée vers R2
       const params = new URLSearchParams({
         filename: file.name,
         contentType: file.type || "application/octet-stream",
@@ -63,8 +116,9 @@ const fileInputRef = useRef<HTMLInputElement | null>(null);
       if (!signed.ok) throw new Error("Impossible d’obtenir l’URL d’upload")
       const { url, key } = await signed.json()
 
-      // 2) Uploader directement vers R2
-      setStatus("uploading"); setMessage("Upload en cours…")
+      // 2) PUT direct vers R2
+      setStatus("uploading")
+      setMessage("Upload en cours…")
       const put = await fetch(url, {
         method: "PUT",
         headers: { "Content-Type": file.type || "application/octet-stream" },
@@ -72,7 +126,7 @@ const fileInputRef = useRef<HTMLInputElement | null>(null);
       })
       if (!put.ok) throw new Error(`Échec upload: ${put.status}`)
 
-      // 3) Upsert Loops (waitlist) avec le statut d’upload
+      // 3) Upsert Loops (waitlist)
       const utm = getUTM()
       const payload = {
         email: email.trim().toLowerCase(),
@@ -92,26 +146,21 @@ const fileInputRef = useRef<HTMLInputElement | null>(null);
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
       })
-      // Même si ça échoue on continue le flow (l’upload est fait)
       if (!res.ok) {
-        try {
-          const data = await res.json()
-          console.warn("waitlist upsert error:", data)
-        } catch {}
+        try { console.warn("waitlist upsert error:", await res.json()) } catch {}
       }
 
       // 4) Analytics
-      try {
-        Clarity?.event?.("waitlist_upload_submit")
-      } catch {}
+      try { Clarity?.event?.("waitlist_upload_submit") } catch {}
       try {
         const eventId =
           (typeof crypto !== "undefined" && "randomUUID" in crypto) ? crypto.randomUUID() : String(Date.now())
-        // Meta
         if (typeof window !== "undefined" && (window as any).fbq) {
-          (window as any).fbq("track", "Lead", { content_name: "Waitlist Upload", value: 0, currency: "EUR", ...utm, landingPage: payload.landingPage }, { eventID: eventId })
+          (window as any).fbq("track", "Lead",
+            { content_name: "Waitlist Upload", value: 0, currency: "EUR", ...utm, landingPage: payload.landingPage },
+            { eventID: eventId }
+          )
         }
-        // Google Ads
         if (typeof window !== "undefined" && (window as any).gtag) {
           ;(window as any).gtag("event", "conversion", {
             send_to: `${process.env.NEXT_PUBLIC_GTAG_ID || "AW-17593383683"}/${process.env.NEXT_PUBLIC_GADS_CONVERSION_LABEL || "v7uvCP-kl6AbEIP2lsVB"}`,
@@ -127,7 +176,7 @@ const fileInputRef = useRef<HTMLInputElement | null>(null);
       setStatus("done")
       setMessage("Fichier reçu. Merci !")
       setFile(null)
-      setStep("questions") // 👉 enchaîne sur le questionnaire
+      setStep("questions")
     } catch (err: any) {
       console.error(err)
       setStatus("error")
@@ -137,6 +186,7 @@ const fileInputRef = useRef<HTMLInputElement | null>(null);
     }
   }
 
+  // ---------- Questions submit ----------
   async function handleQuestionsSubmit(skip = false) {
     setLoading(true)
     setErrorMsg(null)
@@ -153,10 +203,7 @@ const fileInputRef = useRef<HTMLInputElement | null>(null);
         body: JSON.stringify(body),
       })
       if (!res.ok) {
-        try {
-          const data = await res.json()
-          console.warn("waitlist questions update error:", data)
-        } catch {}
+        try { console.warn("waitlist questions update error:", await res.json()) } catch {}
       }
       setStep("done")
     } catch (e) {
@@ -191,6 +238,7 @@ const fileInputRef = useRef<HTMLInputElement | null>(null);
             <CardContent className="relative px-4 sm:px-6 pb-6 sm:pb-8">
               {step === "upload" && (
                 <form onSubmit={handleUploadSubmit} className="flex flex-col gap-4 max-w-md mx-auto">
+                  {/* Email */}
                   <Input
                     type="email"
                     placeholder="votre.email@exemple.fr"
@@ -202,68 +250,115 @@ const fileInputRef = useRef<HTMLInputElement | null>(null);
                     autoComplete="email"
                   />
 
+                  {/* Audio */}
                   <div>
-                        <label className="block text-sm font-medium mb-1">Fichier audio</label>
+                    <label className="block text-sm font-medium mb-2">Fichier audio</label>
 
-                        {/* Hidden native input kept in the form for validation + submission */}
-                        <input
-                            ref={fileInputRef}
-                            id="audio-upload"
-                            name="audio"                 // keep if you also read FormData server-side
-                            type="file"
-                            accept="audio/*"
-                            required
-                            className="sr-only"
-                            onChange={(e) => {
-                            const f = e.target.files?.[0] ?? null;
-                            setFile(f);
-                            setFileName(f?.name ?? "");
-                            }}
-                        />
+                    {/* Input natif caché avec accept étendu + capture (iOS → 'Enregistrer') */}
+                    <input
+                      ref={fileInputRef}
+                      id="audio-upload"
+                      name="audio"
+                      type="file"
+                      accept="audio/*,.m4a,.mp3,.wav"
+                      capture="microphone"
+                      className="sr-only"
+                      onChange={(e) => {
+                        const f = e.target.files?.[0] ?? null
+                        setFile(f)
+                        setFileName(f?.name ?? "")
+                        if (f) {
+                          const url = URL.createObjectURL(f)
+                          if (audioRef.current) audioRef.current.src = url
+                        }
+                      }}
+                      required={!file}
+                    />
 
-                        {/* Your visible control */}
-                        <label
-                            htmlFor="audio-upload"
-                            className="inline-flex w-full cursor-pointer items-center justify-between rounded-lg border px-3 py-2 bg-accent hover:bg-accent/90"
-                        >
-                            <span className="text-sm">Sélectionner un fichier audio…</span>
-                            {/* chevron */}
-                            <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 opacity-70" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6z"/>
-                            </svg>
-                        </label>
+                    {/* Actions principales */}
+                    <div className="flex gap-2">
+                      {status !== "recording" ? (
+                        <Button type="button" onClick={startRecording} className="flex-1 min-h-[44px]">
+                          <Mic className="mr-2 h-4 w-4" />
+                          Enregistrer
+                        </Button>
+                      ) : (
+                        <Button type="button" onClick={stopRecording} variant="destructive" className="flex-1 min-h-[44px]">
+                          <Pause className="mr-2 h-4 w-4" />
+                          Arrêter
+                        </Button>
+                      )}
 
-                        {/* Filename feedback */}
-                        <p className="text-sm text-muted-foreground mt-1" aria-live="polite">
-                            {fileName || "Aucun fichier sélectionné"}
-                        </p>
-
-                        <p className="text-xs text-muted-foreground mt-1">
-                            Formats : MP3, M4A, WAV • Idéalement ≤ 60 min.
-                        </p>
+                      <Button
+                        type="button"
+                        variant="secondary"
+                        onClick={() => fileInputRef.current?.click()}
+                        className="flex-1 min-h-[44px]"
+                      >
+                        <Folder className="mr-2 h-4 w-4" />
+                        Parcourir
+                      </Button>
                     </div>
 
+                    {/* Feedback sélection */}
+                    <div className="mt-2 text-sm text-muted-foreground">
+                      <p aria-live="polite">{fileName || "Aucun fichier sélectionné"}</p>
+                      <audio ref={audioRef} controls className="mt-1 w-full" preload="metadata">
+                        Votre navigateur ne supporte pas l’audio.
+                      </audio>
+                      <p className="text-xs mt-1">Formats : MP3, M4A, WAV • Idéalement ≤ 60 min.</p>
+                    </div>
 
-                  <Button type="submit" size="lg" disabled={status === "signing" || status === "uploading"} className="bg-primary hover:bg-primary/90 text-primary-foreground min-h-[48px] text-base font-medium">
-                    {status === "uploading" ? "Upload…" : "Recevoir mes fichiers"}
+                    {/* Aide iPhone repliable */}
+                    <button
+                      type="button"
+                      onClick={() => setShowHelp((s) => !s)}
+                      className="mt-2 text-xs underline text-muted-foreground"
+                    >
+                      {showHelp ? "Masquer" : "Où sont mes mémos vocaux sur iPhone ?"}
+                    </button>
+                    {showHelp && (
+                      <ol className="mt-1 text-xs space-y-1 text-muted-foreground">
+                        <li>1) Dans <strong>Dictaphone</strong>, ouvrez le mémo → ••• → <strong>Partager</strong>.</li>
+                        <li>2) Choisissez <strong>Enregistrer dans Fichiers</strong> → “Sur mon iPhone/Dictaphone”.</li>
+                        <li>3) Revenez ici → <strong>Parcourir</strong> → sélectionnez votre mémo.</li>
+                        <li className="italic">Astuce : renommez le mémo pour le retrouver rapidement.</li>
+                      </ol>
+                    )}
+                  </div>
+
+                  {/* CTA */}
+                  <Button
+                    type="submit"
+                    size="lg"
+                    disabled={status === "recording" || status === "signing" || status === "uploading" || !file}
+                    className="bg-primary hover:bg-primary/90 text-primary-foreground min-h-[48px] text-base font-medium"
+                  >
+                    {status === "uploading" ? "Envoi…" : "Recevoir mes fichiers"}
                     {status !== "uploading" && <ArrowRight className="ml-2 h-4 w-4" />}
                   </Button>
 
+                  {/* Messages */}
                   {message && <p className="text-sm text-slate-600 dark:text-slate-300">{message}</p>}
                   {errorMsg && <p className="text-xs text-red-500 text-center -mt-1">{errorMsg}</p>}
 
                   <p className="text-xs text-muted-foreground">
-                    En envoyant un fichier, vous acceptez la suppression automatique sous 5 min après traitement.
+                    En envoyant un fichier, vous acceptez la suppression automatique 5 min après traitement.
                   </p>
                 </form>
               )}
 
               {step === "questions" && (
                 <div className="mx-auto max-w-md space-y-6">
-                    <p className="text-center text-sm font-semibold text-card-foreground">Répondez à ces 2 questions pour valider l'envoi</p>
+                  <p className="text-center text-sm font-semibold text-card-foreground">
+                    Répondez à ces 2 questions pour valider l'envoi
+                  </p>
+
                   {/* Q1 */}
                   <fieldset className="space-y-3">
-                    <legend className="text-sm font-semibold text-card-foreground">Combien d'heures par mois envisagez-vous transcrire ?</legend>
+                    <legend className="text-sm font-semibold text-card-foreground">
+                      Combien d'heures par mois envisagez-vous transcrire ?
+                    </legend>
                     <div className="grid grid-cols-2 gap-2">
                       {["<1h","1–5h","5–20h","20h+"].map((v) => (
                         <label key={v} className={`cursor-pointer rounded-lg border p-3 text-sm ${hoursPerMonth === v ? "border-primary bg-primary/5" : "border-border"}`}>
@@ -330,13 +425,15 @@ const fileInputRef = useRef<HTMLInputElement | null>(null);
                   <CheckCircle className="h-12 w-12 text-primary mx-auto mb-4" />
                   <h3 className="text-xl font-semibold text-card-foreground mb-2">Merci !</h3>
                   <p className="text-muted-foreground">
-                    Nous vous enverrons la transcription + le compte-rendu sous 24 h à <span className="font-bold">{submittedEmail || email}</span>.
-                    <br /> <br /> Pour un traitement prioritaire (sous 2h), répondez au mail de confirmation que vous allez recevoir.
+                    Nous vous enverrons la transcription + le compte-rendu sous 24 h à{" "}
+                    <span className="font-bold">{submittedEmail || email}</span>.
+                    <br /><br />
+                    Pour un traitement prioritaire (sous 2h), répondez au mail de confirmation que vous allez recevoir.
                   </p>
                 </div>
               )}
 
-              {/* petits proof points */}
+              {/* Proof points */}
               <div className="mt-8 grid grid-cols-3 gap-4 text-center">
                 <div className="flex flex-col items-center"><div className="text-xl sm:text-2xl">🚀</div><div className="text-xs sm:text-sm text-muted-foreground">+312/500 déjà inscrits</div></div>
                 <div className="flex flex-col items-center"><div className="text-xl sm:text-2xl">🔒</div><div className="text-xs sm:text-sm text-muted-foreground">Suppression auto sous 5 min</div></div>

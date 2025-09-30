@@ -83,7 +83,7 @@ export function HeroSection() {
           </div>
 
           <div className="-mt-1 sm:mt-6 text-base text-xs leading-7 sm:leading-8 text-muted-foreground text-pretty px-2 sm:px-0">
-            sans carte bancaire
+            sans carte bancaire ・ optimisé pour le français
           </div>
 
           {/* Proof row */}
