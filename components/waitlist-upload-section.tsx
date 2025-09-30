@@ -9,8 +9,6 @@ import { CheckCircle, ArrowRight, Gift, Mic, Folder, Pause } from "lucide-react"
 import Clarity from "@microsoft/clarity"
 
 type Step = "upload" | "questions" | "done"
-
-// ↑ Ajout de "recording" pour l'UX d'enregistrement
 type UploadStatus = "idle" | "recording" | "signing" | "uploading" | "done" | "error"
 
 export default function WaitlistUploadSection() {
@@ -27,7 +25,8 @@ export default function WaitlistUploadSection() {
   const [loading, setLoading] = useState(false)
 
   // UI/UX helpers
-  const fileInputRef = useRef<HTMLInputElement | null>(null)
+  const recordInputRef = useRef<HTMLInputElement | null>(null) // capture="microphone"
+  const browseInputRef = useRef<HTMLInputElement | null>(null) // sans capture
   const audioRef = useRef<HTMLAudioElement | null>(null)
   const [showHelp, setShowHelp] = useState(false)
 
@@ -62,14 +61,12 @@ export default function WaitlistUploadSection() {
       chunksRef.current = []
       mr.ondataavailable = (e) => e.data?.size && chunksRef.current.push(e.data)
       mr.onstop = () => {
-        // iOS sort souvent de l'AAC dans un conteneur mp4/m4a
-        const blob = new Blob(chunksRef.current, { type: "audio/mp4" })
+        const blob = new Blob(chunksRef.current, { type: "audio/mp4" }) // iOS -> AAC/mp4
         const f = new File([blob], `memo-${Date.now()}.m4a`, { type: blob.type })
         setFile(f)
         setFileName(f.name)
         const url = URL.createObjectURL(blob)
         if (audioRef.current) audioRef.current.src = url
-        // Libérer le micro
         mr.stream.getTracks().forEach(t => t.stop())
         mediaRecorderRef.current = null
         setStatus("idle")
@@ -81,9 +78,17 @@ export default function WaitlistUploadSection() {
       setErrorMsg("Micro non accessible. Vérifiez les permissions navigateur.")
     }
   }
-
   function stopRecording() {
     mediaRecorderRef.current?.stop()
+  }
+
+  // ---------- File select (commun aux 2 inputs) ----------
+  function handleFilePicked(f: File | null) {
+    setFile(f || null)
+    setFileName(f?.name ?? "")
+    if (f && audioRef.current) {
+      audioRef.current.src = URL.createObjectURL(f)
+    }
   }
 
   // ---------- Submit upload ----------
@@ -98,7 +103,6 @@ export default function WaitlistUploadSection() {
     setMessage("")
 
     try {
-      // Garde-fou volume
       if (file.size > 200 * 1024 * 1024) {
         throw new Error("Fichier trop volumineux (max 200 Mo pour ce premier test).")
       }
@@ -106,7 +110,6 @@ export default function WaitlistUploadSection() {
       setStatus("signing")
       setMessage("Préparation de l’upload…")
 
-      // 1) URL présignée vers R2
       const params = new URLSearchParams({
         filename: file.name,
         contentType: file.type || "application/octet-stream",
@@ -116,7 +119,6 @@ export default function WaitlistUploadSection() {
       if (!signed.ok) throw new Error("Impossible d’obtenir l’URL d’upload")
       const { url, key } = await signed.json()
 
-      // 2) PUT direct vers R2
       setStatus("uploading")
       setMessage("Upload en cours…")
       const put = await fetch(url, {
@@ -126,7 +128,6 @@ export default function WaitlistUploadSection() {
       })
       if (!put.ok) throw new Error(`Échec upload: ${put.status}`)
 
-      // 3) Upsert Loops (waitlist)
       const utm = getUTM()
       const payload = {
         email: email.trim().toLowerCase(),
@@ -150,7 +151,6 @@ export default function WaitlistUploadSection() {
         try { console.warn("waitlist upsert error:", await res.json()) } catch {}
       }
 
-      // 4) Analytics
       try { Clarity?.event?.("waitlist_upload_submit") } catch {}
       try {
         const eventId =
@@ -254,29 +254,32 @@ export default function WaitlistUploadSection() {
                   <div>
                     <label className="block text-sm font-medium mb-2">Fichier audio</label>
 
-                    {/* Input natif caché avec accept étendu + capture (iOS → 'Enregistrer') */}
+                    {/* 1) Input ENREGISTRER (avec capture) */}
                     <input
-                      ref={fileInputRef}
-                      id="audio-upload"
-                      name="audio"
+                      ref={recordInputRef}
+                      id="audio-record"
+                      name="audio-record"
                       type="file"
                       accept="audio/*,.m4a,.mp3,.wav"
                       capture="microphone"
                       className="sr-only"
-                      onChange={(e) => {
-                        const f = e.target.files?.[0] ?? null
-                        setFile(f)
-                        setFileName(f?.name ?? "")
-                        if (f) {
-                          const url = URL.createObjectURL(f)
-                          if (audioRef.current) audioRef.current.src = url
-                        }
-                      }}
-                      required={!file}
+                      onChange={(e) => handleFilePicked(e.target.files?.[0] ?? null)}
+                    />
+
+                    {/* 2) Input PARCOURIR (sans capture) */}
+                    <input
+                      ref={browseInputRef}
+                      id="audio-browse"
+                      name="audio-browse"
+                      type="file"
+                      accept="audio/*,.m4a,.mp3,.wav"
+                      className="sr-only"
+                      onChange={(e) => handleFilePicked(e.target.files?.[0] ?? null)}
                     />
 
                     {/* Actions principales */}
                     <div className="flex gap-2">
+                      {/* Enregistrement in-app (primaire) */}
                       {status !== "recording" ? (
                         <Button type="button" onClick={startRecording} className="flex-1 min-h-[44px]">
                           <Mic className="mr-2 h-4 w-4" />
@@ -289,16 +292,36 @@ export default function WaitlistUploadSection() {
                         </Button>
                       )}
 
+                      {/* Parcourir fichiers (ouvre Fichiers/Drive sur iOS) */}
                       <Button
                         type="button"
                         variant="secondary"
-                        onClick={() => fileInputRef.current?.click()}
+                        onClick={() => {
+                          if (browseInputRef.current) {
+                            browseInputRef.current.value = ""
+                            browseInputRef.current.click()
+                          }
+                        }}
                         className="flex-1 min-h-[44px]"
                       >
                         <Folder className="mr-2 h-4 w-4" />
                         Parcourir
                       </Button>
                     </div>
+
+                    {/* Optionnel : fallback vers le picker "Enregistrer" natif iOS */}
+                    {/* <button
+                      type="button"
+                      className="mt-2 text-xs underline text-muted-foreground"
+                      onClick={() => {
+                        if (recordInputRef.current) {
+                          recordInputRef.current.value = ""
+                          recordInputRef.current.click()
+                        }
+                      }}
+                    >
+                      Ou utiliser l’enregistrement iOS
+                    </button> */}
 
                     {/* Feedback sélection */}
                     <div className="mt-2 text-sm text-muted-foreground">
