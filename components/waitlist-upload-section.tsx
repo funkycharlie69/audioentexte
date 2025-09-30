@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useRef, useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
@@ -19,6 +19,8 @@ export default function WaitlistUploadSection() {
   const [message, setMessage] = useState<string>("")
   const [errorMsg, setErrorMsg] = useState<string | null>(null)
   const [loading, setLoading] = useState(false)
+  const [fileName, setFileName] = useState("");
+const fileInputRef = useRef<HTMLInputElement | null>(null);
 
   // Questions (reprend tes champs)
   const [hoursPerMonth, setHoursPerMonth] = useState<string>("")
@@ -201,16 +203,46 @@ export default function WaitlistUploadSection() {
                   />
 
                   <div>
-                    <label className="block text-sm font-medium mb-1">Fichier audio</label>
-                    <Input
-                      type="file"
-                      required
-                      accept="audio/*"
-                      onChange={(e) => setFile(e.target.files?.[0] ?? null)}
-                      className="bg-background border-border focus:border-primary text-base min-h-[48px] px-4"
-                    />
-                    <p className="text-xs text-muted-foreground mt-1">Formats : MP3, M4A, WAV • Idéalement ≤ 60 min.</p>
-                  </div>
+                        <label className="block text-sm font-medium mb-1">Fichier audio</label>
+
+                        {/* Hidden native input kept in the form for validation + submission */}
+                        <input
+                            ref={fileInputRef}
+                            id="audio-upload"
+                            name="audio"                 // keep if you also read FormData server-side
+                            type="file"
+                            accept="audio/*"
+                            required
+                            className="sr-only"
+                            onChange={(e) => {
+                            const f = e.target.files?.[0] ?? null;
+                            setFile(f);
+                            setFileName(f?.name ?? "");
+                            }}
+                        />
+
+                        {/* Your visible control */}
+                        <label
+                            htmlFor="audio-upload"
+                            className="inline-flex w-full cursor-pointer items-center justify-between rounded-lg border px-3 py-2 bg-accent hover:bg-accent/90"
+                        >
+                            <span className="text-sm">Sélectionner un fichier audio…</span>
+                            {/* chevron */}
+                            <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 opacity-70" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6z"/>
+                            </svg>
+                        </label>
+
+                        {/* Filename feedback */}
+                        <p className="text-sm text-muted-foreground mt-1" aria-live="polite">
+                            {fileName || "Aucun fichier sélectionné"}
+                        </p>
+
+                        <p className="text-xs text-muted-foreground mt-1">
+                            Formats : MP3, M4A, WAV • Idéalement ≤ 60 min.
+                        </p>
+                    </div>
+
 
                   <Button type="submit" size="lg" disabled={status === "signing" || status === "uploading"} className="bg-primary hover:bg-primary/90 text-primary-foreground min-h-[48px] text-base font-medium">
                     {status === "uploading" ? "Upload…" : "Recevoir mes fichiers"}
