@@ -91,7 +91,7 @@ export function FeaturesSection() {
         </div>
         <div className="mt-8 sm:mt-10 flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-x-6 px-4 sm:px-0">
             <Button size="lg" className="w-full sm:w-auto bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-4 text-base font-medium min-h-[48px]" asChild>
-              <Link href="#waitlist">Essayer maintenant – 5h offertes →</Link>
+              <Link href="#waitlist">Essayer gratuitement →</Link>
             </Button>
         </div>
       </div>
