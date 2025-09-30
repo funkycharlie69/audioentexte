@@ -17,7 +17,7 @@ export default function TutorielPage() {
       <section className="max-w-3xl mx-auto px-6 py-10 text-slate-800 dark:text-slate-100">
         <header className="mb-10 text-center">
           <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight">
-            Uploadez votre 1er fichier audio
+            Transcrivez votre 1er fichier audio
           </h1>
           <p className="mt-3 text-slate-600 dark:text-slate-300">
             Recevez <strong>la transcription</strong> + <strong>un compte-rendu</strong> à l'adresse e-mail indiquée.
@@ -29,7 +29,7 @@ export default function TutorielPage() {
         <div className="mt-10 rounded-xl border border-slate-200 dark:border-slate-700 p-4">
           <h2 className="text-lg font-semibold">Infos rapides</h2>
           <ul className="mt-3 space-y-2 list-disc pl-6 text-slate-700 dark:text-slate-300">
-            <li>Formats acceptés : MP3, M4A, WAV (idéalement ≤ 10 min pour le 1er essai).</li>
+            <li>Formats acceptés : MP3, M4A, WAV (idéalement ≤ 60 min pour le 1er fichier).</li>
             <li>Confidentialité : suppression automatique 5 minutes après traitement.</li>
             <li>En cas de souci d'envoi, écrivez à <a href="mailto:bonjour@audioentexte.com" className="font-bold">bonjour@audioentexte.com</a>.</li>
           </ul>

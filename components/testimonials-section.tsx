@@ -101,7 +101,7 @@ export function TestimonialsSection() {
             className="w-full sm:w-auto bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-4 text-base font-medium min-h-[48px]"
             asChild
           >
-            <Link href="#waitlist">🎁 5H de transcription offertes →</Link>
+            <Link href="#waitlist">Tester gratuitement →</Link>
           </Button>
         </div>
       </div>

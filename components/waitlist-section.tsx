@@ -157,7 +157,7 @@ export function WaitlistSection() {
                   />
                   <p className="text-xs -mt-2">Vous recevrez un email de confirmation.</p>
                   <Button type="submit" size="lg" disabled={loading} className="bg-primary hover:bg-primary/90 text-primary-foreground min-h-[48px] text-base font-medium">
-                    {loading ? "Envoi…" : "🎁 Testez gratuitement 5H"}
+                    {loading ? "Envoi…" : "🎁 Testez gratuitement"}
                     {!loading && <ArrowRight className="ml-2 h-4 w-4" />}
                   </Button>
                   {errorMsg && <p className="text-xs text-red-500 text-center -mt-1">{errorMsg}</p>}
@@ -226,10 +226,7 @@ export function WaitlistSection() {
                     <Button onClick={() => sendFollowupAnswers(false)} disabled={loading} className="min-h-[44px]">
                       {loading ? "Envoi…" : "Valider"}
                     </Button>
-                    {/* <Button variant="secondary" onClick={() => sendFollowupAnswers(true)} disabled={loading} className="min-h-[44px]">
-                      Passer
-                    </Button> */}
-                  </div>
+                   </div>
                 </div>
               )}
 

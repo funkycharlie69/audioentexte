@@ -76,8 +76,8 @@ export function HeroSection() {
               className="w-full sm:w-auto bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-4 text-base font-medium min-h-[48px]"
               asChild
             >
-              <Link href="#waitlist" aria-label="Tester gratuitement 5 heures">
-                🎁 Tester gratuitement 5h →
+              <Link href="#waitlist" aria-label="Tester gratuitement">
+                🎁 Tester gratuitement →
               </Link>
             </Button>
           </div>
@@ -185,8 +185,8 @@ export function HeroSection() {
               asChild
               className="w-full sm:w-auto bg-primary hover:bg-primary/90 text-primary-foreground min-h-[44px]"
             >
-              <Link href="#waitlist" aria-label="Activer mes 5 heures offertes">
-                🎁 Tester gratuitement 5h →
+              <Link href="#waitlist" aria-label="tester gratuitement">
+                🎁 Tester gratuitement →
               </Link>
             </Button>
           </div>

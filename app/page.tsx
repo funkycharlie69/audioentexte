@@ -5,6 +5,7 @@ import { TestimonialsSection } from "@/components/testimonials-section"
 import { WaitlistSection } from "@/components/waitlist-section"
 import { Footer } from "@/components/footer"
 import { UtmCapture } from "@/components/utm-capture";
+import WaitlistUploadSection from "@/components/waitlist-upload-section"
 // import { ProsUseCasesSection } from "@/components/pro-use-case-section";
 
 export default function HomePage() {
@@ -16,7 +17,7 @@ export default function HomePage() {
         {/* <ProsUseCasesSection /> */}
         <FeaturesSection />
         <TestimonialsSection />
-        <WaitlistSection />
+        <WaitlistUploadSection />
         <Footer />
       </main>
     </>
