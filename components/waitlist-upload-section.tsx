@@ -458,7 +458,7 @@ export default function WaitlistUploadSection() {
 
               {/* Proof points */}
               <div className="mt-8 grid grid-cols-3 gap-4 text-center">
-                <div className="flex flex-col items-center"><div className="text-xl sm:text-2xl">🚀</div><div className="text-xs sm:text-sm text-muted-foreground">+312/500 déjà inscrits</div></div>
+                <div className="flex flex-col items-center"><div className="text-xl sm:text-2xl">🚀</div><div className="text-xs sm:text-sm text-muted-foreground">+353/500 déjà inscrits</div></div>
                 <div className="flex flex-col items-center"><div className="text-xl sm:text-2xl">🔒</div><div className="text-xs sm:text-sm text-muted-foreground">Suppression auto sous 5 min</div></div>
                 <div className="flex flex-col items-center"><div className="text-xl sm:text-2xl">🇫🇷</div><div className="text-xs sm:text-sm text-muted-foreground">Optimisé pour le français</div></div>
               </div>
