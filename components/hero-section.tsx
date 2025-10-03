@@ -30,8 +30,8 @@ export function HeroSection() {
   }, []);
 
   return (
-    <section className="relative overflow-hidden bg-gradient-to-b from-background to-muted/30 py-12 sm:py-20 lg:py-32">
-      <div className="absolute inset-0 bg-[url('/abstract-audio-waves-pattern-light-blue.jpg')] opacity-5 bg-cover bg-center" />
+    <section className="relative overflow-hidden bg-linear-35 from-cyan-100 to-white py-12 sm:py-20 lg:py-32">
+      <div className="absolute inset-0" />
 
       <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="relative z-5 -m-10 mx-auto max-w-3xl text-center">
@@ -54,16 +54,16 @@ export function HeroSection() {
           </Badge>
 
           <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-foreground text-balance leading-tight">
-            <span className="text-primary">Transcription audio en texte (FR)</span>{" "}
+            <span className="text-primary">Transcription audio en texte</span>{" "}
             <br />
             <span className="text-foreground">+ </span>
             <br />
-            <span className="text-foreground">Résumé automatique</span>
+            <span className="text-foreground">Résumé professionnel</span>
           </h1>
 
           <p className="mt-4 sm:mt-6 text-base sm:text-lg leading-7 sm:leading-8 text-muted-foreground text-pretty px-2 sm:px-0">
             Fini la prise de notes : transformez vos réunions et interviews en comptes rendus exploitables.
-            Jusqu’à 90% de temps gagné (2h → 2 min).
+            Jusqu'à 90% de temps gagné (2h → 1 min).
           </p>
 
           {/* CTA principal — OBSERVÉ */}
@@ -89,7 +89,7 @@ export function HeroSection() {
           {/* Proof row */}
           <div className="mt-12 sm:mt-16 flex flex-col sm:flex-row justify-center items-center gap-6 sm:gap-8 text-muted-foreground px-4 sm:px-0">
             <div className="flex items-center gap-2">
-              <span className="text-sm font-medium">✅ +353/500 déjà inscrits</span>
+              <span className="text-sm font-medium">✅ +350/500 déjà inscrits</span>
             </div>
             <div className="flex items-center gap-2">
               <span className="text-sm font-medium">✅ Forfait Gratuit : 1h/mois</span>
@@ -177,7 +177,7 @@ export function HeroSection() {
           <div className="flex items-center gap-3">
             <div className="hidden sm:flex flex-col text-sm text-muted-foreground">
               <span className="font-medium text-foreground">Transcription FR + Résumé</span>
-              <span>🎁 5h offertes - sans CB</span>
+              <span>Sans carte bancaire</span>
             </div>
             <div className="flex-1 sm:flex-none" />
             <Button

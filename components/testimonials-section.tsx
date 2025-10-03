@@ -41,7 +41,7 @@ function initials(name: string) {
 
 export function TestimonialsSection() {
   return (
-    <section id="testimonials" className="py-24 sm:py-32 bg-muted/30">
+    <section id="testimonials" className="py-24 sm:py-32 bg-cyan-100">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="mx-auto max-w-2xl text-center">
           <h2 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl text-balance">
