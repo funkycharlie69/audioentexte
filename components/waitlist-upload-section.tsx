@@ -329,7 +329,7 @@ export default function WaitlistUploadSection() {
                       <audio ref={audioRef} controls className="mt-1 w-full" preload="metadata">
                         Votre navigateur ne supporte pas l’audio.
                       </audio>
-                      <p className="text-xs mt-1">Formats : MP3, M4A, WAV • Idéalement ≤ 60 min.</p>
+                      <p className="text-xs mt-1">Formats : MP3, M4A, WAV • ≤ 60 min.</p>
                     </div>
 
                     {/* Aide iPhone repliable */}
