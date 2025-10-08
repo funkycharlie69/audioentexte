@@ -35,7 +35,7 @@ const testimonials = [
       },
     },
     {
-      body: "L'addiction est réelle - à ce stade, je ne peux plus imaginer ma vie sans. Puissant sans effort.",
+      body: "L'addiction est réelle - à ce stade, je ne peux plus imaginer ma life sans. Puissant sans effort.",
       author: {
         name: 'Adriana Vitagliano',
         handle: 'VC, Firstminute',
@@ -121,6 +121,32 @@ const faqs = [
       "Oui. Vous pouvez supprimer vos données à tout moment depuis votre compte, ou activer la suppression automatique après traitement.",
   },
 ]
+
+const footerNavigation = {
+  solutions: [
+    { name: 'Scribe IA', href: '#features' },
+    { name: 'Différences', href: '#differentiators' },
+    { name: 'Tarifs', href: '#pricing' },
+    { name: 'FAQ', href: '#faq' },
+    { name: 'Contact', href: '#contact' },
+  ],
+  support: [
+    { name: "Centre d’aide", href: '#' },
+    { name: 'Documentation', href: '#' },
+    { name: 'Guides', href: '#' },
+  ],
+  company: [
+    { name: 'À propos', href: '#' },
+    { name: 'Blog', href: '#' },
+    { name: 'Carrières', href: '#' },
+    { name: 'Presse', href: '#' },
+  ],
+  legal: [
+    { name: 'CGU', href: '#' },
+    { name: 'Confidentialité', href: '#' },
+    { name: 'Contrat de traitement (DPA)', href: '#' },
+  ],
+}
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
@@ -217,9 +243,6 @@ export default function Example() {
       </header>
       
       <div className="relative isolate">
-        {/* Les 'blobs' de dégradé ont été supprimés pour une approche plus propre. */}
-        {/* Le dégradé est maintenant appliqué sur le div parent. */}
-
         <main>
           {/* Hero section */}
           <div className="relative pt-14">
@@ -240,6 +263,9 @@ export default function Example() {
                       Essayer aujourd'hui →
                     </a>
                   </div>
+                  <p className="mt-3 text-xs text-gray-500 dark:text-gray-400">
+                  30 jours satisfait ou remboursé ・ Remboursement en 1 clic
+                </p>
                 </div>
                 <div className="mt-16 flow-root sm:mt-24">
                   <div className="-m-2 rounded-xl bg-slate-900/5 p-2 ring-1 ring-inset ring-slate-900/10 lg:-m-4 lg:rounded-2xl lg:p-4">
@@ -337,7 +363,7 @@ export default function Example() {
           </div>
         </div>
 
-          {/* How it works Section */}
+          {/* How it works Section - Bento Grid */}
           <div id="how-it-works" className="py-24 sm:py-32">
             <div className="mx-auto max-w-7xl px-6 lg:px-8">
               <div className="mx-auto max-w-3xl text-center">
@@ -346,59 +372,60 @@ export default function Example() {
                   C'est comme un bloc-notes, mais qui transcrit et résume pour vous.
                 </p>
               </div>
-              <div className="mx-auto mt-16 max-w-2xl sm:mt-20 lg:mt-24 lg:max-w-none">
-                <dl className="grid max-w-xl grid-cols-1 gap-x-8 gap-y-16 lg:max-w-none lg:grid-cols-3">
-                  <div className="flex flex-col items-center text-center">
-                    <dt>
-                      <div className="flex size-12 items-center justify-center rounded-lg bg-indigo-600 text-white">
-                        <PlayCircleIcon className="size-8" />
-                      </div>
-                      <p className="mt-5 text-lg font-semibold leading-8 text-slate-900">1. Enregistrez sans effort <br /> (en ligne & hors ligne)</p>
-                    </dt>
-                    <dd className="mt-2 text-base text-slate-600">
-                      Lancez l'enregistrement sur Meet, Zoom, Teams, <strong>et même en personne</strong>. Pas de bot à inviter, on utilise le micro et la sortie audio de votre appareil.
-                    </dd>
+              <div className="mt-16 grid gap-8 sm:mt-20 lg:grid-cols-3 lg:grid-rows-2">
+                {/* Box 1: Step 1 (Left, Large) */}
+                <div className="lg:row-span-2 rounded-3xl bg-white/60 p-8 ring-1 ring-black/5 shadow-lg backdrop-blur-lg flex flex-col">
+                  <div className="flex size-12 items-center justify-center rounded-lg bg-indigo-600 text-white">
+                    <PlayCircleIcon className="size-8" />
                   </div>
-                  <div className="flex flex-col items-center text-center">
-                    <dt>
-                      <div className="flex size-12 items-center justify-center rounded-lg bg-indigo-600 text-white">
-                        <SparklesIcon className="size-8" />
-                      </div>
-                      <p className="mt-5 text-lg font-semibold leading-8 text-slate-900">2. Recevez un plan d'action</p>
-                    </dt>
-                    <dd className="mt-2 text-base text-slate-600">
-                      Dès la fin de la réunion, recevez une synthèse professionnelle avec <strong>les décisions, les prochaines étapes et les responsables</strong>.
-                    </dd>
+                  <h3 className="mt-5 text-lg font-semibold leading-8 text-slate-900">1. Enregistrez sans effort <br /> (en ligne & hors ligne)</h3>
+                  <p className="mt-2 text-base text-slate-600">
+                    Lancez l'enregistrement sur Meet, Zoom, Teams, <strong>et même en personne</strong>. Pas de bot à inviter, on utilise le micro et la sortie audio de votre appareil.
+                  </p>
+                </div>
+                
+                {/* Box 2: Step 2 (Middle, Top) */}
+                <div className="lg:col-start-2 rounded-3xl bg-white/60 p-8 ring-1 ring-black/5 shadow-lg backdrop-blur-lg flex flex-col">
+                  <div className="flex size-12 items-center justify-center rounded-lg bg-indigo-600 text-white">
+                    <SparklesIcon className="size-8" />
                   </div>
-                  <div className="flex flex-col items-center text-center">
-                    <dt>
-                      <div className="flex size-12 items-center justify-center rounded-lg bg-indigo-600 text-white">
-                        <ShareIcon className="size-8" />
-                      </div>
-                      <p className="mt-5 text-lg font-semibold leading-8 text-slate-900">3. Partagez instantanément</p>
-                    </dt>
-                    <dd className="mt-2 text-base text-slate-600">
-                      Envoyez le compte rendu à votre équipe en un clic <strong>via Slack, Notion, par email ou simplement avec un lien</strong>.
-                    </dd>
+                  <h3 className="mt-5 text-lg font-semibold leading-8 text-slate-900">2. Recevez un plan d'action</h3>
+                  <p className="mt-2 text-base text-slate-600">
+                    Dès la fin de la réunion, recevez une synthèse professionnelle avec <strong>les décisions, les prochaines étapes et les responsables</strong>.
+                  </p>
+                </div>
+                
+                {/* Box 3: Step 3 (Middle, Bottom) */}
+                <div className="lg:col-start-2 lg:row-start-2 rounded-3xl bg-white/60 p-8 ring-1 ring-black/5 shadow-lg backdrop-blur-lg flex flex-col">
+                  <div className="flex size-12 items-center justify-center rounded-lg bg-indigo-600 text-white">
+                    <ShareIcon className="size-8" />
                   </div>
-                </dl>
+                  <h3 className="mt-5 text-lg font-semibold leading-8 text-slate-900">3. Partagez instantanément</h3>
+                  <p className="mt-2 text-base text-slate-600">
+                    Envoyez le compte rendu à votre équipe en un clic <strong>via Slack, Notion, par email ou simplement avec un lien</strong>.
+                  </p>
+                </div>
+                
+                {/* Box 4: Testimonial (Right, Large) */}
+                <div className="mt-16 rounded-2xl p-8 text-center sm:mt-24">
+                  <figure>
+                    <blockquote className="text-lg font-medium leading-8 text-slate-900">
+                        <p>“{testimonials[0].body}”</p>
+                    </blockquote>
+                    <figcaption className="mt-6">
+                        <img
+                            className="mx-auto h-10 w-10 rounded-full"
+                            src={testimonials[0].author.imageUrl}
+                            alt=""
+                        />
+                        <div className="mt-4 flex flex-col items-center justify-center space-y-1 text-base">
+                            <div className="font-semibold text-slate-900">{testimonials[0].author.name}</div>
+                            <div className="text-slate-600">{testimonials[0].author.handle}</div>
+                        </div>
+                    </figcaption>
+                  </figure>
+                </div>
               </div>
-              <figure className="mt-16 rounded-2xl bg-white/60 p-8 text-center ring-1 ring-black/5 shadow-lg backdrop-blur-lg sm:mt-24">
-                  <blockquote className="text-lg font-medium leading-8 text-slate-900">
-                      <p>“{testimonials[0].body}”</p>
-                  </blockquote>
-                  <figcaption className="mt-6">
-                      <img
-                          className="mx-auto h-10 w-10 rounded-full"
-                          src={testimonials[0].author.imageUrl}
-                          alt=""
-                      />
-                      <div className="mt-4 flex flex-col items-center justify-center space-x-3 text-base">
-                          <div className="font-semibold text-slate-900">{testimonials[0].author.name}</div>
-                          <div className="text-slate-600">{testimonials[0].author.handle}</div>
-                      </div>
-                  </figcaption>
-              </figure>
             </div>
           </div>
 
@@ -412,7 +439,7 @@ export default function Example() {
                 </p>
               </div>
               <p className="mx-auto mt-6 max-w-2xl text-center text-lg/8 text-pretty text-slate-600">
-                Testez dès aujourd'hui avec notre garantie de 30 jours satisfait ou remboursé.
+                Essayez dès aujourd'hui avec notre garantie de 30 jours satisfait ou remboursé.
               </p>
               <div className="isolate mx-auto mt-16 grid max-w-md grid-cols-1 gap-y-8 sm:mt-20 lg:mx-0 lg:max-w-none lg:grid-cols-3">
                 {tiers.map((tier, tierIdx) => (
@@ -478,7 +505,7 @@ export default function Example() {
                   </div>
                 ))}
               </div>
-              <figure className="mt-16 rounded-2xl bg-white/60 p-8 text-center ring-1 ring-black/5 shadow-lg backdrop-blur-lg sm:mt-24">
+              <figure className="mt-16 rounded-2xl p-8 text-center sm:mt-24">
                   <blockquote className="text-lg font-medium leading-8 text-slate-900">
                       <p>“{testimonials[1].body}”</p>
                   </blockquote>
@@ -514,7 +541,7 @@ export default function Example() {
               </div>
             ))}
           </dl>
-          <figure className="mt-16 rounded-2xl bg-white/60 p-8 text-center ring-1 ring-black/5 shadow-lg backdrop-blur-lg sm:mt-24">
+          <figure className="mt-16 rounded-2xl p-8 text-center sm:mt-24">
                   <blockquote className="text-lg font-medium leading-8 text-slate-900">
                       <p>“{testimonials[2].body}”</p>
                   </blockquote>
@@ -579,13 +606,88 @@ export default function Example() {
         
         
         {/* Footer */}
-        <footer className="mx-auto mt-16 max-w-7xl px-6 lg:px-8">
-          <div className="border-t border-slate-900/10 py-8">
-              <div className="flex items-center justify-center">
-                  <p className="text-xs leading-5 text-slate-500">&copy; 2025 AudioEnTexte. Tous droits réservés.</p>
+      <footer className="relative mx-auto mt-32 max-w-7xl px-6 lg:px-8">
+        <div className="border-t border-gray-900/10 py-16 sm:py-24 lg:py-32 dark:border-white/10">
+          <div className="xl:grid xl:grid-cols-3 xl:gap-8">
+            <img
+              alt="AudioEnTexte"
+              src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=600"
+              className="h-9 dark:hidden"
+            />
+            <img
+              alt="AudioEnTexte"
+              src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=500"
+              className="h-9 not-dark:hidden"
+            />
+            <div className="mt-16 grid grid-cols-2 gap-8 xl:col-span-2 xl:mt-0">
+              <div className="md:grid md:grid-cols-2 md:gap-8">
+                <div>
+                  <h3 className="text-sm/6 font-semibold text-gray-900 dark:text-white">Solutions</h3>
+                  <ul role="list" className="mt-6 space-y-4">
+                    {footerNavigation.solutions.map((item) => (
+                      <li key={item.name}>
+                        <a
+                          href={item.href}
+                          className="text-sm/6 text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
+                        >
+                          {item.name}
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+                <div className="mt-10 md:mt-0">
+                  <h3 className="text-sm/6 font-semibold text-gray-900 dark:text-white">Support</h3>
+                  <ul role="list" className="mt-6 space-y-4">
+                    {footerNavigation.support.map((item) => (
+                      <li key={item.name}>
+                        <a
+                          href={item.href}
+                          className="text-sm/6 text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
+                        >
+                          {item.name}
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
               </div>
+              <div className="md:grid md:grid-cols-2 md:gap-8">
+                <div>
+                  <h3 className="text-sm/6 font-semibold text-gray-900 dark:text-white">Entreprise</h3>
+                  <ul role="list" className="mt-6 space-y-4">
+                    {footerNavigation.company.map((item) => (
+                      <li key={item.name}>
+                        <a
+                          href={item.href}
+                          className="text-sm/6 text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
+                        >
+                          {item.name}
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+                <div className="mt-10 md:mt-0">
+                  <h3 className="text-sm/6 font-semibold text-gray-900 dark:text-white">Légal</h3>
+                  <ul role="list" className="mt-6 space-y-4">
+                    {footerNavigation.legal.map((item) => (
+                      <li key={item.name}>
+                        <a
+                          href={item.href}
+                          className="text-sm/6 text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
+                        >
+                          {item.name}
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            </div>
           </div>
-        </footer>
+        </div>
+      </footer>
       </div>
     </div>
   )
