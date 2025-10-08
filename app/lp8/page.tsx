@@ -406,9 +406,9 @@ export default function Example() {
                   </p>
                 </div>
                 
-                {/* Box 4: Testimonial (Right, Large) */}
-                <div className="mt-16 rounded-2xl p-8 text-center sm:mt-24">
-                  <figure>
+                {/* Box 4: Testimonial (Right, Large) - CORRIGÉ */}
+                <div className="lg:col-start-3 lg:row-span-2 rounded-2xl p-8 text-center">
+                  <figure className="flex flex-col h-full justify-center">
                     <blockquote className="text-lg font-medium leading-8 text-slate-900">
                         <p>“{testimonials[0].body}”</p>
                     </blockquote>
