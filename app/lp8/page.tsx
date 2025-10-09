@@ -278,7 +278,7 @@ const Header = () => {
 
 const Hero = () => (
   <div className="relative pt-14">
-    <div className="py-24">
+    <div className="py-24 pt-16">
       <div className="absolute -rotate-12 top-5 left-5 w-20 h-20">
         <img src="/france.png" alt="Entreprise Française" />
       </div>
