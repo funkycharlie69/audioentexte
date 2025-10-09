@@ -19,11 +19,11 @@ const navigation = [
 
 const testimonials = [
     {
-      body: 'Compte rendu envoyé au client en 10 minutes, tâches claires pour toute l’équipe. On a arrêté les prises de notes à la main.',
+      body: 'Compte rendu envoyé en 10 minutes, tâches claires pour toute l’équipe. On a arrêté les prises de notes à la main.',
       author: {
-        name: 'Sophie L.',
-        handle: 'Cheffe de projet, agence conseil',
-        imageUrl: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
+        name: 'Marc Biessy',
+        handle: 'Co-Fondateur, Ops Clean',
+        imageUrl: '/marc-biessy.png',
       },
     },
     {
@@ -35,27 +35,27 @@ const testimonials = [
       },
     },
     {
-      body: "L'addiction est réelle - à ce stade, je ne peux plus imaginer ma life sans. Puissant sans effort.",
+      body: "L'addiction est réelle... à ce stade, je ne peux plus imaginer ma life sans. Puissant sans effort.",
       author: {
-        name: 'Adriana Vitagliano',
-        handle: 'VC, Firstminute',
-        imageUrl: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
+        name: 'Josselin Trouilloud',
+        handle: 'Vidéaste, JossTVisuals',
+        imageUrl: '/josselin-trouilloud.png',
       },
     },
 ]
 
 const tiers = [
   {
-    name: 'Pro',
-    id: 'tier-pro',
+    name: 'Solo',
+    id: 'tier-solo',
     href: '#checkout',
     priceMonthly: '39€',
     description: 'Idéal pour freelances & consultants qui veulent gagner 3-4h/semaine sur leurs comptes rendus.',
     features: [
       'Réunions illimitées',
       'Transcription en français',
-      'Compte rendu IA (modifiable)',
-      'Partage (lien, Slack, email, Notion, etc.)',
+      'Compte rendu professionnel (modifiable)',
+      'Partage (lien, Slack, email, Notion, Asana, ClickUp, Monday)',
     ],
     mostPopular: false,
   },
@@ -63,13 +63,13 @@ const tiers = [
     name: 'Business',
     id: 'tier-business',
     href: '#checkout',
-    priceMonthly: '69€',
+    priceMonthly: '79€',
     description: 'Parfait pour les équipes de 2 à 50 personnes qui veulent standardiser la qualité des notes et le suivi.',
     features: [
-      'Tout dans Pro, plus :',
+      'Tout dans Solo, plus :',
       'Dossiers partagés & modèles d’entreprise',
       'Rôles admin',
-      'Support prioritaire (jour ouvré)',
+      'Support prioritaire (24H)',
     ],
     mostPopular: true,
   },
@@ -157,7 +157,19 @@ export default function Example() {
 
   // On applique le fond dégradé sur le conteneur principal de la page.
   return (
-    <div className="bg-gradient-to-b from-indigo-50 to-white">
+    <div>
+    <div
+            aria-hidden="true"
+            className="absolute top-0 right-0 left-0 -z-10 hidden -translate-y-10 transform-gpu overflow-hidden blur-3xl sm:block"
+          >
+            <div
+              style={{
+                clipPath:
+                  'polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)',
+              }}
+              className="aspect-1155/678 w-288.75 bg-linear-to-tr from-cyan-500 to-blue-500 opacity-10"
+            />
+          </div>'
       {/* Header */}
       <header className="absolute inset-x-0 top-0 z-50">
         <nav aria-label="Global" className="flex items-center justify-between p-6 lg:px-8">
@@ -166,8 +178,8 @@ export default function Example() {
               <span className="sr-only">AudioEnTexte</span>
               <img
                 alt="AudioEnTexte"
-                src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=600"
-                className="h-8 w-auto"
+                src="/audio-en-texte.png"
+                className="h-15 w-auto"
               />
             </a>
           </div>
@@ -202,8 +214,8 @@ export default function Example() {
                 <span className="sr-only">AudioEnTexte</span>
                 <img
                   alt="AudioEnTexte"
-                  src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=600"
-                  className="h-8 w-auto"
+                  src="/audio-en-texte.png"
+                  className="h-15 w-auto"
                 />
               </a>
               <button
@@ -248,17 +260,17 @@ export default function Example() {
           <div className="relative pt-14">
             <div className="py-24 sm:py-32">
               <div className="mx-auto max-w-7xl px-6 lg:px-8">
-                <div className="mx-auto max-w-3xl text-center">
-                  <h1 className="text-4xl font-semibold tracking-tight text-balance text-slate-900 sm:text-5xl">
+                <div className="mx-auto max-w-5xl text-center">
+                  <h1 className="text-4xl font-semibold tracking-tight text-pretty text-slate-900 sm:text-6xl">
                     Compte rendu de réunion parfait, sans prendre de notes.
                   </h1>
-                  <p className="mt-8 text-lg text-pretty text-slate-600 sm:text-xl/8">
+                  <p className="mt-8 text-lg text-balance text-slate-600 sm:text-xl/8">
                     Concentrez-vous sur la conversation, AudioEnTexte rédige pour vous un plan d'action clair et prêt à partager.
                   </p>
                   <div className="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row sm:gap-x-6">
                     <a
                       href="#pricing"
-                      className="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                      className="rounded-md bg-cyan-600 px-5 py-2.5 text-lg font-semibold text-white shadow-sm hover:bg-cyan-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-600"
                     >
                       Essayer aujourd'hui →
                     </a>
@@ -367,15 +379,17 @@ export default function Example() {
           <div id="how-it-works" className="py-24 sm:py-32">
             <div className="mx-auto max-w-7xl px-6 lg:px-8">
               <div className="mx-auto max-w-3xl text-center">
-                <h2 className="text-base/7 font-semibold text-indigo-600">Comment ça marche</h2>
+                <h2 className="text-base/7 font-semibold text-cyan-600">Comment ça marche</h2>
                 <p className="mt-2 text-4xl font-semibold tracking-tight text-slate-900 sm:text-5xl">
                   C'est comme un bloc-notes, mais qui transcrit et résume pour vous.
                 </p>
               </div>
-              <div className="mt-16 grid gap-8 sm:mt-20 lg:grid-cols-3 lg:grid-rows-2">
+
+              {/* Grille Bento simplifiée */}
+              <div className="mt-16 grid gap-8 sm:mt-20 lg:grid-cols-3">
                 {/* Box 1: Step 1 (Left, Large) */}
-                <div className="lg:row-span-2 rounded-3xl bg-white/60 p-8 ring-1 ring-black/5 shadow-lg backdrop-blur-lg flex flex-col">
-                  <div className="flex size-12 items-center justify-center rounded-lg bg-indigo-600 text-white">
+                <div className="rounded-3xl bg-white/60 p-8 ring-1 ring-black/5 shadow-lg backdrop-blur-lg flex flex-col">
+                  <div className="flex size-12 items-center justify-center rounded-lg bg-cyan-600 text-white">
                     <PlayCircleIcon className="size-8" />
                   </div>
                   <h3 className="mt-5 text-lg font-semibold leading-8 text-slate-900">1. Enregistrez sans effort <br /> (en ligne & hors ligne)</h3>
@@ -384,9 +398,9 @@ export default function Example() {
                   </p>
                 </div>
                 
-                {/* Box 2: Step 2 (Middle, Top) */}
-                <div className="lg:col-start-2 rounded-3xl bg-white/60 p-8 ring-1 ring-black/5 shadow-lg backdrop-blur-lg flex flex-col">
-                  <div className="flex size-12 items-center justify-center rounded-lg bg-indigo-600 text-white">
+                {/* Box 2: Step 2 (Right, Top) */}
+                <div className="rounded-3xl bg-white/60 p-8 ring-1 ring-black/5 shadow-lg backdrop-blur-lg flex flex-col">
+                  <div className="flex size-12 items-center justify-center rounded-lg bg-cyan-600 text-white">
                     <SparklesIcon className="size-8" />
                   </div>
                   <h3 className="mt-5 text-lg font-semibold leading-8 text-slate-900">2. Recevez un plan d'action</h3>
@@ -395,9 +409,9 @@ export default function Example() {
                   </p>
                 </div>
                 
-                {/* Box 3: Step 3 (Middle, Bottom) */}
-                <div className="lg:col-start-2 lg:row-start-2 rounded-3xl bg-white/60 p-8 ring-1 ring-black/5 shadow-lg backdrop-blur-lg flex flex-col">
-                  <div className="flex size-12 items-center justify-center rounded-lg bg-indigo-600 text-white">
+                {/* Box 3: Step 3 (Right, Bottom) */}
+                <div className="rounded-3xl bg-white/60 p-8 ring-1 ring-black/5 shadow-lg backdrop-blur-lg flex flex-col">
+                  <div className="flex size-12 items-center justify-center rounded-lg bg-cyan-600 text-white">
                     <ShareIcon className="size-8" />
                   </div>
                   <h3 className="mt-5 text-lg font-semibold leading-8 text-slate-900">3. Partagez instantanément</h3>
@@ -405,41 +419,53 @@ export default function Example() {
                     Envoyez le compte rendu à votre équipe en un clic <strong>via Slack, Notion, par email ou simplement avec un lien</strong>.
                   </p>
                 </div>
-                
-                {/* Box 4: Testimonial (Right, Large) - CORRIGÉ */}
-                <div className="lg:col-start-3 lg:row-span-2 rounded-2xl p-8 text-center">
-                  <figure className="flex flex-col h-full justify-center">
-                    <blockquote className="text-lg font-medium leading-8 text-slate-900">
-                        <p>“{testimonials[0].body}”</p>
-                    </blockquote>
-                    <figcaption className="mt-6">
-                        <img
-                            className="mx-auto h-10 w-10 rounded-full"
-                            src={testimonials[0].author.imageUrl}
-                            alt=""
-                        />
-                        <div className="mt-4 flex flex-col items-center justify-center space-y-1 text-base">
-                            <div className="font-semibold text-slate-900">{testimonials[0].author.name}</div>
-                            <div className="text-slate-600">{testimonials[0].author.handle}</div>
-                        </div>
-                    </figcaption>
-                  </figure>
-                </div>
+              </div>
+
+              {/* Témoignage placé sous la grille */}
+              <div className="mt-16 sm:mt-24">
+                <figure className="mx-auto max-w-4xl text-center">
+                  <blockquote className="text-lg text-pretty font-medium leading-8 text-slate-900 sm:text-xl sm:leading-9">
+                      <p>“{testimonials[0].body}”</p>
+                  </blockquote>
+                  <figcaption className="mt-8">
+                      <img
+                          className="mx-auto h-12 w-12 rounded-full"
+                          src={testimonials[0].author.imageUrl}
+                          alt=""
+                      />
+                      <div className="mt-4 flex flex-col items-center justify-center space-x-3 text-base">
+                          <div className="font-semibold text-slate-900">{testimonials[0].author.name}</div>
+                          <div className="text-slate-600">{testimonials[0].author.handle}</div>
+                      </div>
+                  </figcaption>
+                </figure>
               </div>
             </div>
           </div>
 
           {/* Pricing section */}
           <div id="pricing" className="py-24 sm:py-32">
+            <div
+            aria-hidden="true"
+            className="absolute inset-x-0 top-1/2 -z-10 flex -translate-y-1/2 transform-gpu justify-center overflow-hidden blur-3xl sm:top-auto sm:right-[calc(50%-6rem)] sm:translate-y-0 sm:justify-end"
+          >
+            <div
+              style={{
+                clipPath:
+                  'polygon(73.6% 48.6%, 91.7% 88.5%, 100% 53.9%, 97.4% 18.1%, 92.5% 15.4%, 75.7% 36.3%, 55.3% 52.8%, 46.5% 50.9%, 45% 37.4%, 50.3% 13.1%, 21.3% 36.2%, 0.1% 0.1%, 5.4% 49.1%, 21.4% 36.4%, 58.9% 100%, 73.6% 48.6%)',
+              }}
+              className="aspect-1108/632 w-277 flex-none bg-linear-to-r from-cyan-500 to-blue-500 opacity-20"
+            />
+          </div>
             <div className="mx-auto max-w-7xl px-6 lg:px-8">
               <div className="mx-auto max-w-4xl text-center">
-                <h2 className="text-base/7 font-semibold text-indigo-600">Tarifs</h2>
+                <h2 className="text-base/7 font-semibold text-cyan-600">Tarifs</h2>
                 <p className="mt-2 text-4xl font-semibold tracking-tight text-balance text-slate-900 sm:text-5xl">
                   Un tarif simple et transparent
                 </p>
               </div>
-              <p className="mx-auto mt-6 max-w-2xl text-center text-lg/8 text-pretty text-slate-600">
-                Essayez dès aujourd'hui avec notre garantie de 30 jours satisfait ou remboursé.
+              <p className="mx-auto mt-6 max-w-2xl text-center text-lg/8 text-balance text-slate-600">
+                Essayez dès aujourd'hui avec notre garantie de 30 jours satisfait ou remboursé en 1 clic.
               </p>
               <div className="isolate mx-auto mt-16 grid max-w-md grid-cols-1 gap-y-8 sm:mt-20 lg:mx-0 lg:max-w-none lg:grid-cols-3">
                 {tiers.map((tier, tierIdx) => (
@@ -457,14 +483,14 @@ export default function Example() {
                         <h3
                           id={tier.id}
                           className={classNames(
-                            tier.mostPopular ? 'text-indigo-600' : 'text-slate-900',
+                            tier.mostPopular ? 'text-cyan-600' : 'text-slate-900',
                             'text-lg/8 font-semibold',
                           )}
                         >
                           {tier.name}
                         </h3>
                         {tier.mostPopular ? (
-                          <p className="rounded-full bg-indigo-600/10 px-2.5 py-1 text-xs/5 font-semibold text-indigo-600">
+                          <p className="rounded-full bg-cyan-600/10 px-2.5 py-1 text-xs/5 font-semibold text-cyan-600">
                             Plus choisi
                           </p>
                         ) : null}
@@ -483,7 +509,7 @@ export default function Example() {
                           <li key={feature} className="flex gap-x-3">
                             <CheckIcon
                               aria-hidden="true"
-                              className="h-6 w-5 flex-none text-indigo-600"
+                              className="h-6 w-5 flex-none text-cyan-600"
                             />
                             {feature}
                           </li>
@@ -495,9 +521,9 @@ export default function Example() {
                       aria-describedby={tier.id}
                       className={classNames(
                         tier.mostPopular
-                          ? 'bg-indigo-600 text-white shadow-sm hover:bg-indigo-500'
-                          : 'text-indigo-600 ring-1 ring-inset ring-indigo-200 hover:ring-indigo-300',
-                        'mt-8 block rounded-md px-3 py-2 text-center text-sm/6 font-semibold focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600',
+                          ? 'bg-cyan-600 text-white shadow-sm hover:bg-cyan-500'
+                          : 'text-cyan-600 ring-1 ring-inset ring-cyan-200 hover:ring-cyan-300',
+                        'mt-8 block rounded-md px-3 py-2 text-center text-lg/6 font-semibold focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-600',
                       )}
                     >
                       {tier.name === 'Entreprise' ? 'Nous contacter' : 'Choisir ce plan'}
@@ -506,7 +532,7 @@ export default function Example() {
                 ))}
               </div>
               <figure className="mt-16 rounded-2xl p-8 text-center sm:mt-24">
-                  <blockquote className="text-lg font-medium leading-8 text-slate-900">
+                  <blockquote className="text-lg text-pretty font-medium leading-8 text-slate-900">
                       <p>“{testimonials[1].body}”</p>
                   </blockquote>
                   <figcaption className="mt-6">
@@ -542,7 +568,7 @@ export default function Example() {
             ))}
           </dl>
           <figure className="mt-16 rounded-2xl p-8 text-center sm:mt-24">
-                  <blockquote className="text-lg font-medium leading-8 text-slate-900">
+                  <blockquote className="text-lg text-pretty font-medium leading-8 text-slate-900">
                       <p>“{testimonials[2].body}”</p>
                   </blockquote>
                   <figcaption className="mt-6">
@@ -561,18 +587,6 @@ export default function Example() {
         
           {/* CTA section */}
         <div id="contact" className="relative -z-10 mt-32 px-6 lg:px-8">
-          <div
-            aria-hidden="true"
-            className="absolute inset-x-0 top-1/2 -z-10 flex -translate-y-1/2 transform-gpu justify-center overflow-hidden blur-3xl sm:top-auto sm:right-[calc(50%-6rem)] sm:bottom-0 sm:translate-y-0 sm:justify-end"
-          >
-            <div
-              style={{
-                clipPath:
-                  'polygon(73.6% 48.6%, 91.7% 88.5%, 100% 53.9%, 97.4% 18.1%, 92.5% 15.4%, 75.7% 36.3%, 55.3% 52.8%, 46.5% 50.9%, 45% 37.4%, 50.3% 13.1%, 21.3% 36.2%, 0.1% 0.1%, 5.4% 49.1%, 21.4% 36.4%, 58.9% 100%, 73.6% 48.6%)',
-              }}
-              className="aspect-1108/632 w-277 flex-none bg-linear-to-r from-[#ff80b5] to-[#9089fc] opacity-25"
-            />
-          </div>
           <div className="mx-auto max-w-2xl text-center">
             <h2 className="text-4xl font-semibold tracking-tight text-balance text-gray-900 sm:text-5xl dark:text-white">
               Prêt à décupler votre productivité ?
@@ -583,7 +597,7 @@ export default function Example() {
             <div className="mt-10 flex items-center justify-center gap-x-6">
               <a
                 href="#pricing"
-                className="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 dark:bg-indigo-500 dark:shadow-none dark:hover:bg-indigo-400 dark:focus-visible:outline-indigo-500"
+                className="rounded-md bg-cyan-600 px-5 py-2.5 text-lg font-semibold text-white shadow-xs hover:bg-cyan-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-600 dark:bg-cyan-500 dark:shadow-none dark:hover:bg-cyan-400 dark:focus-visible:outline-cyan-500"
               >
                 Créez mon compte
               </a>
@@ -598,7 +612,7 @@ export default function Example() {
                 clipPath:
                   'polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)',
               }}
-              className="aspect-1155/678 w-288.75 bg-linear-to-tr from-[#ff80b5] to-[#9089fc] opacity-30"
+              className="aspect-1155/678 w-288.75 bg-linear-to-tr from-cyan-500 to-blue-500 opacity-30"
             />
           </div>
         </div>
@@ -611,12 +625,12 @@ export default function Example() {
           <div className="xl:grid xl:grid-cols-3 xl:gap-8">
             <img
               alt="AudioEnTexte"
-              src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=600"
+              src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=cyan&shade=600"
               className="h-9 dark:hidden"
             />
             <img
               alt="AudioEnTexte"
-              src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=500"
+              src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=cyan&shade=500"
               className="h-9 not-dark:hidden"
             />
             <div className="mt-16 grid grid-cols-2 gap-8 xl:col-span-2 xl:mt-0">
@@ -628,7 +642,7 @@ export default function Example() {
                       <li key={item.name}>
                         <a
                           href={item.href}
-                          className="text-sm/6 text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
+                          className="text-/6 text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
                         >
                           {item.name}
                         </a>
