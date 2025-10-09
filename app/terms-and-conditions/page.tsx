@@ -1,274 +1,268 @@
-import { Footer } from "@/components/footer"
-import { UtmCapture } from "@/components/utm-capture"
-import type { Metadata } from "next";
+// Gemini
+'use client'
 
-export const metadata: Metadata = {
-  title: "Politique de confidentialité – AudioEnTexte",
-  description: "Découvrez comment nous protégeons vos données personnelles.",
+import { useState } from 'react';
+import { Dialog, DialogPanel } from '@headlessui/react';
+import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
+
+// --- CONSTANTS & DATA ---
+const navigation = [
+  { name: 'Accueil', href: '/' },
+  { name: 'Tarifs', href: '/#pricing' },
+  { name: 'FAQ', href: '/#faq' },
+];
+
+const footerNavigation = {
+    solutions: [
+        { name: 'Comment ça marche', href: '/#how-it-works' },
+        { name: 'Tarifs', href: '/#pricing' },
+        { name: 'FAQ', href: '/#faq' },
+        { name: 'Contact', href: 'mailto:bonjour@audioentexte.com' },
+    ],
+    legal: [
+        { name: 'CGU', href: '/terms-and-conditions' },
+        { name: 'Confidentialité', href: '/privacy-policy' },
+        { name: 'Contrat de traitement (DPA)', href: '#' },
+    ],
 };
 
-export default function PrivacyPolicyPage() {
+
+// --- UI COMPONENTS ---
+
+const Header = () => {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
   return (
-   <>
-    <main className="min-h-screen bg-background">
-      <UtmCapture />
-      <section className="max-w-3xl mx-auto px-6 py-10 text-slate-800 dark:text-slate-100">
-      <header className="mb-10">
-        <h1 className="text-center text-3xl sm:text-4xl font-extrabold tracking-tight">
-          Politique de confidentialité – AudioEnTexte
-        </h1>
-        {/* <p className="mt-2 text-sm sm:text-base text-slate-500">
-          Dernière mise à jour :{" "}
-          <time dateTime="2025-09-26">26 septembre 2025</time>
-        </p> */}
-        <p className="mt-4 text-slate-600 dark:text-slate-300">
-          AudioEnTexte (« nous », « notre », « nos ») exploite le site{" "}
-          <a
-            href="https://www.audioentexte.com"
-            className="underline decoration-slate-300 hover:decoration-slate-500"
-          >
-            https://www.audioentexte.com
-          </a>{" "}
-          (le « Site ») et le service de transcription et de résumé (le « Service »).
-        </p>
-      </header>
-
-      {/* 1) Responsable du traitement */}
-      <section className="mb-8">
-        <h2 className="text-xl font-semibold">1) Responsable du traitement</h2>
-        <dl className="mt-3 grid grid-cols-1 gap-2">
-          <div>
-            <dt className="font-medium">Responsable</dt>
-            <dd className="text-slate-700 dark:text-slate-300">
-              AudioEnTexte
-            </dd>
-          </div>
-          {/* <div>
-            <dt className="font-medium">Adresse</dt>
-            <dd className="text-slate-700 dark:text-slate-300">[Adresse complète]</dd>
-          </div> */}
-          <div>
-            <dt className="font-medium">E-mail de contact</dt>
-            <dd>
-              <a
-                href="mailto:bonjour@audioentexte.com"
-                className="underline decoration-slate-300 hover:decoration-slate-500"
-              >
-                bonjour@audioentexte.com
-              </a>
-            </dd>
-          </div>
-        </dl>
-      </section>
-
-      {/* 2) Données collectées */}
-      <section className="mb-8">
-        <h2 className="text-xl font-semibold">2) Données que nous collectons</h2>
-        <ul className="mt-3 space-y-2 list-disc pl-6">
-          <li>
-            <span className="font-medium">Identité &amp; contact :</span> e-mail, nom (si fourni).
-          </li>
-          <li>
-            <span className="font-medium">Contenu :</span> fichiers audio, métadonnées (nom du
-            fichier, durée), transcriptions générées.
-          </li>
-          <li>
-            <span className="font-medium">Facturation :</span> données nécessaires au paiement
-            (traitées par notre prestataire de paiement).
-          </li>
-          <li>
-            <span className="font-medium">Technique :</span> logs serveur, adresses IP, identifiants
-            de session, cookies/traceurs, données d’usage (pages vues, appareils, navigateur).
-          </li>
-        </ul>
-      </section>
-
-      {/* 3) Finalités & bases légales */}
-      <section className="mb-8">
-        <h2 className="text-xl font-semibold">3) Finalités &amp; bases légales (RGPD)</h2>
-        <ul className="mt-3 space-y-2 list-disc pl-6">
-          <li>
-            <span className="font-medium">Fournir le Service (exécution du contrat)</span> : réception,
-            traitement et restitution de vos transcriptions.
-          </li>
-          <li>
-            <span className="font-medium">Amélioration &amp; sécurité (intérêt légitime)</span> :
-            statistiques agrégées, prévention des abus, qualité et disponibilité.
-          </li>
-          <li>
-            <span className="font-medium">Communication (intérêt légitime/consentement)</span> :
-            réponses à vos demandes ; newsletters si vous y consentez.
-          </li>
-          <li>
-            <span className="font-medium">Obligations légales</span> : comptabilité, lutte contre la
-            fraude, réponse aux autorités.
-          </li>
-        </ul>
-      </section>
-
-      {/* 4) Durées de conservation */}
-      <section className="mb-8">
-        <h2 className="text-xl font-semibold">4) Durées de conservation</h2>
-        <ul className="mt-3 space-y-2 list-disc pl-6">
-          <li>
-            <span className="font-medium">Compte &amp; e-mail :</span> jusqu’à suppression du compte,
-            puis <span className="font-medium">3 ans</span> maximum pour la preuve et la gestion des
-            litiges.
-          </li>
-          <li>
-            <span className="font-medium">Fichiers audio &amp; transcriptions :</span> conservés{" "}
-            <span className="font-medium">[30 jours par défaut]</span> puis supprimés automatiquement,
-            sauf action ou demande contraire de votre part.
-          </li>
-          <li>
-            <span className="font-medium">Facturation :</span> <span className="font-medium">10 ans</span> (obligations comptables).
-          </li>
-          <li>
-            <span className="font-medium">Logs techniques :</span> <span className="font-medium">12 mois</span> maximum.
-          </li>
-        </ul>
-        <p className="mt-3 text-slate-600 dark:text-slate-300">
-          Vous pouvez demander la suppression anticipée de vos fichiers/transcriptions à tout moment
-          (voir vos droits ci-dessous).
-        </p>
-      </section>
-
-      {/* 5) Partage & destinataires */}
-      <section className="mb-8">
-        <h2 className="text-xl font-semibold">5) Partage &amp; destinataires</h2>
-        <p className="mt-3 text-slate-600 dark:text-slate-300">
-          Nous partageons des données uniquement avec des{" "}
-          <span className="font-medium">sous-traitants</span> nécessaires au Service (hébergement,
-          e-mail, analytics, paiement, traitement IA) soumis à des obligations de confidentialité :
-        </p>
-        <ul className="mt-3 space-y-2 list-disc pl-6">
-          <li>
-            <span className="font-medium">Hébergement &amp; déploiement</span> (ex. : Vercel/Cloud provider)
-          </li>
-          <li>
-            <span className="font-medium">Envoi d’e-mails &amp; CRM</span> (ex. : Loops)
-          </li>
-          <li>
-            <span className="font-medium">Paiement</span> (ex. : Stripe)
-          </li>
-          <li>
-            <span className="font-medium">Analyse d’audience</span> (ex. : outils analytics)
-          </li>
-          <li>
-            <span className="font-medium">Fournisseurs d’IA</span> pour la transcription/résumé
-            (ex. : moteurs de reconnaissance vocale)
-          </li>
-        </ul>
-        <p className="mt-3 text-slate-600 dark:text-slate-300">
-          Des transferts hors UE peuvent avoir lieu ; ils sont encadrés par des{" "}
-          <span className="font-medium">Clauses Contractuelles Types</span> ou mécanismes équivalents.
-        </p>
-      </section>
-
-      {/* 6) Cookies & analytics */}
-      <section className="mb-8">
-        <h2 className="text-xl font-semibold">6) Cookies &amp; analytics</h2>
-        <ul className="mt-3 space-y-2 list-disc pl-6">
-          <li>
-            <span className="font-medium">Cookies essentiels</span> : fonctionnement du Site
-            (authentification, sécurité, préférence de langue).
-          </li>
-          <li>
-            <span className="font-medium">Mesure d’audience/marketing</span> : activés uniquement{" "}
-            <span className="font-medium">avec votre consentement</span> via notre bandeau cookies.
-          </li>
-        </ul>
-        <p className="mt-3 text-slate-600 dark:text-slate-300">
-          Vous pouvez modifier vos préférences à tout moment depuis le bandeau/le lien « Cookies ».
-        </p>
-      </section>
-
-      {/* 7) Sécurité */}
-      <section className="mb-8">
-        <h2 className="text-xl font-semibold">7) Sécurité</h2>
-        <p className="mt-3 text-slate-600 dark:text-slate-300">
-          Nous mettons en œuvre des mesures techniques et organisationnelles adaptées (chiffrement en
-          transit, contrôle d’accès, journaux de sécurité). Aucune méthode n’offre une sécurité
-          absolue, mais nous améliorons en continu nos pratiques.
-        </p>
-      </section>
-
-      {/* 8) Vos droits */}
-      <section className="mb-8">
-        <h2 className="text-xl font-semibold">8) Vos droits (RGPD)</h2>
-        <ul className="mt-3 space-y-2 list-disc pl-6">
-          <li>
-            <span className="font-medium">Accès, rectification, effacement</span>
-          </li>
-          <li>
-            <span className="font-medium">Limitation &amp; opposition</span> au traitement
-          </li>
-          <li>
-            <span className="font-medium">Portabilité</span> (données que vous nous avez fournies)
-          </li>
-          <li>
-            <span className="font-medium">Retrait du consentement</span> à tout moment (pour les
-            traitements fondés sur le consentement)
-          </li>
-        </ul>
-        <p className="mt-3">
-          Contact :{" "}
-          <a
-            href="mailto:bonjour@audioentexte.com"
-            className="underline decoration-slate-300 hover:decoration-slate-500"
-          >
-            bonjour@audioentexte.com
+    <header className="sticky top-0 z-50 bg-white/80 backdrop-blur-sm border-b border-slate-900/10">
+      <nav aria-label="Global" className="flex items-center justify-between p-4 lg:px-8">
+        <div className="flex flex-1">
+          <a href="/" className="-m-1.5 p-1.5">
+            <span className="sr-only">AudioEnTexte</span>
+            <img alt="AudioEnTexte" src="/audio-en-texte.png" className="h-10 w-auto" />
           </a>
-          <br />
-          Vous pouvez aussi saisir la{" "}
+        </div>
+        
+        <div className="hidden lg:flex lg:gap-x-12">
+          {navigation.map((item) => (
+            <a key={item.name} href={item.href} className="text-sm/6 font-semibold text-slate-900">
+              {item.name}
+            </a>
+          ))}
+        </div>
+        
+        <div className="hidden lg:flex lg:flex-1 lg:justify-end">
           <a
-            href="https://www.cnil.fr"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="underline decoration-slate-300 hover:decoration-slate-500"
+            href="/onboarding"
+            className="rounded-md bg-cyan-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-cyan-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-600"
           >
-            CNIL
-          </a>{" "}
-          si vous estimez que vos droits ne sont pas respectés.
-        </p>
-      </section>
-
-      {/* 9) Mineurs */}
-      <section className="mb-8">
-        <h2 className="text-xl font-semibold">9) Mineurs</h2>
-        <p className="mt-3 text-slate-600 dark:text-slate-300">
-          Le Service n’est pas destiné aux moins de <span className="font-medium">15 ans</span>. Si
-          vous pensez qu’un mineur nous a transmis des données, contactez-nous pour suppression.
-        </p>
-      </section>
-
-      {/* 10) Modifications */}
-      <section className="mb-10">
-        <h2 className="text-xl font-semibold">10) Modifications</h2>
-        <p className="mt-3 text-slate-600 dark:text-slate-300">
-          Nous pouvons modifier cette politique. La version en vigueur est celle affichée sur cette
-          page avec sa date de mise à jour. En cas de changement important, nous vous informerons par
-          e-mail ou via le Site.
-        </p>
-      </section>
-
-      {/* Contact */}
-      <footer className="border-t border-slate-200 dark:border-slate-700 pt-6">
-        <h3 className="text-lg font-semibold">Contact</h3>
-        <p className="mt-2 text-slate-600 dark:text-slate-300">
-          Pour toute question ou demande relative à la confidentialité :{" "}
-          <a
-            href="mailto:bonjour@audioentexte.com"
-            className="underline decoration-slate-300 hover:decoration-slate-500"
-          >
-            bonjour@audioentexte.com
+            Essayer aujourd'hui
           </a>
-        </p>
+        </div>
+        
+        <div className="flex flex-1 justify-end items-center gap-x-4 lg:hidden">
+            <a
+                href="/onboarding"
+                className="rounded-md bg-cyan-600 px-3 py-2 text-sm font-semibold text-white text-center shadow-sm hover:bg-cyan-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-600"
+            >
+                Essayer
+            </a>
+          <button
+            type="button"
+            onClick={() => setMobileMenuOpen(true)}
+            className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-slate-700"
+          >
+            <span className="sr-only">Ouvrir le menu</span>
+            <Bars3Icon aria-hidden="true" className="size-6" />
+          </button>
+        </div>
+      </nav>
 
-      </footer>
-    </section>
-     <Footer />
-    </main>
-  </>
-  )
+      <Dialog open={mobileMenuOpen} onClose={setMobileMenuOpen} className="lg:hidden">
+        <div className="fixed inset-0 z-50" />
+        <DialogPanel className="fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-white p-6 sm:max-w-sm sm:ring-1 sm:ring-slate-900/10">
+          <div className="flex items-center justify-between">
+            <a href="#" className="-m-1.5 p-1.5">
+              <span className="sr-only">AudioEnTexte</span>
+              <img
+                alt="AudioEnTexte"
+                src="/audio-en-texte.png"
+                className="h-12 w-auto"
+              />
+            </a>
+            <button
+              type="button"
+              onClick={() => setMobileMenuOpen(false)}
+              className="-m-2.5 rounded-md p-2.5 text-slate-700"
+            >
+              <span className="sr-only">Fermer le menu</span>
+              <XMarkIcon aria-hidden="true" className="size-6" />
+            </button>
+          </div>
+          <div className="mt-6 flow-root">
+            <div className="-my-6 divide-y divide-slate-500/10">
+              <div className="space-y-2 py-6">
+                {navigation.map((item) => (
+                  <a
+                    key={item.name}
+                    href={item.href}
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-slate-900 hover:bg-slate-50"
+                  >
+                    {item.name}
+                  </a>
+                ))}
+              </div>
+            </div>
+          </div>
+        </DialogPanel>
+      </Dialog>
+    </header>
+  );
+};
+
+const Footer = () => (
+    <footer className="relative mx-auto mt-32 max-w-7xl px-6 lg:px-8">
+        <div className="border-t border-gray-900/10 py-16 dark:border-white/10">
+            <div className="xl:grid xl:grid-cols-3 xl:gap-8">
+                <div>
+                    <img alt="AudioEnTexte" src="/audio-en-texte.png" className="h-10 w-auto" />
+                    <p className="text-sm text-slate-600 mt-4">Compte rendu de réunion parfait, sans prendre de notes.</p>
+                </div>
+                <div className="mt-16 grid grid-cols-2 gap-8 xl:col-span-2 xl:mt-0">
+                    <div className="md:grid md:grid-cols-2 md:gap-8">
+                        <div>
+                            <h3 className="text-sm/6 font-semibold text-gray-900 dark:text-white">Solutions</h3>
+                            <ul role="list" className="mt-6 space-y-4">
+                                {footerNavigation.solutions.map((item) => (
+                                    <li key={item.name}>
+                                        <a href={item.href} className="text-sm/6 text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white">
+                                            {item.name}
+                                        </a>
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
+                    </div>
+                    <div className="md:grid md:grid-cols-2 md:gap-8">
+                        <div className="mt-0 md:mt-0">
+                            <h3 className="text-sm/6 font-semibold text-gray-900 dark:text-white">Légal</h3>
+                            <ul role="list" className="mt-6 space-y-4">
+                                {footerNavigation.legal.map((item) => (
+                                    <li key={item.name}>
+                                        <a href={item.href} className="text-sm/6 text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white">
+                                            {item.name}
+                                        </a>
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+             <div className="mt-16 border-t border-gray-900/10 pt-8 sm:mt-20 lg:mt-24">
+                <p className="text-xs leading-5 text-gray-500">&copy; 2024 AudioEnTexte. Tous droits réservés.</p>
+            </div>
+        </div>
+    </footer>
+);
+
+const TermsContent = () => (
+    <div className="bg-white px-6 py-24 sm:py-32 lg:px-8">
+        <div className="mx-auto max-w-3xl text-base leading-7 text-gray-700">
+            <p className="text-base font-semibold leading-7 text-cyan-600">Dernière mise à jour : 26 Mars 2025</p>
+            <h1 className="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Conditions Générales d'Utilisation</h1>
+            <div className="mt-10 max-w-2xl">
+                <p>
+                    Les présentes conditions générales d'utilisation (dites « CGU ») ont pour objet l'encadrement juridique
+                    des modalités de mise à disposition du site et des services par AudioEnTexte et de définir les conditions
+                    d’accès et d’utilisation des services par « l'Utilisateur ».
+                </p>
+
+                <h2 className="mt-16 text-2xl font-bold tracking-tight text-gray-900">Article 1 : Mentions légales</h2>
+                <p className="mt-6">
+                    L'édition du site AudioEnTexte est assurée par la Société AudioEnTexte,
+                    immatriculée au RCS de Paris sous le numéro 840376487, dont le siège social est situé au 56 avenue Leclerc, 69007 Lyon.
+                    Adresse e-mail : bonjour@audioentexte.com.
+                    Le Directeur de la publication est : Charles Murillon.
+                </p>
+
+                <h2 className="mt-16 text-2xl font-bold tracking-tight text-gray-900">Article 2 : Accès au site</h2>
+                <p className="mt-6">
+                    Le site AudioEnTexte permet à l'Utilisateur un accès gratuit aux services suivants : transcription audio,
+                    génération de comptes rendus, partage de documents. Le site est accessible gratuitement en tout lieu à tout
+                    Utilisateur ayant un accès à Internet. Tous les frais supportés par l'Utilisateur pour accéder au service
+                    (matériel informatique, logiciels, connexion Internet, etc.) sont à sa charge.
+                </p>
+
+                <h2 className="mt-16 text-2xl font-bold tracking-tight text-gray-900">Article 3 : Collecte des données</h2>
+                <p className="mt-6">
+                    Le site assure à l'Utilisateur une collecte et un traitement d'informations personnelles dans le respect
+                    de la vie privée conformément à la loi n°78-17 du 6 janvier 1978 relative à l'informatique, aux fichiers
+                    et aux libertés. Pour plus d'informations, consultez notre Politique de Confidentialité.
+                </p>
+                <p className="mt-6">
+                    L'Utilisateur conserve la pleine propriété de ses données. AudioEnTexte ne revend ni ne réutilise les contenus
+                    téléchargés par l'Utilisateur à d'autres fins que l'exécution du service.
+                </p>
+
+                <h2 className="mt-16 text-2xl font-bold tracking-tight text-gray-900">Article 4 : Propriété intellectuelle</h2>
+                <p className="mt-6">
+                    Les marques, logos, signes ainsi que tous les contenus du site (textes, images, son…) font l'objet
+                    d'une protection par le Code de la propriété intellectuelle et plus particulièrement par le droit d'auteur.
+                    L'Utilisateur doit solliciter l'autorisation préalable du site pour toute reproduction, publication, copie des
+                    différents contenus.
+                </p>
+
+                <h2 className="mt-16 text-2xl font-bold tracking-tight text-gray-900">Article 5 : Responsabilité</h2>
+                <p className="mt-6">
+                    Les sources des informations diffusées sur le site AudioEnTexte sont réputées fiables mais le site ne garantit pas
+                    qu’il soit exempt de défauts, d’erreurs ou d’omissions. Le service de transcription est fourni à titre indicatif.
+                    La précision de la transcription et du compte rendu peut varier en fonction de la qualité de l'audio. AudioEnTexte
+                    ne saurait être tenu pour responsable de l'utilisation et de l'interprétation de l'information contenue dans ce site.
+                </p>
+
+                <h2 className="mt-16 text-2xl font-bold tracking-tight text-gray-900">Article 6 : Liens hypertextes</h2>
+                <p className="mt-6">
+                    Des liens hypertextes peuvent être présents sur le site. L’Utilisateur est informé qu’en cliquant sur ces liens,
+                    il sortira du site AudioEnTexte. Ce dernier n’a pas de contrôle sur les pages web sur lesquelles aboutissent ces
+                    liens et ne saurait, en aucun cas, être responsable de leur contenu.
+                </p>
+
+                <h2 className="mt-16 text-2xl font-bold tracking-tight text-gray-900">Article 7 : Droit applicable et juridiction compétente</h2>
+                <p className="mt-6">
+                    La législation française s'applique au présent contrat. En cas d'absence de résolution amiable d'un litige né
+                    entre les parties, les tribunaux français seront seuls compétents pour en connaître. Pour toute question relative
+                    à l’application des présentes CGU, vous pouvez joindre l’éditeur aux coordonnées inscrites à l’ARTICLE 1.
+                </p>
+            </div>
+        </div>
+    </div>
+);
+
+
+const BackgroundGradient = () => (
+    <div aria-hidden="true" className="absolute top-0 right-0 left-0 -z-10 hidden -translate-y-10 transform-gpu overflow-hidden blur-3xl sm:block">
+        <div
+            style={{ clipPath: 'polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)' }}
+            className="aspect-1155/678 w-288.75 bg-linear-to-tr from-cyan-500 to-blue-500 opacity-10"
+        />
+    </div>
+);
+
+
+// --- MAIN PAGE COMPONENT ---
+
+export default function TermsAndConditionsPage() {
+  return (
+    <div>
+      <BackgroundGradient />
+      <Header />
+      <div className="relative isolate">
+        <main>
+          <TermsContent />
+        </main>
+        <Footer />
+      </div>
+    </div>
+  );
 }

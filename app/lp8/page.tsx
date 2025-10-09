@@ -132,7 +132,7 @@ const faqs = [
 
 const footerNavigation = {
   solutions: [
-    { name: 'Différences', href: '#differentiators' },
+    { name: 'Comment ça marche', href: '#how-it-works' },
     { name: 'Tarifs', href: '#pricing' },
     { name: 'FAQ', href: '#faq' },
     { name: 'Contact', href: '#contact' },
@@ -150,7 +150,7 @@ const footerNavigation = {
   ],
   legal: [
     { name: 'CGU', href: '#' },
-    { name: 'Confidentialité', href: '#' },
+    { name: 'Confidentialité', href: '/terms-and-conditions' },
     { name: 'Contrat de traitement (DPA)', href: '#' },
   ],
 };
@@ -434,8 +434,8 @@ const Hero = () => (
 );
 
 const LogoCloud = () => (
-    <div className="mx-auto py-24 max-w-7xl px-6 lg:px-8">
-        <h2 className="text-center text-lg font-semibold leading-8 text-gray-900 dark:text-white">
+    <div className="mx-auto py-24 text-center max-w-7xl px-6 lg:px-8">
+        <h2 className="text-base/7 font-semibold text-cyan-600">
             Pour ceux qui visent aussi haut
         </h2>
         <div className="mx-auto mt-10 grid max-w-lg grid-cols-2 items-center gap-x-30 gap-y-10 sm:max-w-xl sm:grid-cols-3 lg:mx-0 lg:max-w-none lg:grid-cols-6">
