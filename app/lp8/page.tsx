@@ -57,27 +57,29 @@ const tiers = [
     name: 'Solo',
     id: 'tier-solo',
     href: '/onboarding',
-    priceMonthly: '39€',
-    description: 'Idéal pour freelances & consultants qui veulent gagner 3-4h/semaine sur leurs comptes rendus.',
+    priceMonthly: '19€',
+    description: 'Idéal pour une personne. Gagnez 3-4h/semaine sur vos comptes rendus.',
     features: [
+      '1 utilisateur',
       'Réunions illimitées',
-      'Transcription en français',
+      '+100 langues supportées',
       'Compte rendu professionnel (modifiable)',
-      'Partage (lien, Slack, email, Notion, Asana, ClickUp, Monday)',
+      'Partage (lien, email)',
     ],
     mostPopular: false,
   },
   {
-    name: 'Business',
-    id: 'tier-business',
+    name: 'Pro',
+    id: 'tier-pro',
     href: '/onboarding',
-    priceMonthly: '99€',
-    description: 'Parfait pour les équipes de 2 à 50 personnes qui veulent standardiser la qualité des notes et le suivi.',
+    priceMonthly: '39€',
+    description: 'Parfait pour les équipes qui veulent standardiser la qualité des notes et le suivi.',
     features: [
       'Tout dans Solo, plus :',
       'Dossiers partagés & modèles d’entreprise',
       'Rôles admin',
       'Support prioritaire (24H)',
+      'Partage (lien, Slack, email, Notion, Asana, ClickUp, Monday)',
     ],
     mostPopular: true,
   },
@@ -470,7 +472,7 @@ const HowItWorks = () => (
                 </div>
                 <div className="rounded-3xl bg-white/60 p-8 ring-1 ring-black/5 shadow-lg backdrop-blur-lg flex flex-col">
                     <div className="flex size-12 items-center justify-center rounded-lg bg-cyan-600 text-white">
-                        <SparklesIcon className="size-8" />
+                        <ClipboardDocumentCheckIcon className="size-8" />
                     </div>
                     <h3 className="mt-5 text-lg font-semibold leading-8 text-slate-900">2. Recevez un plan d'action</h3>
                     <p className="mt-2 text-base text-slate-600">
@@ -548,7 +550,7 @@ const Pricing = () => (
                             <p className="mt-4 text-sm/6 text-slate-600">{tier.description}</p>
                             <p className="mt-6 flex items-baseline gap-x-1">
                                 <span className="text-4xl font-semibold tracking-tight text-slate-900">{tier.priceMonthly}</span>
-                                {tier.priceMonthly !== 'Sur Devis' && <span className="text-sm/6 font-semibold text-slate-600">/mois</span>}
+                                {tier.priceMonthly !== 'Sur Devis' && <span className="text-sm/6 font-semibold text-slate-600">/utilisateur/mois</span>}
                             </p>
                             <ul role="list" className="mt-8 space-y-3 text-sm/6 text-slate-600">
                                 {tier.features.map((feature) => (
