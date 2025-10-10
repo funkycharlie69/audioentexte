@@ -191,7 +191,7 @@ const Header = () => {
         <div className="flex flex-1">
           <a href="#" className="-m-1.5 p-1.5">
             <span className="sr-only">AudioEnTexte</span>
-            <img alt="AudioEnTexte" src="/audio-en-texte.png" className="h-10 w-auto" />
+            <img alt="AudioEnTexte" src="/audio-en-texte.png" className="h-9 w-auto" />
           </a>
         </div>
         
