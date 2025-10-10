@@ -35,7 +35,7 @@ const testimonials = [
     },
   },
   {
-    body: 'AudioEnTexte est devenu indispensable. C’est comme si je vivais dans le futur.',
+    body: 'L\'addiction est réelle... à ce stade, je ne peux plus imaginer ma life sans. Puissant sans effort.',
     author: {
       name: 'Maxime Dubois',
       handle: 'Dirigeant, Atelier Loupiote',
@@ -43,7 +43,7 @@ const testimonials = [
     },
   },
   {
-    body: "L'addiction est réelle... à ce stade, je ne peux plus imaginer ma life sans. Puissant sans effort.",
+    body: 'Marche super bien. Compte rendu fidèle à l\'enregistrement',
     author: {
       name: 'Josselin Trouilloud',
       handle: 'Vidéaste, JossTVisuals',
@@ -58,7 +58,7 @@ const tiers = [
     id: 'tier-solo',
     href: '/onboarding',
     priceMonthly: '19€',
-    description: 'Idéal pour une personne. Gagnez 3-4h/semaine sur vos comptes rendus.',
+    description: 'Idéal pour freelances et indépendants.',
     features: [
       '1 utilisateur',
       'Réunions illimitées',
@@ -73,7 +73,7 @@ const tiers = [
     id: 'tier-pro',
     href: '/onboarding',
     priceMonthly: '39€',
-    description: 'Parfait pour les équipes qui veulent standardiser la qualité des notes et le suivi.',
+    description: 'Parfait pour les équipes agiles.',
     features: [
       'Tout dans Solo, plus :',
       'Dossiers partagés & modèles d’entreprise',
@@ -191,7 +191,7 @@ const Header = () => {
         <div className="flex flex-1">
           <a href="#" className="-m-1.5 p-1.5">
             <span className="sr-only">AudioEnTexte</span>
-            <img alt="AudioEnTexte" src="/audio-en-texte2.png" className="h-9 w-auto" />
+            <img alt="AudioEnTexte" src="/aet2.png" className="h-10 md:h-15 w-auto" />
           </a>
         </div>
         
@@ -218,7 +218,7 @@ const Header = () => {
         <div className="flex flex-1 justify-end items-center gap-x-4 lg:hidden">
             <a
                 href="/onboarding"
-                className="rounded-md bg-cyan-600 px-3 py-2 text-sm font-semibold text-white text-center shadow-sm hover:bg-cyan-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-600"
+                className="rounded-md bg-white px-3 py-2 text-sm font-semibold border border-cyan-600 text-slate-900 text-center shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-600"
             >
                 Essayer aujourd'hui
             </a>
@@ -281,15 +281,15 @@ const Header = () => {
 const Hero = () => (
   <div className="relative pt-14">
     <div className="py-24 pt-16">
-      <div className="absolute -rotate-12 top-5 left-5 w-20 h-20">
+      {/* <div className="absolute -rotate-12 top-5 left-5 w-20 h-20">
         <img src="/france.png" alt="Entreprise Française" />
-      </div>
+      </div> */}
       <div className="mx-auto max-w-7xl px-6 lg:px-8 relative">
         <div className="mx-auto max-w-5xl text-center">
           {/* Pill: Available On Platforms - START */}
           <div className="flex justify-center mb-6">
             <div className="inline-flex items-center gap-x-3 rounded-full bg-slate-100 px-4 py-1.5 text-sm font-medium text-slate-700 ring-1 ring-inset ring-slate-200">
-              <p>Disponible sur :</p>
+              <p>Fontionne dans +100 langues sur :</p>
               <div className="flex items-center gap-x-2.5 text-slate-500">
                 <img src="https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg" alt="Logo Apple" className="h-4 w-auto" />
                 <img src="https://upload.wikimedia.org/wikipedia/commons/2/2b/Windows_logo_2012-Black.svg" alt="Logo Microsoft" className="h-4 w-auto" />
@@ -315,38 +315,47 @@ const Hero = () => (
             30 jours satisfait ou remboursé en 1 clic
           </p>
         </div>
-
+      
         {/* Hero image */}
-        <div className="mt-16 flow-root sm:mt-24">
-          <div className="flex flex-col items-center justify-center gap-8 lg:flex-row lg:gap-12">
+        <div className="mt-16 flow-root sm:mt-24 border-2 border-slate-200 rounded-3xl shadow-2xl p-16">
+          <div className="grid grid-cols-1 gap-8 lg:grid-cols-1 lg:gap-12">
             
             {/* Étape 1: */}
-            <div className="grid gap-4 grid-cols-2 grid-row-3 items-center">
-              <p className="text-center text-sm font-medium text-slate-500 col-span-2">Réunion en ligne ou en présentiel</p>
-              <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Microsoft_Office_Teams_%282018%E2%80%93present%29.svg/1200px-Microsoft_Office_Teams_%282018%E2%80%93present%29.svg.png" alt="Teams Logo" className="size-10 shrink-0 mx-auto" />
-              <img src="https://www.logo.wine/a/logo/Google_Meet/Google_Meet-Logo.wine.svg" alt="Google Meet Logo" className="size-10 shrink-0 mx-auto" />
-              <img src="https://www.logo.wine/a/logo/Slack_Technologies/Slack_Technologies-Mark-Logo.wine.svg" alt="Slack Logo" className="size-10 shrink-0 mx-auto" />
-              <UserGroupIcon className="size-10 shrink-0 mx-auto" />
-            </div>
+              <div className="grid gap-4 grid-cols-2 grid-rows-2 items-center max-w-3xl mx-auto relative">
+    
+                <p className="text-center text-sm font-medium text-primary col-span-2">Réunion en ligne ou en présentiel</p>
 
-            <ArrowDownIcon className="size-8 text-cyan-600 lg:hidden" />
-            <ArrowRightIcon className="hidden size-8 text-cyan-600 lg:block" />
+                {/* Icônes de la grille */}
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Microsoft_Office_Teams_%282018%E2%80%93present%29.svg/1200px-Microsoft_Office_Teams_%282018%E2%80%93present%29.svg.png" alt="Teams Logo" className="size-10 shrink-0 mx-auto" />
+                <img src="https://www.logo.wine/a/logo/Google_Meet/Google_Meet-Logo.wine.svg" alt="Google Meet Logo" className="size-10 shrink-0 mx-auto" />
+                <img src="https://www.logo.wine/a/logo/Slack_Technologies/Slack_Technologies-Mark-Logo.wine.svg" alt="Slack Logo" className="size-10 shrink-0 mx-auto" />
+                <UserGroupIcon className="size-10 shrink-0 mx-auto" />
+
+                {/* --- Icône de microphone au centre --- */}
+                <div className="absolute top-2/3 left-1/2 -translate-x-1/2 -translate-y-1/2">
+                  <div className="flex shrink-0 items-center justify-center rounded-full bg-slate-100 p-4 ring-1 ring-slate-200 sm:p-4">
+                            <MicrophoneIcon className="size-12 text-cyan-600 sm:size-10" />
+                          </div> 
+                </div>
+                
+              </div>
+
+            <ArrowDownIcon className="size-8 text-cyan-600 mx-auto" />
             
             {/* Étape 2: Icône IA */}
             <div className="flex flex-col text-center items-center gap-4">
-              <p className="text-sm font-medium text-balance text-slate-500">Notre IA travaille pour vous</p>
+              <p className="text-sm font-medium text-balance text-primary">Notre IA travaille pour vous</p>
               <div className="flex shrink-0 items-center justify-center rounded-full bg-slate-100 p-4 ring-1 ring-slate-200 sm:p-4">
                 <SparklesIcon className="size-12 text-cyan-600 sm:size-10" />
               </div>
             </div>
-            
-            <ArrowDownIcon className="size-8 text-cyan-600 lg:hidden" />
-            <ArrowRightIcon className="hidden size-8 text-cyan-600 lg:block" />
+
+            <ArrowDownIcon className="size-8 text-cyan-600 mx-auto" />
 
             {/* Étape 3: Le Compte Rendu */}
-            <div className="flex flex-col gap-4 w-full max-w-3xl shrink-0 origin-center transform lg:w-2/3 lg:origin-left lg:scale-100">
-              <p className="text-sm text-center font-medium text-balance text-slate-500">Votre compte rendu</p>
-              <div className="rounded-2xl bg-white p-6 shadow-2xl ring-1 ring-slate-900/10 sm:p-8">
+            <div className="flex flex-col gap-4 w-full max-w-3xl mx-auto shrink-0 origin-center transform lg:origin-left lg:scale-100">
+              <p className="text-sm text-center font-medium text-balance text-primary">Votre compte rendu</p>
+              <div className="rounded-2xl bg-white p-6 ring-1 border border-primary ring-slate-900/10 sm:p-8">
                 <div className="flex gap-5 flex-col items-center justify-between">
                   <div className="ml-2 shrink-0 rounded-full bg-cyan-50 px-3 py-1.5 text-xs font-medium text-cyan-700">
                     Généré en 58s (Réunion de 47min)
@@ -523,7 +532,7 @@ const Pricing = () => (
                 </p>
             </div>
             <p className="mx-auto mt-6 max-w-2xl text-center text-lg/8 text-balance text-slate-600">
-                Essayez dès aujourd'hui avec notre garantie de 30 jours satisfait ou remboursé en 1 clic.
+                Gagnez 3-4h/semaine sur vos comptes rendus en essayant dès aujourd'hui. Garantie de 30 jours satisfait ou remboursé en 1 clic.
             </p>
             <div className="isolate mx-auto mt-16 grid max-w-md grid-cols-1 gap-y-8 sm:mt-20 lg:mx-0 lg:max-w-none lg:grid-cols-3">
                 {tiers.map((tier, tierIdx) => (
