@@ -1,7 +1,7 @@
 // Gemini
 'use client'
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Dialog, DialogPanel } from '@headlessui/react';
 import {
   Bars3Icon,
@@ -14,11 +14,10 @@ import {
   UsersIcon,
   MicrophoneIcon,
 } from '@heroicons/react/24/outline';
-import { CheckCircleIcon, CheckIcon, UserGroupIcon, ArrowRightIcon, ArrowDownIcon } from '@heroicons/react/20/solid';
+import { CheckCircleIcon, CheckIcon, UserGroupIcon, ArrowRightIcon, ArrowDownIcon, ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/20/solid';
 
 // --- CONSTANTS & DATA ---
-// On sort les données statiques des composants pour de meilleures performances.
-
+// ... (Toutes vos constantes comme navigation, testimonials, etc. restent ici, inchangées)
 const navigation = [
   { name: 'Comment ça marche', href: '#how-it-works' },
   { name: 'Tarifs', href: '#pricing' },
@@ -158,34 +157,145 @@ const footerNavigation = {
 };
 
 // --- UTILITY FUNCTIONS ---
-
-/**
- * Fonction utilitaire pour obtenir une date future formatée
- * @param {number} daysToAdd - Nombre de jours à ajouter à la date actuelle.
- * @returns {string} - La date formatée (ex: "12 oct.").
- */
 const getFutureDate = (daysToAdd) => {
   const future = new Date();
   future.setDate(future.getDate() + daysToAdd);
   return future.toLocaleDateString('fr-FR', { day: 'numeric', month: 'short' });
 };
 
-/**
- * Concatène les noms de classes CSS de manière conditionnelle.
- * @param {...string} classes - Les classes à joindre.
- * @returns {string}
- */
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ');
 }
 
+
+// --- NOUVEAU COMPOSANT POUR LE COMPTE RENDU PLIABLE ---
+const CompteRenduPliable = () => {
+  const [isExpanded, setIsExpanded] = useState(false);
+
+  const toggleExpansion = () => {
+    setIsExpanded(!isExpanded);
+  };
+
+  return (
+    <div className="w-full">
+      <div className="rounded-2xl bg-white p-6 ring-1 border-2 border-primary ring-slate-900/10 sm:p-8 relative">
+        <div
+          className={`
+            overflow-hidden 
+            transition-all duration-700 ease-in-out
+            ${isExpanded ? 'max-h-[2000px]' : 'max-h-96'} 
+          `}
+        >
+          {/* Contenu original et complet du compte rendu */}
+          <div className="flex gap-5 flex-col items-center justify-between">
+            <div className="ml-2 shrink-0 rounded-full bg-cyan-50 px-3 py-1.5 text-xs font-medium text-cyan-700">
+              Généré en 58s (Réunion de 47min)
+            </div>
+            <div>
+              <h2 className="text-xl font-semibold tracking-tight text-slate-900">
+                Compte Rendu Réunion - Lancement Phoenix
+              </h2>
+              <p className="mt-1 text-sm text-slate-500">
+                Date : {new Date().toLocaleDateString('fr-FR', { month: 'long', day: 'numeric', year: 'numeric' })}
+              </p>
+            </div>
+          </div>
+          <div className="mt-6 border-t border-slate-200 pt-6 text-sm">
+            <div>
+              <h3 className="flex items-center gap-x-2 font-semibold text-slate-800">
+                <ChatBubbleBottomCenterTextIcon className="size-5 text-cyan-600" />
+                Résumé Exécutif
+              </h3>
+              <p className="mt-3 text-slate-600">
+                La préparation du lancement de Phoenix avance bien, avec la finalisation du login SSO. La décision clé de la réunion est d'opter pour un <strong>essai gratuit de 14 jours</strong> plutôt qu'un modèle freemium pour le lancement, afin de maximiser les retours qualitatifs. Le marketing a <strong>besoin des visuels finaux</strong> pour la landing page.
+              </p>
+            </div>
+            <div className="mt-6">
+              <h3 className="flex items-center gap-x-2 font-semibold text-slate-800">
+                <UsersIcon className="size-5 text-cyan-600" />
+                Participants
+              </h3>
+              <div className="mt-3 flex flex-wrap gap-2">
+                <span className="inline-flex items-center rounded-full bg-red-50 px-2 py-1 text-xs font-medium text-red-700 ring-1 ring-inset ring-red-700/10">Léa (Produit)</span>
+                <span className="inline-flex items-center rounded-full bg-blue-50 px-2 py-1 text-xs font-medium text-blue-700 ring-1 ring-inset ring-blue-700/10">Marc (Tech)</span>
+                <span className="inline-flex items-center rounded-full bg-purple-50 px-2 py-1 text-xs font-medium text-purple-700 ring-1 ring-inset ring-purple-700/10">Sophie (Marketing)</span>
+                <span className="inline-flex items-center rounded-full bg-gray-50 px-2 py-1 text-xs font-medium text-gray-600 ring-1 ring-inset ring-gray-500/10">Alex (CEO)</span>
+              </div>
+            </div>
+             <div className="mt-6">
+              <h3 className="flex items-center gap-x-2 font-semibold text-slate-800">
+                <CheckCircleIcon className="size-5 text-cyan-600" />
+                Décisions Clés
+              </h3>
+              <ul className="mt-3 list-disc space-y-2 pl-5 text-slate-600">
+                <li>
+                  <strong>Modèle de lancement :</strong> L'équipe opte pour un essai gratuit de 14 jours. Le modèle freemium sera réévalué pour le T2 2026.
+                </li>
+                <li>
+                  <strong>Périmètre Beta :</strong> La fonctionnalité de reporting avancé est dépriorisée pour la V1 afin de tenir la date de lancement.
+                </li>
+              </ul>
+            </div>
+            <div className="mt-6">
+              <h3 className="flex items-center gap-x-2 font-semibold text-slate-800">
+                <ClipboardDocumentCheckIcon className="size-5 text-cyan-600" />
+                Plan d'Action
+              </h3>
+              <div className="mt-3 space-y-2">
+                <div className="grid grid-cols-1 gap-2 rounded-md border border-slate-200 bg-slate-50 p-3 sm:grid-cols-3">
+                  <div className="font-medium text-slate-900 sm:col-span-2">Déployer la version beta sur le serveur de staging</div>
+                  <div className="flex items-center justify-start gap-x-2 sm:justify-end">
+                    <span className="text-xs font-medium text-blue-700">Marc</span>
+                    <span className="text-xs text-slate-500">→ {getFutureDate(5)}</span>
+                  </div>
+                </div>
+                <div className="grid grid-cols-1 gap-2 rounded-md border border-slate-200 bg-slate-50 p-3 sm:grid-cols-3">
+                  <div className="font-medium text-slate-900 sm:col-span-2">Mettre à jour la landing page avec l'offre d'essai</div>
+                  <div className="flex items-center justify-start gap-x-2 sm:justify-end">
+                    <span className="text-xs font-medium text-purple-700">Sophie</span>
+                    <span className="text-xs text-slate-500">→ {getFutureDate(15)}</span>
+                  </div>
+                </div>
+                <div className="grid grid-cols-1 gap-2 rounded-md border border-slate-200 bg-slate-50 p-3 sm:grid-cols-3">
+                  <div className="font-medium text-slate-900 sm:col-span-2">Préparer le script de la vidéo de démo</div>
+                  <div className="flex items-center justify-start gap-x-2 sm:justify-end">
+                    <span className="text-xs font-medium text-red-700">Léa</span>
+                    <span className="text-xs text-slate-500">→ {getFutureDate(20)}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        {/* Effet "déchiré" */}
+        {!isExpanded && (
+          <div className="absolute bottom-6 left-0 h-24 w-full bg-gradient-to-t from-white to-transparent pointer-events-none" />
+        )}
+      </div>
+
+      {/* Bouton "Voir plus/moins" */}
+      <div className="mt-4 flex justify-center">
+        <button
+          onClick={toggleExpansion}
+          className="flex items-center gap-2 rounded-full bg-cyan-600/10 px-4 py-2 text-sm font-semibold text-cyan-700 hover:bg-cyan-600/20 transition-colors"
+        >
+          {isExpanded ? 'Voir moins' : 'Voir tout le compte rendu'}
+          {isExpanded ? <ChevronUpIcon className="size-4" /> : <ChevronDownIcon className="size-4" />}
+        </button>
+      </div>
+    </div>
+  );
+};
+
+
 // --- UI COMPONENTS ---
 
 const Header = () => {
+    // ... (Votre composant Header reste inchangé)
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
-    // Modification pour un header sticky avec un fond lors du scroll
     <header className="sticky top-0 z-50 bg-white/80 backdrop-blur-sm border-b border-slate-900/10">
       <nav aria-label="Global" className="flex items-center justify-between p-4 lg:px-8">
         <div className="flex flex-1">
@@ -194,8 +304,6 @@ const Header = () => {
             <img alt="AudioEnTexte" src="/aet2.png" className="h-10 md:h-15 w-auto" />
           </a>
         </div>
-        
-        {/* Liens de navigation pour le desktop */}
         <div className="hidden lg:flex lg:gap-x-12">
           {navigation.map((item) => (
             <a key={item.name} href={item.href} className="text-sm/6 font-semibold text-slate-900">
@@ -203,8 +311,6 @@ const Header = () => {
             </a>
           ))}
         </div>
-        
-        {/* Bouton CTA pour le desktop */}
         <div className="hidden lg:flex lg:flex-1 lg:justify-end">
           <a
             href="/onboarding"
@@ -213,12 +319,10 @@ const Header = () => {
             Essayer aujourd'hui
           </a>
         </div>
-        
-        {/* Boutons pour le mobile : CTA toujours visible + Menu Burger */}
         <div className="flex flex-1 justify-end items-center gap-x-4 lg:hidden">
             <a
                 href="/onboarding"
-                className="rounded-md bg-white px-3 py-2 text-sm font-semibold border border-cyan-600 text-slate-900 text-center shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-600"
+                className={"rounded-md bg-white px-3 whitespace-nowrap py-2 text-sm font-semibold border border-cyan-600 text-slate-900 text-center shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-600"}
             >
                 Essayer aujourd'hui
             </a>
@@ -232,8 +336,6 @@ const Header = () => {
           </button>
         </div>
       </nav>
-
-      {/* Panel du menu burger pour mobile */}
       <Dialog open={mobileMenuOpen} onClose={setMobileMenuOpen} className="lg:hidden">
         <div className="fixed inset-0 z-50" />
         <DialogPanel className="fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-white p-6 sm:max-w-sm sm:ring-1 sm:ring-slate-900/10">
@@ -242,7 +344,7 @@ const Header = () => {
               <span className="sr-only">AudioEnTexte</span>
               <img
                 alt="AudioEnTexte"
-                src="/audio-en-texte.png"
+                src="/aet2.png"
                 className="h-12 w-auto"
               />
             </a>
@@ -262,14 +364,13 @@ const Header = () => {
                   <a
                     key={item.name}
                     href={item.href}
-                    onClick={() => setMobileMenuOpen(false)} // Ferme le menu au clic
+                    onClick={() => setMobileMenuOpen(false)}
                     className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-slate-900 hover:bg-slate-50"
                   >
                     {item.name}
                   </a>
                 ))}
               </div>
-              {/* Le lien de connexion a été retiré car le bouton CTA est maintenant toujours visible */}
             </div>
           </div>
         </DialogPanel>
@@ -279,17 +380,13 @@ const Header = () => {
 };
 
 const Hero = () => (
-  <div className="relative pt-14">
+  <div className="relative">
     <div className="py-24 pt-16">
-      {/* <div className="absolute -rotate-12 top-5 left-5 w-20 h-20">
-        <img src="/france.png" alt="Entreprise Française" />
-      </div> */}
-      <div className="mx-auto max-w-7xl px-6 lg:px-8 relative">
+      <div className="mx-auto max-w-7xl px-7 lg:px-8 relative">
         <div className="mx-auto max-w-5xl text-center">
-          {/* Pill: Available On Platforms - START */}
-          <div className="flex justify-center mb-6">
+            <div className="flex justify-center mb-6">
             <div className="inline-flex items-center gap-x-3 rounded-full bg-slate-100 px-4 py-1.5 text-sm font-medium text-slate-700 ring-1 ring-inset ring-slate-200">
-              <p>Fontionne dans +100 langues sur :</p>
+              <p>Disponible sur :</p>
               <div className="flex items-center gap-x-2.5 text-slate-500">
                 <img src="https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg" alt="Logo Apple" className="h-4 w-auto" />
                 <img src="https://upload.wikimedia.org/wikipedia/commons/2/2b/Windows_logo_2012-Black.svg" alt="Logo Microsoft" className="h-4 w-auto" />
@@ -300,9 +397,9 @@ const Hero = () => (
           <h1 className="text-4xl font-semibold tracking-tight text-pretty text-slate-900 sm:text-6xl">
             Compte rendu de réunion parfait, <span className="text-cyan-600">sans prendre de notes.</span>
           </h1>
-          <p className="mt-8 text-lg text-balance text-slate-600 sm:text-2xl/8">
+          <h2 className="mt-8 text-lg text-balance text-slate-600 sm:text-2xl/8">
             <strong>Concentrez-vous sur la conversation</strong>, AudioEnTexte rédige pour vous un plan d'action clair et prêt à partager.
-          </p>
+          </h2>
           <div className="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row sm:gap-x-6">
             <a
               href="/onboarding"
@@ -316,35 +413,28 @@ const Hero = () => (
           </p>
         </div>
       
-        {/* Hero image */}
-        <div className="mt-16 flow-root sm:mt-24 border-2 border-slate-200 rounded-3xl shadow-2xl p-16">
+        <div className="mt-16 flow-root sm:mt-24 border-2 border-slate-200 rounded-3xl shadow-2xl p-8">
           <div className="grid grid-cols-1 gap-8 lg:grid-cols-1 lg:gap-12">
             
-            {/* Étape 1: */}
-              <div className="grid gap-4 grid-cols-2 grid-rows-2 items-center max-w-3xl mx-auto relative">
-    
-                <p className="text-center text-sm font-medium text-primary col-span-2">Réunion en ligne ou en présentiel</p>
-
-                {/* Icônes de la grille */}
-                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Microsoft_Office_Teams_%282018%E2%80%93present%29.svg/1200px-Microsoft_Office_Teams_%282018%E2%80%93present%29.svg.png" alt="Teams Logo" className="size-10 shrink-0 mx-auto" />
-                <img src="https://www.logo.wine/a/logo/Google_Meet/Google_Meet-Logo.wine.svg" alt="Google Meet Logo" className="size-10 shrink-0 mx-auto" />
-                <img src="https://www.logo.wine/a/logo/Slack_Technologies/Slack_Technologies-Mark-Logo.wine.svg" alt="Slack Logo" className="size-10 shrink-0 mx-auto" />
-                <UserGroupIcon className="size-10 shrink-0 mx-auto" />
-
-                {/* --- Icône de microphone au centre --- */}
-                <div className="absolute top-2/3 left-1/2 -translate-x-1/2 -translate-y-1/2">
-                  <div className="flex shrink-0 items-center justify-center rounded-full bg-slate-100 p-4 ring-1 ring-slate-200 sm:p-4">
-                            <MicrophoneIcon className="size-12 text-cyan-600 sm:size-10" />
-                          </div> 
+            {/* Étape 1 */}
+            <div className="grid gap-4 grid-cols-2 grid-rows-2 items-center max-w-3xl mx-auto relative">
+              <h3 className="text-center text-balance text-lg font-medium text-primary col-span-2">Enregistrez vos réunion en ligne ou en présentiel</h3>
+              <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Microsoft_Office_Teams_%282018%E2%80%93present%29.svg/1200px-Microsoft_Office_Teams_%282018%E2%80%93present%29.svg.png" alt="Teams Logo" className="size-10 shrink-0 mx-auto" />
+              <img src="https://www.logo.wine/a/logo/Google_Meet/Google_Meet-Logo.wine.svg" alt="Google Meet Logo" className="size-10 shrink-0 mx-auto" />
+              <img src="https://www.logo.wine/a/logo/Slack_Technologies/Slack_Technologies-Mark-Logo.wine.svg" alt="Slack Logo" className="size-10 shrink-0 mx-auto" />
+              <UserGroupIcon className="size-10 shrink-0 mx-auto" />
+              <div className="absolute top-2/3 left-1/2 -translate-x-1/2 -translate-y-1/2">
+                <div className="flex shrink-0 items-center justify-center rounded-full bg-slate-100 p-4 ring-1 ring-slate-200 sm:p-4">
+                  <MicrophoneIcon className="size-12 text-cyan-600 sm:size-10" />
                 </div>
-                
               </div>
+            </div>
 
             <ArrowDownIcon className="size-8 text-cyan-600 mx-auto" />
             
-            {/* Étape 2: Icône IA */}
+            {/* Étape 2 */}
             <div className="flex flex-col text-center items-center gap-4">
-              <p className="text-sm font-medium text-balance text-primary">Notre IA travaille pour vous</p>
+              <h3 className="text-center text-balance text-lg font-medium text-primary col-span-2">Notre IA travaille pour vous</h3>
               <div className="flex shrink-0 items-center justify-center rounded-full bg-slate-100 p-4 ring-1 ring-slate-200 sm:p-4">
                 <SparklesIcon className="size-12 text-cyan-600 sm:size-10" />
               </div>
@@ -352,91 +442,12 @@ const Hero = () => (
 
             <ArrowDownIcon className="size-8 text-cyan-600 mx-auto" />
 
-            {/* Étape 3: Le Compte Rendu */}
-            <div className="flex flex-col gap-4 w-full max-w-3xl mx-auto shrink-0 origin-center transform lg:origin-left lg:scale-100">
-              <p className="text-sm text-center font-medium text-balance text-primary">Votre compte rendu</p>
-              <div className="rounded-2xl bg-white p-6 ring-1 border border-primary ring-slate-900/10 sm:p-8">
-                <div className="flex gap-5 flex-col items-center justify-between">
-                  <div className="ml-2 shrink-0 rounded-full bg-cyan-50 px-3 py-1.5 text-xs font-medium text-cyan-700">
-                    Généré en 58s (Réunion de 47min)
-                  </div>
-                  <div>
-                    <h2 className="text-xl font-semibold tracking-tight text-slate-900">
-                      Compte Rendu Réunion - Lancement Phoenix
-                    </h2>
-                    <p className="mt-1 text-sm text-slate-500">
-                      Date : {new Date().toLocaleDateString('fr-FR', { month: 'long', day: 'numeric', year: 'numeric' })}
-                    </p>
-                  </div>
-                </div>
-                <div className="mt-6 border-t border-slate-200 pt-6 text-sm">
-                  <div>
-                    <h3 className="flex items-center gap-x-2 font-semibold text-slate-800">
-                      <ChatBubbleBottomCenterTextIcon className="size-5 text-cyan-600" />
-                      Résumé Exécutif
-                    </h3>
-                    <p className="mt-3 text-slate-600">
-                      La préparation du lancement de Phoenix avance bien, avec la finalisation du login SSO. La décision clé de la réunion est d'opter pour un <strong>essai gratuit de 14 jours</strong> plutôt qu'un modèle freemium pour le lancement, afin de maximiser les retours qualitatifs. Le marketing a <strong>besoin des visuels finaux</strong> pour la landing page.
-                    </p>
-                  </div>
-                  <div className="mt-6">
-                    <h3 className="flex items-center gap-x-2 font-semibold text-slate-800">
-                      <UsersIcon className="size-5 text-cyan-600" />
-                      Participants
-                    </h3>
-                    <div className="mt-3 flex flex-wrap gap-2">
-                      <span className="inline-flex items-center rounded-full bg-red-50 px-2 py-1 text-xs font-medium text-red-700 ring-1 ring-inset ring-red-700/10">Léa (Produit)</span>
-                      <span className="inline-flex items-center rounded-full bg-blue-50 px-2 py-1 text-xs font-medium text-blue-700 ring-1 ring-inset ring-blue-700/10">Marc (Tech)</span>
-                      <span className="inline-flex items-center rounded-full bg-purple-50 px-2 py-1 text-xs font-medium text-purple-700 ring-1 ring-inset ring-purple-700/10">Sophie (Marketing)</span>
-                      <span className="inline-flex items-center rounded-full bg-gray-50 px-2 py-1 text-xs font-medium text-gray-600 ring-1 ring-inset ring-gray-500/10">Alex (CEO)</span>
-                    </div>
-                  </div>
-                   <div className="mt-6">
-                    <h3 className="flex items-center gap-x-2 font-semibold text-slate-800">
-                      <CheckCircleIcon className="size-5 text-cyan-600" />
-                      Décisions Clés
-                    </h3>
-                    <ul className="mt-3 list-disc space-y-2 pl-5 text-slate-600">
-                      <li>
-                        <strong>Modèle de lancement :</strong> L'équipe opte pour un essai gratuit de 14 jours. Le modèle freemium sera réévalué pour le T2 2026.
-                      </li>
-                      <li>
-                        <strong>Périmètre Beta :</strong> La fonctionnalité de reporting avancé est dépriorisée pour la V1 afin de tenir la date de lancement.
-                      </li>
-                    </ul>
-                  </div>
-                  <div className="mt-6">
-                    <h3 className="flex items-center gap-x-2 font-semibold text-slate-800">
-                      <ClipboardDocumentCheckIcon className="size-5 text-cyan-600" />
-                      Plan d'Action
-                    </h3>
-                    <div className="mt-3 space-y-2">
-                      <div className="grid grid-cols-1 gap-2 rounded-md border border-slate-200 bg-slate-50 p-3 sm:grid-cols-3">
-                        <div className="font-medium text-slate-900 sm:col-span-2">Déployer la version beta sur le serveur de staging</div>
-                        <div className="flex items-center justify-start gap-x-2 sm:justify-end">
-                          <span className="text-xs font-medium text-blue-700">Marc</span>
-                          <span className="text-xs text-slate-500">→ {getFutureDate(5)}</span>
-                        </div>
-                      </div>
-                      <div className="grid grid-cols-1 gap-2 rounded-md border border-slate-200 bg-slate-50 p-3 sm:grid-cols-3">
-                        <div className="font-medium text-slate-900 sm:col-span-2">Mettre à jour la landing page avec l'offre d'essai</div>
-                        <div className="flex items-center justify-start gap-x-2 sm:justify-end">
-                          <span className="text-xs font-medium text-purple-700">Sophie</span>
-                          <span className="text-xs text-slate-500">→ {getFutureDate(15)}</span>
-                        </div>
-                      </div>
-                      <div className="grid grid-cols-1 gap-2 rounded-md border border-slate-200 bg-slate-50 p-3 sm:grid-cols-3">
-                        <div className="font-medium text-slate-900 sm:col-span-2">Préparer le script de la vidéo de démo</div>
-                        <div className="flex items-center justify-start gap-x-2 sm:justify-end">
-                          <span className="text-xs font-medium text-red-700">Léa</span>
-                          <span className="text-xs text-slate-500">→ {getFutureDate(20)}</span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
+            {/* Étape 3: Le Compte Rendu - REMPLACEMENT PAR LE NOUVEAU COMPOSANT */}
+            <div className="flex flex-col gap-4 w-full max-w-3xl mx-auto shrink-0">
+              <h3 className="text-center text-balance text-lg font-medium text-primary col-span-2">Recevez votre compte rendu</h3>
+              <CompteRenduPliable />
             </div>
+
           </div>
         </div>
       </div>
@@ -444,6 +455,8 @@ const Hero = () => (
   </div>
 );
 
+
+// ... (Les autres composants : LogoCloud, HowItWorks, Pricing, FAQ, CTA, Footer, BackgroundGradient restent inchangés)
 const LogoCloud = () => (
     <div className="mx-auto py-24 text-center max-w-7xl px-6 lg:px-8">
         <h2 className="text-base/7 font-semibold text-cyan-600">
@@ -483,7 +496,7 @@ const HowItWorks = () => (
                     <div className="flex size-12 items-center justify-center rounded-lg bg-cyan-600 text-white">
                         <ClipboardDocumentCheckIcon className="size-8" />
                     </div>
-                    <h3 className="mt-5 text-lg font-semibold leading-8 text-slate-900">2. Recevez un plan d'action</h3>
+                    <h3 className="mt-5 text-lg font-semibold leading-8 text-slate-900">2. Recevez un compte rendu</h3>
                     <p className="mt-2 text-base text-slate-600">
                         Dès la fin de la réunion, recevez une synthèse professionnelle avec <strong>les décisions, les prochaines étapes et les responsables</strong>.
                     </p>
@@ -559,13 +572,17 @@ const Pricing = () => (
                             <p className="mt-4 text-sm/6 text-slate-600">{tier.description}</p>
                             <p className="mt-6 flex items-baseline gap-x-1">
                                 <span className="text-4xl font-semibold tracking-tight text-slate-900">{tier.priceMonthly}</span>
-                                {tier.priceMonthly !== 'Sur Devis' && <span className="text-sm/6 font-semibold text-slate-600">/utilisateur/mois</span>}
+                                {tier.priceMonthly !== 'Sur Devis' && (
+                                  <span className="text-sm/6 font-semibold text-slate-600">
+                                    {tier.name === 'Solo' ? '/mois' : '/utilisateur/mois'}
+                                  </span>
+                                )}
                             </p>
                             <ul role="list" className="mt-8 space-y-3 text-sm/6 text-slate-600">
                                 {tier.features.map((feature) => (
                                     <li key={feature} className="flex gap-x-3">
                                         <CheckIcon aria-hidden="true" className="h-6 w-5 flex-none text-cyan-600" />
-                                        {feature}
+                                        {tier.name === 'Pro' ? <span className='font-bold'>{feature}</span> : feature}
                                     </li>
                                 ))}
                             </ul>
@@ -606,7 +623,7 @@ const FAQ = () => (
         <h2 className="text-4xl font-semibold tracking-tight text-gray-900 sm:text-5xl dark:text-white">
             Questions fréquentes
         </h2>
-        <dl className="mt-20 divide-y divide-gray-900/10 dark:divide-white/10">
+        <dl className="mt-8 divide-y divide-gray-900/10 dark:divide-white/10">
             {faqs.map((faq) => (
                 <div key={faq.id} className="py-8 first:pt-0 last:pb-0 lg:grid lg:grid-cols-12 lg:gap-8">
                     <dt className="text-base/7 font-semibold text-gray-900 lg:col-span-5 dark:text-white">
@@ -634,7 +651,7 @@ const FAQ = () => (
 );
 
 const CTA = () => (
-    <div id="contact" className="relative mt-32 px-6 lg:px-8">
+    <div id="contact" className="relative mt-24 px-6 lg:px-8">
         <div className="mx-auto max-w-2xl text-center">
             <h2 className="text-4xl font-semibold tracking-tight text-balance text-gray-900 sm:text-5xl dark:text-white">
                 Prêt à décupler votre productivité ?
@@ -664,11 +681,10 @@ const CTA = () => (
 );
 
 const Footer = () => (
-    <footer className="relative mx-auto mt-32 max-w-7xl px-6 lg:px-8">
+    <footer className="relative mx-auto mt-24 max-w-7xl px-6 lg:px-8">
         <div className="border-t border-gray-900/10 py-16 dark:border-white/10">
             <div className="xl:grid xl:grid-cols-3 xl:gap-8">
-                <img alt="AudioEnTexte" src="/audio-en-texte.png" className="h-15 dark:hidden" />
-                <img alt="AudioEnTexte" src="/audio-en-texte.png" className="h-9 not-dark:hidden" />
+                <img alt="AudioEnTexte" src="/aet2.png" className="h-15 dark:hidden" />
                 <div className="mt-16 grid grid-cols-2 gap-8 xl:col-span-2 xl:mt-0">
                     <div className="md:grid md:grid-cols-2 md:gap-8">
                         <div>
@@ -683,10 +699,8 @@ const Footer = () => (
                                 ))}
                             </ul>
                         </div>
-                        {/* <div className="mt-10 md:mt-0"> ... </div> */}
                     </div>
                     <div className="md:grid md:grid-cols-2 md:gap-8">
-                        {/* <div> ... </div> */}
                         <div className="mt-0 md:mt-0">
                             <h3 className="text-sm/6 font-semibold text-gray-900 dark:text-white">Légal</h3>
                             <ul role="list" className="mt-6 space-y-4">
@@ -719,7 +733,6 @@ const BackgroundGradient = () => (
 // --- MAIN PAGE COMPONENT ---
 
 export default function LandingPage() {
-  // On applique le fond dégradé sur le conteneur principal de la page.
   return (
     <div>
       <BackgroundGradient />
@@ -738,3 +751,4 @@ export default function LandingPage() {
     </div>
   );
 }
+
