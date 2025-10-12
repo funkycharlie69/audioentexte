@@ -1,7 +1,7 @@
 // page.tsx
 "use client"
 
-import { useState } from 'react'; // useEffect et useSearchParams ne sont plus nécessaires ici
+import { useState } from 'react';
 import { CheckIcon } from '@heroicons/react/20/solid';
 
 // --- CONSTANTES & FONCTIONS UTILES ---
@@ -31,33 +31,22 @@ function classNames(...classes: (string | boolean)[]) {
   return classes.filter(Boolean).join(' ');
 }
 
-/**
- * NOUVEAU : Fonction de récupération des données de suivi.
- * Lit directement les données sauvegardées par votre composant UtmCapture.
- */
 function getStoredTrackingData() {
   if (typeof window === 'undefined') return {};
-
   const keys = ["utm_source", "utm_medium", "utm_campaign", "utm_content", "utm_term", "landingPage"];
   const data: Record<string, string> = {};
-  
   keys.forEach((key) => {
     const value = sessionStorage.getItem(key);
-    if (value) {
-      data[key] = value;
-    }
+    if (value) data[key] = value;
   });
-
   return data;
 }
-
 
 // --- COMPOSANT PRINCIPAL ---
 
 type Step = 'details' | 'questionJob' | 'questionSize' | 'selectPlan' | 'done';
 
 export default function OnboardingPage() {
-  // Les états du composant restent les mêmes
   const [step, setStep] = useState<Step>('details');
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
@@ -70,9 +59,6 @@ export default function OnboardingPage() {
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const [selectedPlanId, setSelectedPlanId] = useState<string | null>(null);
 
-  // Le hook useEffect pour capturer les UTMs a été retiré,
-  // car votre composant UtmCapture s'en charge déjà globalement.
-
   // --- Fonctions de soumission ---
 
   async function handleDetailsSubmit(e: React.FormEvent) {
@@ -84,9 +70,7 @@ export default function OnboardingPage() {
     setLoading(true);
     setErrorMsg(null);
     try {
-      // MODIFIÉ : On utilise la nouvelle fonction de récupération
       const trackingData = getStoredTrackingData();
-
       const payload = { 
         email, 
         firstName, 
@@ -95,9 +79,8 @@ export default function OnboardingPage() {
         source: "lp-onboarding", 
         userGroup: "waitlist", 
         subscribed: true,
-        ...trackingData // On ajoute toutes les données de suivi (UTMs + landingPage)
+        ...trackingData
       };
-      
       const res = await fetch("/api/waitlist", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload) });
       if (!res.ok) throw new Error("Une erreur est survenue lors de l'inscription.");
       setSubmittedEmail(email);
@@ -130,14 +113,23 @@ export default function OnboardingPage() {
     }
   }
 
-  async function handlePlanSelection(planId: string, stripeLink: string) {
+  // --- MODIFIÉ : La fonction accepte maintenant planName ---
+  async function handlePlanSelection(planId: string, planName: string, stripeLink: string) {
     setSelectedPlanId(planId);
     setLoading(true);
     setErrorMsg(null);
     try {
-      const payload = { email: submittedEmail, selectedPlan: planId };
+      // --- MODIFIÉ : Le payload inclut maintenant le nom du plan ---
+      const payload = { 
+        email: submittedEmail, 
+        selectedPlan: planName // On envoie "Solo" ou "Pro"
+      };
+      
       await fetch("/api/waitlist", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload) });
+      
+      // La redirection se fait après l'envoi des données
       window.location.href = stripeLink;
+
     } catch (err: any) {
        setErrorMsg("Impossible de procéder au paiement. Veuillez réessayer.");
     } finally {
@@ -146,7 +138,7 @@ export default function OnboardingPage() {
     }
   }
 
-  // --- Rendu du composant (inchangé) ---
+  // --- Rendu du composant ---
   return (
     <div className="flex min-h-screen flex-col justify-center px-6 py-6 lg:px-8 bg-slate-50">
       <div className="sm:mx-auto sm:w-full sm:max-w-sm">
@@ -205,7 +197,14 @@ export default function OnboardingPage() {
                       <p className="mt-6 flex items-baseline gap-x-1"><span className="text-4xl font-semibold tracking-tight text-slate-900">{tier.priceMonthly}</span><span className="text-sm/6 font-semibold text-slate-600">{tier.name === 'Solo' ? '/mois' : '/utilisateur/mois'}</span></p>
                       <ul role="list" className="mt-8 space-y-3 text-sm/6 text-slate-600">{tier.features.map((feature) => (<li key={feature} className="flex gap-x-3"><CheckIcon aria-hidden="true" className="h-6 w-5 flex-none text-cyan-600" />{tier.name === 'Pro' ? <span className='font-bold'>{feature}</span> : feature}</li>))}</ul>
                     </div>
-                    <button onClick={() => handlePlanSelection(tier.id, tier.stripeLink)} disabled={loading} aria-describedby={tier.id} className={classNames('mt-8 block rounded-md px-3 py-2 text-center text-lg/6 font-semibold focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-600 disabled:opacity-50', tier.mostPopular ? 'bg-cyan-600 text-white shadow-sm hover:bg-cyan-500' : 'text-cyan-600 ring-1 ring-inset ring-cyan-200 hover:ring-cyan-300')}>{(loading && selectedPlanId === tier.id) ? 'Redirection...' : 'Choisir ce plan'}</button>
+                    {/* --- MODIFIÉ : L'appel onClick envoie maintenant tier.name --- */}
+                    <button 
+                      onClick={() => handlePlanSelection(tier.id, tier.name, tier.stripeLink)} 
+                      disabled={loading} 
+                      aria-describedby={tier.id} 
+                      className={classNames('mt-8 block rounded-md px-3 py-2 text-center text-lg/6 font-semibold focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-600 disabled:opacity-50', tier.mostPopular ? 'bg-cyan-600 text-white shadow-sm hover:bg-cyan-500' : 'text-cyan-600 ring-1 ring-inset ring-cyan-200 hover:ring-cyan-300')}>
+                      {(loading && selectedPlanId === tier.id) ? 'Redirection...' : 'Choisir ce plan'}
+                    </button>
                   </div>
                 ))}
               </div>

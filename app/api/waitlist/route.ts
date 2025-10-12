@@ -41,6 +41,7 @@ export async function POST(req: Request) {
     // 4) Réponses aux questions
     const jobRole     = toStr((body as any).jobRole);
     const companySize = toStr((body as any).companySize);
+    const selectedPlan = toStr((body as any).selectedPlan);
     
     // 5) Autres champs optionnels
     const hoursPerMonth = toStr((body as any).hoursPerMonth);
@@ -80,6 +81,7 @@ export async function POST(req: Request) {
       term,
       content,
       campaign,
+      selectedPlan,
     });
 
     // 8) Upsert Loops
