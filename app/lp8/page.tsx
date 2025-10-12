@@ -113,18 +113,24 @@ const faqs = [
   },
   {
     id: 3,
+    question: "Est-ce que ça fonctionne avec d'autres langues ?",
+    answer:
+      "Oui, notre modèle de transcription supporte plus de 100 langues. Cependant, notre spécialité est le français, et c'est là que nous offrons la meilleure qualité de transcription et de résumé.",
+  },
+  {
+    id: 4,
     question: "Quelle est votre politique de remboursement ?",
     answer:
       "Vous bénéficiez d'une garantie \"satisfait ou remboursé\" de 30 jours. Si notre service ne vous convient pas, vous pouvez demander un remboursement complet, sans aucune justification.",
   },
   {
-    id: 4,
+    id: 5,
     question: 'Où sont hébergées mes données ?',
     answer:
       "En France, sur des serveurs à Paris. Vous conservez la pleine propriété de vos fichiers. Nous ne revendons ni ne réutilisons jamais vos contenus.",
   },
   {
-    id: 5,
+    id: 6,
     question: 'Pouvez-vous supprimer mes données ?',
     answer:
       "Oui. Vous pouvez supprimer vos données à tout moment depuis votre compte, ou activer la suppression automatique après traitement.",
@@ -292,7 +298,6 @@ const CompteRenduPliable = () => {
 // --- UI COMPONENTS ---
 
 const Header = () => {
-    // ... (Votre composant Header reste inchangé)
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
@@ -314,7 +319,7 @@ const Header = () => {
         <div className="hidden lg:flex lg:flex-1 lg:justify-end">
           <a
             href="/onboarding"
-            className="rounded-md bg-cyan-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-cyan-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-600"
+            className="rounded-md bg-white px-3 whitespace-nowrap py-2 text-sm font-semibold border border-cyan-600 text-slate-900 text-center shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-600"
           >
             Essayer aujourd'hui
           </a>
@@ -395,7 +400,7 @@ const Hero = () => (
             </div>
           </div>
           <h1 className="text-4xl font-semibold tracking-tight text-pretty text-slate-900 sm:text-6xl">
-            Compte rendu de réunion parfait, <span className="text-cyan-600">sans prendre de notes.</span>
+            Compte rendu de réunion parfait, <br /><span className="text-cyan-600">sans prendre de notes.</span>
           </h1>
           <h2 className="mt-8 text-lg text-balance text-slate-600 sm:text-2xl/8">
             <strong>Concentrez-vous sur la conversation</strong>, AudioEnTexte rédige pour vous un plan d'action clair et prêt à partager.
@@ -458,11 +463,11 @@ const Hero = () => (
 
 // ... (Les autres composants : LogoCloud, HowItWorks, Pricing, FAQ, CTA, Footer, BackgroundGradient restent inchangés)
 const LogoCloud = () => (
-    <div className="mx-auto py-24 text-center max-w-7xl px-6 lg:px-8">
+    <div className="mx-auto py-24 text-center max-w-7xl px-16">
         <h2 className="text-base/7 font-semibold text-cyan-600">
             Pour ceux qui visent aussi haut
         </h2>
-        <div className="mx-auto mt-10 grid max-w-lg grid-cols-2 items-center gap-x-30 gap-y-10 sm:max-w-xl sm:grid-cols-3 lg:mx-0 lg:max-w-none lg:grid-cols-6">
+        <div className="mx-auto mt-10 grid max-w-lg grid-cols-2 items-center gap-x-16 lg:gap-x-30 gap-y-10 sm:max-w-xl sm:grid-cols-3 lg:mx-0 lg:max-w-none lg:grid-cols-6">
             <img className="col-span-1 max-h-12 w-full object-contain dark:invert" src="/alan.png" alt="Alan" width={158} height={48} />
             <img className="col-span-1 max-h-12 w-full object-contain dark:invert" src="/Swile_black.png" alt="Swile" width={158} height={48} />
             <img className="col-span-1 max-h-12 w-full object-contain dark:invert" src="/sodikart.png" alt="Sodikart" width={158} height={48} />

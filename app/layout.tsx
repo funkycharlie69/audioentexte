@@ -3,6 +3,7 @@ import type { Metadata, Viewport } from "next";
 import type React from "react";
 import { GeistSans } from "geist/font/sans";
 import { GeistMono } from "geist/font/mono";
+import { VT323 } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Suspense } from "react";
@@ -11,6 +12,12 @@ import { FbPageView } from "../components/fb-pageview";
 import "./globals.css";
 import { GtagPageView } from "../components/gtag-pageview";
 import { ClarityInit } from "@/components/clarity-init";
+
+const vt323 = VT323({
+  subsets: ["latin"],
+  weight: "400",
+  variable: "--font-vt323",
+});
 
 // ✅ garder uniquement ce qui relève du SEO/social ici
 export const metadata: Metadata = {
@@ -84,7 +91,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           }}
         />
       </head>
-      <body className={`font-sans ${GeistSans.variable} ${GeistMono.variable} antialiased`}>
+      <body  className={`font-sans ${GeistSans.variable} ${GeistMono.variable} ${vt323.variable} antialiased`}>
         <Suspense fallback={null}>{children}</Suspense>
         <Suspense fallback={null}><FbPageView /></Suspense>
         <Suspense fallback={null}><GtagPageView /></Suspense>
