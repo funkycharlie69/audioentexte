@@ -24,18 +24,18 @@ const vt323 = VT323({
 export const metadata: Metadata = {
   title: "AudioEnTexte - Transcription Audio Française de Qualité",
   description:
-    "La meilleure solution gratuite de transcription audio en texte en français. Transformez vos enregistrements en texte et résumés email de haute qualité.",
+    "La meilleure solution de transcription audio en texte en français. Transformez vos réunions en comptes rendus de haute qualité.",
   openGraph: {
-    title: "AudioEnTexte - Transcription Audio Française",
+    title: "AudioEnTexte - Transcription Audio Française de Qualité",
     description:
-      "Transformez vos enregistrements français en transcriptions parfaites et résumés email professionnels.",
+      "Transformez vos réunions en transcriptions et comptes rendus professionnels.",
     type: "website",
     locale: "fr_FR",
   },
   twitter: {
     card: "summary_large_image",
-    title: "AudioEnTexte - Transcription Audio Française",
-    description: "La première solution optimisée pour le français. Rejoignez la liste d'attente !",
+    title: "AudioEnTexte - Transcription Audio de réunion - Entreprise Française",
+    description: "La première solution optimisée pour le français.",
   },
   robots: { index: true, follow: true },
 };

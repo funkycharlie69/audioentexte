@@ -188,7 +188,7 @@ export default function OnboardingPage() {
           {step === 'selectPlan' && (
             <div>
               <p className="mx-auto max-w-2xl text-center text-lg/8 text-balance text-slate-600">Gagnez 3-4h/semaine sur vos comptes rendus. <strong>Garantie de 30 jours satisfait ou remboursé en 1 clic.</strong></p>
-              <div className="isolate mx-auto mt-3 grid max-w-md grid-cols-1 gap-y-2 lg:mx-0 lg:max-w-none lg:grid-cols-2">
+              <div className="isolate mx-auto mt-3 grid max-w-md grid-cols-1 gap-2 lg:mx-0 lg:max-w-none lg:grid-cols-2">
                 {tiers.map((tier) => (
                   <div key={tier.id} className={classNames('flex flex-col justify-between rounded-3xl bg-white p-8 ring-1 ring-black/5 shadow-lg xl:p-10', tier.mostPopular ? 'lg:z-10' : 'lg:mt-8')}>
                     <div>
