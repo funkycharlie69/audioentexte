@@ -12,6 +12,7 @@ import { FbPageView } from "../components/fb-pageview";
 import "./globals.css";
 import { GtagPageView } from "../components/gtag-pageview";
 import { ClarityInit } from "@/components/clarity-init";
+import { UtmCapture } from "@/components/utm-capture";
 
 const vt323 = VT323({
   subsets: ["latin"],
@@ -96,6 +97,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <Suspense fallback={null}><FbPageView /></Suspense>
         <Suspense fallback={null}><GtagPageView /></Suspense>
         <Suspense fallback={null}><ClarityInit /></Suspense>
+        <UtmCapture />
         <Analytics />
         <SpeedInsights />
       </body>

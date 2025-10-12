@@ -48,6 +48,13 @@ export async function POST(req: Request) {
     const useCaseOther  = toStr((body as any).useCaseOther);
     const userId        = toStr((body as any).userId);
 
+    // 5.1) UTM fields
+    const utmSource = toStr((body as any).utm_source);
+    const medium    = toStr((body as any).utm_medium);
+    const term      = toStr((body as any).utm_term);
+    const content   = toStr((body as any).utm_content);
+    const campaign  = toStr((body as any).utm_campaign);
+
     // 6) `subscribed`
     const subRaw = (body as any).subscribed;
     const subscribed = typeof subRaw === "boolean" ? subRaw : undefined;
@@ -68,6 +75,11 @@ export async function POST(req: Request) {
       useCaseOther:  mainUseCase === "autre" ? useCaseOther : undefined,
       userId,
       subscribed,
+      utmSource,
+      medium,
+      term,
+      content,
+      campaign,
     });
 
     // 8) Upsert Loops

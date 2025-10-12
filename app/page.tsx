@@ -2,6 +2,7 @@
 'use client'
 
 import { useState, useEffect } from 'react';
+import { useSearchParams } from 'next/navigation';
 import { Dialog, DialogPanel } from '@headlessui/react';
 import {
   Bars3Icon,
@@ -173,7 +174,6 @@ const getFutureDate = (daysToAdd) => {
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ');
 }
-
 
 // --- NOUVEAU COMPOSANT POUR LE COMPTE RENDU PLIABLE ---
 const CompteRenduPliable = () => {
