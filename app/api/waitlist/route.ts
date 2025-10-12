@@ -9,6 +9,7 @@ const LOOPS_UPSERT_URL = "https://app.loops.so/api/v1/contacts/update";
 function toStr(v: unknown) {
   return (v ?? "").toString().trim();
 }
+
 function pickDefined(obj: Record<string, any>) {
   const out: Record<string, any> = {};
   for (const [k, v] of Object.entries(obj)) {
@@ -19,11 +20,7 @@ function pickDefined(obj: Record<string, any>) {
 
 export async function POST(req: Request) {
   try {
-    const ct = req.headers.get("content-type") || "";
-    const body =
-      ct.includes("application/json")
-        ? await req.json()
-        : Object.fromEntries((await req.formData()).entries());
+    const body = await req.json();
 
     // 1) Email obligatoire
     const email = toStr((body as any).email).toLowerCase();
@@ -31,53 +28,49 @@ export async function POST(req: Request) {
       return NextResponse.json({ ok: false, error: "email_required" }, { status: 400 });
     }
 
-    // 2) Champs “identité campagne” (compat JSON + alias UTM)
-    const source      = toStr((body as any).source) || "lp";
-    const userGroup   = toStr((body as any).userGroup) || "waitlist";
-    const campaign    = toStr((body as any).campaign ?? (body as any).utm_campaign);
-    const content     = toStr((body as any).content  ?? (body as any).utm_content);
-    const medium      = toStr((body as any).medium   ?? (body as any).utm_medium);
-    const term        = toStr((body as any).term     ?? (body as any).utm_term);
-    const utmSource   = toStr((body as any).utmSource ?? (body as any).utm_source); // nécessite une prop custom "utmSource" dans Loops si tu veux la garder distincte
-    const landingPage = toStr((body as any).landingPage ?? (body as any).page);
+    // 2) Champs “identité campagne”
+    const source      = toStr((body as any).source);
+    const userGroup   = toStr((body as any).userGroup);
+    const landingPage = toStr((body as any).landingPage);
 
-    // 3) Nouvelles réponses post-email
+    // 3) Champs "profil" de base
+    const firstName = toStr((body as any).firstName);
+    const lastName  = toStr((body as any).lastName);
+    const companyName = toStr((body as any).companyName); // NOUVEAU CHAMP
+
+    // 4) Réponses aux questions
+    const jobRole     = toStr((body as any).jobRole);
+    const companySize = toStr((body as any).companySize);
+    
+    // 5) Autres champs optionnels
     const hoursPerMonth = toStr((body as any).hoursPerMonth);
     const mainUseCase   = toStr((body as any).mainUseCase);
     const useCaseOther  = toStr((body as any).useCaseOther);
+    const userId        = toStr((body as any).userId);
 
-    // 4) Optionnels “profil”
-    const firstName = toStr((body as any).firstName);
-    const lastName  = toStr((body as any).lastName);
-    const notes     = toStr((body as any).notes);
-    const userId    = toStr((body as any).userId);
-
-    // 5) `subscribed` : n’inclure que si explicitement fourni (sinon Loops laisse la valeur par défaut)
+    // 6) `subscribed`
     const subRaw = (body as any).subscribed;
     const subscribed = typeof subRaw === "boolean" ? subRaw : undefined;
 
-    // 6) Build payload (ne garde que les champs renseignés)
+    // 7) Build payload
     const loopsPayload = pickDefined({
       email,
+      firstName,
+      lastName,
+      companyName, // AJOUTÉ ICI
       source,
       userGroup,
-      campaign,
-      content,
-      medium,
-      term,
-      utmSource,       // crée la propriété custom dans Loops si tu veux la conserver
       landingPage,
-      hoursPerMonth: hoursPerMonth || undefined,
-      mainUseCase:   mainUseCase   || undefined,
-      useCaseOther:  mainUseCase === "autre" ? (useCaseOther || undefined) : undefined,
-      firstName: firstName || undefined,
-      lastName:  lastName  || undefined,
-      notes:     notes     || undefined,
-      userId:    userId    || undefined,
-      subscribed, // inclus seulement si fourni
+      jobRole,
+      companySize,
+      hoursPerMonth,
+      mainUseCase,
+      useCaseOther:  mainUseCase === "autre" ? useCaseOther : undefined,
+      userId,
+      subscribed,
     });
 
-    // 7) Upsert Loops
+    // 8) Upsert Loops
     const res = await fetch(LOOPS_UPSERT_URL, {
       method: "PUT",
       headers: {
@@ -90,6 +83,7 @@ export async function POST(req: Request) {
 
     const data = await res.json().catch(() => ({}));
     if (!res.ok || data?.success === false) {
+      console.error("Loops API Error:", data);
       return NextResponse.json(
         { ok: false, error: "loops_error", details: data },
         { status: 502 }
