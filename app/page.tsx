@@ -415,7 +415,7 @@ const Hero = () => (
             </a>
           </div>
           <p className="mt-3 text-sm text-gray-500 dark:text-gray-400">
-            30 jours satisfait ou remboursé en 1 clic
+            Optimisé pour le français ・ 30 jours satisfait ou remboursé en 1 clic
           </p>
         </div>
       
