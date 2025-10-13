@@ -42,7 +42,7 @@ function getStoredTrackingData() {
   return data;
 }
 
-// --- COMPOSANT PRINCIPAL ---
+// --- COMPONENT PRINCIPAL ---
 
 type Step = 'details' | 'questionJob' | 'questionSize' | 'selectPlan' | 'done';
 
@@ -85,7 +85,7 @@ export default function OnboardingPage() {
       const res = await fetch("/api/waitlist", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload) });
       if (!res.ok) throw new Error("Une erreur est survenue lors de l'inscription.");
 
-      // --- AJOUT : Envoi de l'événement de conversion Google Ads ---
+      // --- Suivi Google Ads ---
       try {
         if (typeof window !== "undefined" && (window as any).gtag) {
           (window as any).gtag("event", "conversion", {
@@ -96,6 +96,26 @@ export default function OnboardingPage() {
         }
       } catch (analyticsError) {
         console.warn("Erreur lors de l'envoi de l'événement Google Ads:", analyticsError);
+      }
+      
+      // --- AJOUT : Suivi Meta (Facebook) Pixel ---
+      try {
+        const eventId = (typeof crypto !== "undefined" && "randomUUID" in crypto) ? crypto.randomUUID() : String(Date.now());
+        if (typeof window !== "undefined" && (window as any).fbq) {
+          (window as any).fbq(
+            "track",
+            "Lead",
+            {
+              content_name: "Onboarding Lead", // Nom plus spécifique à ce formulaire
+              value: 0,
+              currency: "EUR",
+              ...trackingData
+            },
+            { eventID: eventId }
+          );
+        }
+      } catch (analyticsError) {
+        console.warn("Erreur lors de l'envoi de l'événement Meta Pixel:", analyticsError);
       }
       // --- FIN DE L'AJOUT ---
 
