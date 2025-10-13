@@ -81,8 +81,24 @@ export default function OnboardingPage() {
         subscribed: true,
         ...trackingData
       };
+      
       const res = await fetch("/api/waitlist", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload) });
       if (!res.ok) throw new Error("Une erreur est survenue lors de l'inscription.");
+
+      // --- AJOUT : Envoi de l'événement de conversion Google Ads ---
+      try {
+        if (typeof window !== "undefined" && (window as any).gtag) {
+          (window as any).gtag("event", "conversion", {
+            send_to: "AW-17593383683/v7uvCP-kl6AbEIP2lsVB",
+            value: 1.0,
+            currency: "EUR",
+          });
+        }
+      } catch (analyticsError) {
+        console.warn("Erreur lors de l'envoi de l'événement Google Ads:", analyticsError);
+      }
+      // --- FIN DE L'AJOUT ---
+
       setSubmittedEmail(email);
       setStep('questionJob');
     } catch (err: any) {
@@ -113,21 +129,18 @@ export default function OnboardingPage() {
     }
   }
 
-  // --- MODIFIÉ : La fonction accepte maintenant planName ---
   async function handlePlanSelection(planId: string, planName: string, stripeLink: string) {
     setSelectedPlanId(planId);
     setLoading(true);
     setErrorMsg(null);
     try {
-      // --- MODIFIÉ : Le payload inclut maintenant le nom du plan ---
       const payload = { 
         email: submittedEmail, 
-        selectedPlan: planName // On envoie "Solo" ou "Pro"
+        selectedPlan: planName
       };
       
       await fetch("/api/waitlist", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload) });
       
-      // La redirection se fait après l'envoi des données
       window.location.href = stripeLink;
 
     } catch (err: any) {
@@ -138,7 +151,7 @@ export default function OnboardingPage() {
     }
   }
 
-  // --- Rendu du composant ---
+  // --- Rendu du composant (inchangé) ---
   return (
     <div className="flex min-h-screen flex-col justify-center px-6 py-6 lg:px-8 bg-slate-50">
       <div className="sm:mx-auto sm:w-full sm:max-w-sm">
@@ -197,7 +210,6 @@ export default function OnboardingPage() {
                       <p className="mt-6 flex items-baseline gap-x-1"><span className="text-4xl font-semibold tracking-tight text-slate-900">{tier.priceMonthly}</span><span className="text-sm/6 font-semibold text-slate-600">{tier.name === 'Solo' ? '/mois' : '/utilisateur/mois'}</span></p>
                       <ul role="list" className="mt-8 space-y-3 text-sm/6 text-slate-600">{tier.features.map((feature) => (<li key={feature} className="flex gap-x-3"><CheckIcon aria-hidden="true" className="h-6 w-5 flex-none text-cyan-600" />{tier.name === 'Pro' ? <span className='font-bold'>{feature}</span> : feature}</li>))}</ul>
                     </div>
-                    {/* --- MODIFIÉ : L'appel onClick envoie maintenant tier.name --- */}
                     <button 
                       onClick={() => handlePlanSelection(tier.id, tier.name, tier.stripeLink)} 
                       disabled={loading} 
