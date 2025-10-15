@@ -135,7 +135,7 @@ export default function ChoosePlanPage() {
             </p>
             <div className="isolate mx-auto mt-3 grid max-w-md grid-cols-1 gap-y-2 lg:mx-0 lg:max-w-none lg:grid-cols-2">
               {tiers.map((tier) => (
-                <div key={tier.id} className={classNames('flex flex-col justify-between rounded-3xl bg-white p-8 ring-1 ring-black/5 shadow-lg xl:p-10', tier.mostPopular ? 'lg:z-10' : 'lg:mt-8')}>
+                <div key={tier.id} className={classNames('flex flex-col justify-between rounded-3xl bg-white p-8 m-1 ring-1 ring-black/5 shadow-lg xl:p-10', tier.mostPopular ? 'lg:z-10' : 'lg:mt-8')}>
                   <div>
                     <div className="flex items-center justify-between gap-x-4"><h3 id={tier.id} className={classNames(tier.mostPopular ? 'text-cyan-600' : 'text-slate-900', 'text-lg/8 font-semibold')}>{tier.name}</h3>{tier.mostPopular && <p className="rounded-full bg-cyan-600/10 px-2.5 py-1 text-xs/5 font-semibold text-cyan-600">Plus choisi</p>}</div>
                     <p className="mt-4 text-sm/6 text-slate-600">{tier.description}</p>
@@ -146,7 +146,7 @@ export default function ChoosePlanPage() {
                     onClick={() => handlePlanSelection(tier.id, tier.name, tier.stripeLink)} 
                     disabled={loading || !userEmail} 
                     aria-describedby={tier.id} 
-                    className={classNames('mt-8 block rounded-md px-3 py-2 text-center text-lg/6 font-semibold focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-600 disabled:opacity-50', tier.mostPopular ? 'bg-cyan-600 text-white shadow-sm hover:bg-cyan-500' : 'text-cyan-600 ring-1 ring-inset ring-cyan-200 hover:ring-cyan-300')}>
+                    className={classNames('mt-8 block rounded-md px-3 py-2 text-center text-lg/6 font-semibold focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-600 disabled:opacity-50', tier.mostPopular ? 'bg-cyan-600 text-white shadow-sm hover:bg-cyan-500' : 'bg-cyan-600 text-white shadow-sm hover:bg-cyan-500')}>
                     {(loading && selectedPlanId === tier.id) ? 'Redirection...' : 'Choisir ce plan'}
                   </button>
                 </div>
