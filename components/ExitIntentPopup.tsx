@@ -105,7 +105,7 @@ const ExitIntentPopup = ({ isOpen, onClose }: ExitIntentPopupProps) => {
               </DialogTitle>
               <p className="mt-4 text-center text-slate-600 text-balance">
                 C'est le temps moyen que nos clients récupèrent en arrêtant de rédiger des comptes rendus. Concentrez-vous sur l'essentiel, on s'occupe du reste.
-                <br /><br /><strong>Voici <span className="text-cyan-600">-20% à vie</span> pour vous lancer.</strong>
+                <br /><br /><strong>Voici <span className="text-cyan-600">-20% sur vos 3 premiers mois</span> pour vous lancer.</strong>
               </p>
               <form onSubmit={handleSubmit} className="mt-6 flex flex-col gap-3">
                 <label htmlFor="email-address" className="sr-only">Adresse email</label>
