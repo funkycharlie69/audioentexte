@@ -28,7 +28,7 @@ const navigation = [
 
 const testimonials = [
   {
-    body: 'Compte rendu envoyé en 10 minutes, tâches claires pour toute l’équipe. On a arrêté les prises de notes à la main.',
+    body: 'Compte rendu envoyé en 3 minutes, tâches claires pour toute l’équipe. On a arrêté les prises de notes à la main.',
     author: {
       name: 'Marc Biessy',
       handle: 'Co-Fondateur, Ops Clean',
@@ -420,6 +420,21 @@ const Hero = () => (
           </p>
         </div>
       
+        <div className="mt-16 sm:mt-24">
+                <figure className="mx-auto max-w-4xl text-center">
+                    <blockquote className="text-lg text-pretty font-medium leading-8 text-slate-900 sm:text-xl sm:leading-9">
+                        <p>“{testimonials[0].body}”</p>
+                    </blockquote>
+                    <figcaption className="mt-8">
+                        <img className="mx-auto h-12 w-12 rounded-full" src={testimonials[0].author.imageUrl} alt="" />
+                        <div className="mt-4 flex flex-col items-center justify-center space-x-3 text-base">
+                            <div className="font-semibold text-slate-900">{testimonials[0].author.name}</div>
+                            <div className="text-slate-600">{testimonials[0].author.handle}</div>
+                        </div>
+                    </figcaption>
+                </figure>
+            </div>
+
         <div className="mt-16 flow-root sm:mt-24 border-2 border-slate-200 rounded-3xl shadow-2xl p-8">
           <div className="grid grid-cols-1 gap-8 lg:grid-cols-1 lg:gap-12">
             
@@ -518,20 +533,7 @@ const HowItWorks = () => (
                     </p>
                 </div>
             </div>
-            <div className="mt-16 sm:mt-24">
-                <figure className="mx-auto max-w-4xl text-center">
-                    <blockquote className="text-lg text-pretty font-medium leading-8 text-slate-900 sm:text-xl sm:leading-9">
-                        <p>“{testimonials[0].body}”</p>
-                    </blockquote>
-                    <figcaption className="mt-8">
-                        <img className="mx-auto h-12 w-12 rounded-full" src={testimonials[0].author.imageUrl} alt="" />
-                        <div className="mt-4 flex flex-col items-center justify-center space-x-3 text-base">
-                            <div className="font-semibold text-slate-900">{testimonials[0].author.name}</div>
-                            <div className="text-slate-600">{testimonials[0].author.handle}</div>
-                        </div>
-                    </figcaption>
-                </figure>
-            </div>
+            
         </div>
     </div>
 );
