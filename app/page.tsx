@@ -1,7 +1,7 @@
 // Gemini
 'use client'
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { Dialog, DialogPanel } from '@headlessui/react';
 import {
@@ -16,6 +16,7 @@ import {
   MicrophoneIcon,
 } from '@heroicons/react/24/outline';
 import { CheckCircleIcon, CheckIcon, UserGroupIcon, ArrowRightIcon, ArrowDownIcon, ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/20/solid';
+import ExitIntentPopup from '../components/ExitIntentPopup';
 
 // --- CONSTANTS & DATA ---
 // ... (Toutes vos constantes comme navigation, testimonials, etc. restent ici, inchangées)
@@ -739,6 +740,66 @@ const BackgroundGradient = () => (
 // --- MAIN PAGE COMPONENT ---
 
 export default function LandingPage() {
+  const [showExitPopup, setShowExitPopup] = useState(false);
+  const popupShown = useRef(false);
+  // --- NOUVEAU REF ---
+  // On utilise un ref pour garder en mémoire la dernière position de scroll
+  // sans causer de re-rendu du composant à chaque pixel défilé.
+  const lastScrollY = useRef(0);
+
+  useEffect(() => {
+    const isMobile = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+
+    // --- LOGIQUE POUR DESKTOP (inchangée) ---
+    const handleMouseLeave = (event: MouseEvent) => {
+      if (event.clientY <= 0 && !popupShown.current) {
+        setShowExitPopup(true);
+        popupShown.current = true;
+      }
+    };
+
+    // --- NOUVELLE LOGIQUE POUR MOBILE (Déclenchement à la remontée) ---
+    const handleScroll = () => {
+      if (popupShown.current) {
+        // Si la pop-up a déjà été affichée, on ne fait plus rien.
+        return;
+      }
+
+      const currentScrollY = window.scrollY;
+
+      // --- CONDITIONS DE DÉCLENCHEMENT ---
+      // 1. L'utilisateur doit avoir défilé d'au moins 5x la hauteur de l'écran (signe d'engagement).
+      // 2. L'utilisateur doit être en train de remonter (la position actuelle est plus haute que la précédente).
+      if (
+        currentScrollY > window.innerHeight * 5 &&
+        currentScrollY < lastScrollY.current
+      ) {
+        setShowExitPopup(true);
+        popupShown.current = true;
+        // On retire l'écouteur pour la performance une fois la mission accomplie.
+        document.removeEventListener('scroll', handleScroll);
+      }
+
+      // On met à jour la dernière position de scroll connue pour la prochaine comparaison.
+      lastScrollY.current = currentScrollY;
+    };
+
+    if (isMobile) {
+      document.addEventListener('scroll', handleScroll, { passive: true });
+    } else {
+      document.addEventListener('mouseleave', handleMouseLeave);
+    }
+
+    // Fonction de nettoyage
+    return () => {
+      if (isMobile) {
+        document.removeEventListener('scroll', handleScroll);
+      } else {
+        document.removeEventListener('mouseleave', handleMouseLeave);
+      }
+    };
+  }, []);
+
   return (
     <div>
       <BackgroundGradient />
@@ -754,6 +815,10 @@ export default function LandingPage() {
         </main>
         <Footer />
       </div>
+      <ExitIntentPopup 
+        isOpen={showExitPopup} 
+        onClose={() => setShowExitPopup(false)} 
+      />
     </div>
   );
 }
