@@ -742,45 +742,39 @@ const BackgroundGradient = () => (
 export default function LandingPage() {
   const [showExitPopup, setShowExitPopup] = useState(false);
   const popupShown = useRef(false);
-  // --- NOUVEAU REF ---
-  // On utilise un ref pour garder en mémoire la dernière position de scroll
-  // sans causer de re-rendu du composant à chaque pixel défilé.
   const lastScrollY = useRef(0);
 
   useEffect(() => {
     const isMobile = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
 
-    // --- LOGIQUE POUR DESKTOP (inchangée) ---
+    // --- LOGIQUE POUR DESKTOP (Mise à jour) ---
+    // On ajoute une condition pour vérifier que l'utilisateur a suffisamment défilé.
     const handleMouseLeave = (event: MouseEvent) => {
-      if (event.clientY <= 0 && !popupShown.current) {
+      // NOUVELLE CONDITION : L'utilisateur a-t-il fait défiler au moins 2,5x de la hauteur de l'écran ?
+      const hasScrolledEnough = window.scrollY > window.innerHeight * 2.5;
+      const isExitingTop = event.clientY <= 0;
+
+      // La pop-up ne s'affiche que si les DEUX conditions sont remplies
+      if (isExitingTop && hasScrolledEnough && !popupShown.current) {
         setShowExitPopup(true);
         popupShown.current = true;
       }
     };
 
-    // --- NOUVELLE LOGIQUE POUR MOBILE (Déclenchement à la remontée) ---
+    // --- LOGIQUE POUR MOBILE (inchangée) ---
     const handleScroll = () => {
       if (popupShown.current) {
-        // Si la pop-up a déjà été affichée, on ne fait plus rien.
         return;
       }
-
       const currentScrollY = window.scrollY;
-
-      // --- CONDITIONS DE DÉCLENCHEMENT ---
-      // 1. L'utilisateur doit avoir défilé d'au moins 5x la hauteur de l'écran (signe d'engagement).
-      // 2. L'utilisateur doit être en train de remonter (la position actuelle est plus haute que la précédente).
       if (
         currentScrollY > window.innerHeight * 5 &&
         currentScrollY < lastScrollY.current
       ) {
         setShowExitPopup(true);
         popupShown.current = true;
-        // On retire l'écouteur pour la performance une fois la mission accomplie.
         document.removeEventListener('scroll', handleScroll);
       }
-
-      // On met à jour la dernière position de scroll connue pour la prochaine comparaison.
       lastScrollY.current = currentScrollY;
     };
 
