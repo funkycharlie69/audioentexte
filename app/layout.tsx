@@ -22,6 +22,8 @@ const vt323 = VT323({
 
 // ✅ garder uniquement ce qui relève du SEO/social ici
 export const metadata: Metadata = {
+  metadataBase: new URL("https://www.audioentexte.com"),
+
   title: "AudioEnTexte - Transcription Audio Française de Qualité",
   description:
     "La meilleure solution de transcription audio en texte en français. Transformez vos réunions en comptes rendus de haute qualité.",
@@ -38,6 +40,10 @@ export const metadata: Metadata = {
     description: "La première solution optimisée pour le français.",
   },
   robots: { index: true, follow: true },
+
+  alternates: {
+    canonical: "/",
+  },
 };
 
 // ✅ déplacer viewport + themeColor ici
