@@ -811,10 +811,10 @@ export default function LandingPage() {
         </main>
         <Footer />
       </div>
-      <ExitIntentPopup 
+      {/* <ExitIntentPopup 
         isOpen={showExitPopup} 
         onClose={() => setShowExitPopup(false)} 
-      />
+      /> */}
     </div>
   );
 }
