@@ -13,7 +13,7 @@ const freeEmailProviders = [
   'live.com', 'msn.com', 'protonmail.com', 'gmx.com', 'yandex.com', 'mail.com',
   'zoho.com',
   // France
-  'orange.fr', 'sfr.fr', 'free.fr', 'laposte.net', 'bbox.fr', 'wanadoo.fr', 'live.fr', 'hotmail.fr', 'yahoo.fr', 'outlook.fr', 'gmx.fr'
+  'orange.fr', 'sfr.fr', 'free.fr', 'laposte.net', 'bbox.fr', 'wanadoo.fr', 'live.fr', 'hotmail.fr', 'yahoo.fr', 'outlook.fr', 'gmx.fr', 'club-internet.fr '
 ];
 
 /**
