@@ -77,9 +77,16 @@
 }
 
 @theme inline {
-  --font-sans: var(--font-geist-sans);
+  --font-sans: var(--font-inter);
+  --font-heading: var(--font-archivo-black);
   --font-mono: var(--font-geist-mono);
-  --font-vt323: var(--font-vt323);  
+  --font-vt323: var(--font-vt323);
+
+  /* Brand colors */
+  --brand-dark: #0E172B;
+  --brand-green: #00D492;
+  --brand-text-light: #ffffff;
+  --brand-text-dark: #000000;  
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
@@ -125,4 +132,50 @@
   body {
     @apply bg-background text-foreground;
   }
+}
+
+/* Film grain noise effect for vintage aesthetic */
+.noise-background {
+  position: relative;
+}
+
+.noise-background::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url("/bg.png");
+  opacity: 0.2;
+  background-size: cover;
+  pointer-events: none;
+  z-index: 1;
+  mix-blend-mode: overlay;
+}
+
+/* Utility classes for brand colors */
+.bg-brand-dark {
+  background-color: var(--brand-dark);
+}
+
+.bg-brand-green {
+  background-color: var(--brand-green);
+}
+
+.text-brand-green {
+  color: var(--brand-green);
+}
+
+.text-brand-light {
+  color: var(--brand-text-light);
+}
+
+.border-brand-green {
+  border-color: var(--brand-green);
+}
+
+.font-heading {
+  font-family: var(--font-archivo-black), system-ui, -apple-system, sans-serif;
+  font-weight: 400;
 }
